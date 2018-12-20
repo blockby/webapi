@@ -18,7 +18,7 @@ namespace BBBWebApiCodeFirst.Controllers
     public class MtcsController : ControllerBase
     {
         private readonly DataContext _context;
-        private readonly string connectionString= "User ID = postgres; Password = postgres; Server = localhost; Port = 5432; Database = BlockDb; Integrated Security = true; Pooling = true;";
+        private readonly string connectionString= "User ID = postgres; Password = Cl4nd3st1n0; Server = localhost; Port = 5432; Database = BlockDb; Integrated Security = true; Pooling = true;";
 
         public MtcsController(DataContext context)
         {
@@ -32,7 +32,6 @@ namespace BBBWebApiCodeFirst.Controllers
         {
             return _context.Mtcs;
         }
-
 
 
         ////GET:api/Mtcs/getallrows
@@ -82,60 +81,7 @@ namespace BBBWebApiCodeFirst.Controllers
             };
             return mtc;
         }
-
-
-        ////GET:api/Mtcs/getallrows
-        //[HttpGet("getallrows")]
-        //public IEnumerable<Mtc> GetAllRows()
-        //{
-        //string _selectString = "SELECT * from \"Mtcs\" limit 3";
-
-        // string _selectString = "SELECT * from \"Mtcs\" limit 3";
-
-        //            SELECT c.id, c.gid, c.area,a.zone_act, b.id_day,b.name_day, a.hours_act, SUM(a.count_act) AS people, c.geom FROM mtc_activity a
-        //INNER JOIN days b ON a.days_act = b.id_day
-        //INNER JOIN mtc c  ON a.zone_act = c.gid
-        //WHERE ST_Contains(c.geom, ST_GeomFromText('POINT(11.56330 48.18674)', 4326))= true
-        //GROUP BY c.id, c.gid, a.zone_act, b.id_day, b.name_day, a.hours_act, c.geom ORDER BY b.id_day,a.hours_act ASC
-
-        //    using (var conn = new NpgsqlConnection(connectionString))
-        //    {
-        //        conn.Open();
-
-        //        using (var cmd = new NpgsqlCommand(_selectString, conn))
-        //        {
-        //            using (var reader = cmd.ExecuteReader())
-        //            {
-        //                List<Mtc> MtcList = new List<Mtc>();
-
-        //                while (reader.Read())
-        //                {
-        //                    Mtc mtc = ReadMtc(reader);
-        //                    MtcList.Add(mtc);
-        //                }
-        //                return MtcList;
-        //            }
-        //        }
-        //    }
-        //    //return null;
-        //}
-
-        //private static Mtc ReadMtc(IDataRecord reader)
-        //{
-        //    int gid = reader.GetInt32(0);
-        //    long id = reader.GetInt64(1);
-        //    long groesse = reader.GetInt64(2);
-        //    decimal area = reader.GetDecimal(4);
-
-        //    Mtc mtc = new Mtc
-        //    {
-        //        Gid = gid,
-        //        Id = id,
-        //        Groesse = groesse,
-        //        Area = area
-        //    };
-        //    return mtc;
-        //}
+      
 
         // GET: api/Mtcs/5
         [HttpGet("{id}")]
@@ -177,26 +123,6 @@ namespace BBBWebApiCodeFirst.Controllers
 
             return Ok(mtcArea);
         }
-
-
-        // GET: api/Mtcs/gettophour
-        //[HttpGet("gettophour")]
-        //public async Task<IActionResult> GetTopHour()
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return BadRequest(ModelState);
-        //    }
-
-            //var tophour =  _context.Mtcs.
-            
-            //if (tophour == null)
-            //{
-            //    return NotFound();
-            //}
-
-            //return Ok(tophour);
-        //}
 
 
         // PUT: api/Mtcs/5

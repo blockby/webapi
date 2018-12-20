@@ -12,7 +12,6 @@ namespace BBBWebApiCodeFirst.Converters
         public ObjectConverter()
         {
 
-
         }
 
         public JObject HourlyPeopleJson(List<MainChartDTO> list)
@@ -528,8 +527,6 @@ namespace BBBWebApiCodeFirst.Converters
                     {
                         serie6.Add("6", item.People);
                     }
-
-
                 }
                 if (item.HoursAct == 7)
                 {
@@ -561,7 +558,6 @@ namespace BBBWebApiCodeFirst.Converters
                     {
                         serie7.Add("6", item.People);
                     }
-
                 }
                 if (item.HoursAct == 8)
                 {
@@ -593,7 +589,6 @@ namespace BBBWebApiCodeFirst.Converters
                     {
                         serie8.Add("6", item.People);
                     }
-
                 }
                 if (item.HoursAct == 9)
                 {
@@ -625,7 +620,6 @@ namespace BBBWebApiCodeFirst.Converters
                     {
                         serie9.Add("6", item.People);
                     }
-
                 }
                 if (item.HoursAct == 10)
                 {
@@ -657,7 +651,6 @@ namespace BBBWebApiCodeFirst.Converters
                     {
                         serie10.Add("6", item.People);
                     }
-
                 }
                 if (item.HoursAct == 11)
                 {
@@ -689,7 +682,6 @@ namespace BBBWebApiCodeFirst.Converters
                     {
                         serie11.Add("6", item.People);
                     }
-
                 }
                 if (item.HoursAct == 12)
                 {
@@ -721,7 +713,6 @@ namespace BBBWebApiCodeFirst.Converters
                     {
                         serie12.Add("6", item.People);
                     }
-
                 }
                 if (item.HoursAct == 13)
                 {
@@ -753,7 +744,6 @@ namespace BBBWebApiCodeFirst.Converters
                     {
                         serie13.Add("6", item.People);
                     }
-
                 }
                 if (item.HoursAct == 14)
                 {
@@ -785,7 +775,6 @@ namespace BBBWebApiCodeFirst.Converters
                     {
                         serie14.Add("6", item.People);
                     }
-
                 }
                 if (item.HoursAct == 15)
                 {
@@ -817,7 +806,6 @@ namespace BBBWebApiCodeFirst.Converters
                     {
                         serie15.Add("6", item.People);
                     }
-
                 }
                 if (item.HoursAct == 16)
                 {
@@ -849,7 +837,6 @@ namespace BBBWebApiCodeFirst.Converters
                     {
                         serie16.Add("6", item.People);
                     }
-
                 }
                 if (item.HoursAct == 17)
                 {
@@ -881,7 +868,6 @@ namespace BBBWebApiCodeFirst.Converters
                     {
                         serie17.Add("6", item.People);
                     }
-
                 }
                 if (item.HoursAct == 18)
                 {
@@ -913,7 +899,6 @@ namespace BBBWebApiCodeFirst.Converters
                     {
                         serie18.Add("6", item.People);
                     }
-
                 }
                 if (item.HoursAct == 19)
                 {
@@ -945,7 +930,6 @@ namespace BBBWebApiCodeFirst.Converters
                     {
                         serie19.Add("6", item.People);
                     }
-
                 }
                 if (item.HoursAct == 20)
                 {
@@ -977,7 +961,6 @@ namespace BBBWebApiCodeFirst.Converters
                     {
                         serie20.Add("6", item.People);
                     }
-
                 }
                 if (item.HoursAct == 21)
                 {
@@ -1009,7 +992,6 @@ namespace BBBWebApiCodeFirst.Converters
                     {
                         serie21.Add("6", item.People);
                     }
-
                 }
                 if (item.HoursAct == 22)
                 {
@@ -1041,7 +1023,6 @@ namespace BBBWebApiCodeFirst.Converters
                     {
                         serie22.Add("6", item.People);
                     }
-
                 }
                 if (item.HoursAct == 23)
                 {
@@ -1073,7 +1054,6 @@ namespace BBBWebApiCodeFirst.Converters
                     {
                         serie23.Add("6", item.People);
                     }
-
                 }
             }
             obj.Add("serie0", serie0); obj.Add("serie1", serie1);
@@ -1105,7 +1085,6 @@ namespace BBBWebApiCodeFirst.Converters
                     obj.Add("6", "SUN");         
             
             return obj;
-
         }
 
         public JObject TopPeopleChart(List<TopDTO> list)
@@ -1137,8 +1116,7 @@ namespace BBBWebApiCodeFirst.Converters
                 obj.Add(x, item.ZoneAct);
                 i++;
 
-            }
-            
+            }            
             return obj;
         }
 

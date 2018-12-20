@@ -45,13 +45,7 @@ namespace BBBWebApiCodeFirst
             }
             app.UseHttpsRedirection();
 
-            app.UseMvc();
-
-            //app.UseMvc(routes =>
-            //{
-            //    routes.MapRoute("top1", "{controller=Mtcs}/{action=GetTop1}/{point?}");
-            //    routes.MapRoute("getarea", "{controller = Mtcs}/{action=GetArea}/{id}");
-            //});
+            app.UseMvc();           
         }
     }
 }

@@ -18,7 +18,6 @@ namespace BBBWebApiCodeFirst.Models
 
         public decimal? Groesse { get; set; }
 
-
         [JsonConverter(typeof(NetTopologySuiteConverter))]
         public Geometry Geom { get; set; }
 

@@ -17,6 +17,7 @@ namespace BBBWebApiCodeFirst.Models
 
         public DataContext()
         {
+
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -44,7 +45,5 @@ namespace BBBWebApiCodeFirst.Models
         public DbSet<MtcHomezone> MtcHomezones { get; set; }
 
         public DbSet<Days> Dayss { get; set; }
-
-
     }
 }

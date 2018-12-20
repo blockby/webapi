@@ -9,10 +9,8 @@ namespace BBBWebApiCodeFirst.Models
 {
     public class MtcHomezone
     {
-
         [Key]
         public int IdHz { get; set; }
-
    
         public int ZoneHz { get; set; }
 

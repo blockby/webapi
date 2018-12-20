@@ -89,7 +89,6 @@ namespace BBBWebApiCodeFirst.DataReaders
             return mainChartDTO;
         }
 
-
         public Mtc ReadMtc(IDataRecord reader)
         {
             int gid = reader.GetInt32(0);
@@ -97,7 +96,6 @@ namespace BBBWebApiCodeFirst.DataReaders
             long groesse = reader.GetInt64(2);
             Geometry geom = reader.GetValue(3) as NetTopologySuite.Geometries.Geometry;
             long area = reader.GetInt64(4);
-
 
             Mtc mtc = new Mtc
             {
