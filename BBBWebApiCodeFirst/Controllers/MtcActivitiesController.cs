@@ -16,9 +16,7 @@ namespace BBBWebApiCodeFirst.Controllers
     [ApiController]
     public class MtcActivitiesController : ControllerBase
     {
-        private readonly DataContext _context;
- 
-        private readonly string connectionString = "User ID = postgres; Password = postgres; Server = localhost; Port = 5432; Database = BlockDb; Integrated Security = true; Pooling = true;";
+        private readonly DataContext _context;        
         
         public MtcActivitiesController(DataContext context)
         {
