@@ -123,7 +123,7 @@ namespace BBBWebApiCodeFirst.Converters
             return series;
         }
 
-        public JObject TimeJson()
+        public JObject LabelsJson()
         {
             var obj = new JObject();            
                 
@@ -153,114 +153,11 @@ namespace BBBWebApiCodeFirst.Converters
                     obj.Add("23",23);
           
             return obj;
-
-            //foreach (var item in list)
-            //{
-            //    if (item.HoursAct == 0)
-            //    {
-            //        obj.Add("0", item.HoursAct);
-            //    }
-            //    if (item.HoursAct == 1)
-            //    {
-            //        obj.Add("1", item.HoursAct);
-            //    }
-            //    if (item.HoursAct == 2)
-            //    {
-            //        obj.Add("2", item.HoursAct);
-            //    }
-            //    if (item.HoursAct == 3)
-            //    {
-            //        obj.Add("3", item.HoursAct);
-            //    }
-            //    if (item.HoursAct == 4)
-            //    {
-            //        obj.Add("4", item.HoursAct);
-            //    }
-            //    if (item.HoursAct == 5)
-            //    {
-            //        obj.Add("5", item.HoursAct);
-            //    }
-            //    if (item.HoursAct == 6)
-            //    {
-            //        obj.Add("6", item.HoursAct);
-            //    }
-            //    if (item.HoursAct == 7)
-            //    {
-            //        obj.Add("7", item.HoursAct);
-            //    }
-            //    if (item.HoursAct == 8)
-            //    {
-            //        obj.Add("8", item.HoursAct);
-            //    }
-            //    if (item.HoursAct == 9)
-            //    {
-            //        obj.Add("9", item.HoursAct);
-            //    }
-            //    if (item.HoursAct == 10)
-            //    {
-            //        obj.Add("10", item.HoursAct);
-            //    }
-            //    if (item.HoursAct == 11)
-            //    {
-            //        obj.Add("11", item.HoursAct);
-            //    }
-            //    if (item.HoursAct == 12)
-            //    {
-            //        obj.Add("12", item.HoursAct);
-            //    }
-            //    if (item.HoursAct == 13)
-            //    {
-            //        obj.Add("13", item.HoursAct);
-            //    }
-            //    if (item.HoursAct == 14)
-            //    {
-            //        obj.Add("14", item.HoursAct);
-            //    }
-            //    if (item.HoursAct == 15)
-            //    {
-            //        obj.Add("15", item.HoursAct);
-            //    }
-            //    if (item.HoursAct == 16)
-            //    {
-            //        obj.Add("16", item.HoursAct);
-            //    }
-            //    if (item.HoursAct == 17)
-            //    {
-            //        obj.Add("17", item.HoursAct);
-            //    }
-            //    if (item.HoursAct == 18)
-            //    {
-            //        obj.Add("18", item.HoursAct);
-            //    }
-            //    if (item.HoursAct == 19)
-            //    {
-            //        obj.Add("19", item.HoursAct);
-            //    }
-            //    if (item.HoursAct == 20)
-            //    {
-            //        obj.Add("20", item.HoursAct);
-            //    }
-            //    if (item.HoursAct == 21)
-            //    {
-            //        obj.Add("21", item.HoursAct);
-            //    }
-            //    if (item.HoursAct == 22)
-            //    {
-            //        obj.Add("22", item.HoursAct);
-            //    }
-            //    if (item.HoursAct == 23)
-            //    {
-            //        obj.Add("23", item.HoursAct);
-            //    }
-
-            //}
-
-            //return obj;
-
-
         }
 
-        public JObject DayJson(List<MainChartDTO> list)
+
+
+        public JObject TitleJson(List<MainChartDTO> list)
         {
             var obj = new JObject();
             foreach (var item in list) {
@@ -269,14 +166,8 @@ namespace BBBWebApiCodeFirst.Converters
                 
                 break;
             }
-
             return obj ;
-
         }
-       
-
-
-
 
 
 
@@ -300,10 +191,7 @@ namespace BBBWebApiCodeFirst.Converters
             {
 
                 if (item.HoursAct == 0 )
-                {
-                    //var day = item.IdDay;
-                    //var people = item.People;
-                    
+                {                                       
                     if (item.NameDay == "MON") {
                         serie0.Add("0", item.People);
                     }
@@ -331,8 +219,6 @@ namespace BBBWebApiCodeFirst.Converters
                     {
                         serie0.Add("6", item.People);
                     }
-
-
                 }
                 if (item.HoursAct == 1)
                 {
@@ -364,8 +250,6 @@ namespace BBBWebApiCodeFirst.Converters
                     {
                         serie1.Add("6", item.People);
                     }
-
-
                 }
                 if (item.HoursAct == 2)
                 {
@@ -397,8 +281,6 @@ namespace BBBWebApiCodeFirst.Converters
                     {
                         serie2.Add("6", item.People);
                     }
-
-
                 }
                 if (item.HoursAct == 3)
                 {
@@ -430,7 +312,6 @@ namespace BBBWebApiCodeFirst.Converters
                     {
                         serie3.Add("6", item.People);
                     }
-
                 }
                 if (item.HoursAct == 4)
                 {
@@ -462,8 +343,6 @@ namespace BBBWebApiCodeFirst.Converters
                     {
                         serie4.Add("6", item.People);
                     }
-
-
                 }
                 if (item.HoursAct == 5)
                 {
@@ -495,7 +374,6 @@ namespace BBBWebApiCodeFirst.Converters
                     {
                         serie5.Add("6", item.People);
                     }
-
                 }
                 if (item.HoursAct == 6)
                 {
@@ -1087,6 +965,7 @@ namespace BBBWebApiCodeFirst.Converters
             return obj;
         }
 
+
         public JObject TopPeopleChart(List<TopDTO> list)
         {
             var obj = new JObject();
@@ -1097,13 +976,12 @@ namespace BBBWebApiCodeFirst.Converters
             {
                 string x = Convert.ToString(i);          
                     obj.Add(x, item.People);
-                i++;
-              
+                i++;              
             }
             serie0.Add("serie0", obj);
-
             return serie0;
         }
+
 
         public JObject TopZoneChart(List<TopDTO> list)
         {
@@ -1119,7 +997,6 @@ namespace BBBWebApiCodeFirst.Converters
             }            
             return obj;
         }
-
 
 
         public JObject MinPeopleChart(List<TopDTO> list)
@@ -1140,6 +1017,7 @@ namespace BBBWebApiCodeFirst.Converters
             return serie0;
         }
 
+
         public JObject MinZoneChart(List<TopDTO> list)
         {
             var obj = new JObject();
@@ -1152,9 +1030,7 @@ namespace BBBWebApiCodeFirst.Converters
                 i++;
 
             }        
-
             return obj;
         }
-
     }
 }

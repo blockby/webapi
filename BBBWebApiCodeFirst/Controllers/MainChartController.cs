@@ -57,13 +57,13 @@ namespace BBBWebApiCodeFirst.Controllers
                         
                         ObjectConverter objConverted = new ObjectConverter();                        
                         JObject hourlyPeopleJson = objConverted.HourlyPeopleJson(mainChartDtoList);
-                        JObject timeJson = objConverted.TimeJson();
-                        JObject dayJson = objConverted.DayJson(mainChartDtoList);
+                        JObject labelsJson = objConverted.LabelsJson();
+                        JObject titleJson = objConverted.TitleJson(mainChartDtoList);
 
                         var obj = new JObject();
                         obj.Add("series", hourlyPeopleJson);
-                        obj.Add("labels", timeJson);
-                        obj.Add("title", dayJson);
+                        obj.Add("labels", labelsJson);
+                        obj.Add("title", titleJson);
 
                         return obj;                        
                     }
