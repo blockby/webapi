@@ -28,8 +28,7 @@ namespace BBBWebApiCodeFirst.DataTransferObjects
     public int People { get; set; }
 
     [JsonConverter(typeof(NetTopologySuiteConverter))]
-    public Geometry Geom { get; set; }
-        
+    public Geometry Geom { get; set; }   
 
-}
+    }
 }

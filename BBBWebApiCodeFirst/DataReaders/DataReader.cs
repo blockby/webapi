@@ -19,25 +19,6 @@ namespace BBBWebApiCodeFirst.DataReaders
 
         }
 
-        public TopDTO ReadTopDTO(NpgsqlDataReader reader)
-        {
-            var obj = new JObject();
-
-            int id = reader.GetInt32(0);
-            int zoneAct = reader.GetInt32(1);
-            int people = reader.GetInt32(2);
-            Geometry geom = reader.GetValue(3) as NetTopologySuite.Geometries.Geometry;
-
-            TopDTO topDTO = new TopDTO
-            {
-                Id = id,
-                ZoneAct = zoneAct,
-                People = people,
-                //Geom = geom
-            };
-            return topDTO;
-        }
-
         public TopDayDTO ReadTopDayDTO(NpgsqlDataReader reader)
         {
             var obj = new JObject();
