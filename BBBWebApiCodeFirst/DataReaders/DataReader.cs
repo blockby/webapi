@@ -68,27 +68,7 @@ namespace BBBWebApiCodeFirst.DataReaders
                 //Geom = geom
             };
             return mainChartDTO;
-        }
-
-        public Mtc ReadMtc(IDataRecord reader)
-        {
-            int gid = reader.GetInt32(0);
-            long id = reader.GetInt64(1);
-            long groesse = reader.GetInt64(2);
-            Geometry geom = reader.GetValue(3) as NetTopologySuite.Geometries.Geometry;
-            long area = reader.GetInt64(4);
-
-            Mtc mtc = new Mtc
-            {
-                Gid = gid,
-                Id = id,
-                Groesse = groesse,
-                Geom = geom,
-                Area = area
-            };
-
-            return mtc;
-        }
+        }        
     }
 }
 

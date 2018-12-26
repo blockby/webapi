@@ -54,6 +54,7 @@ namespace BBBWebApiCodeFirst.Controllers
                         
                         ObjectConverter objConverted = new ObjectConverter();
                         var obj = objConverted.MainChartDayJson(mainChartDtoList);
+
                         return obj;                        
                     }
                 }
@@ -87,14 +88,15 @@ namespace BBBWebApiCodeFirst.Controllers
                             mainChartDtoList.Add(mainChartDTO);
                         }
 
-                        ObjectConverter objConverted = new ObjectConverter();        
-                        
-                        JObject weeklyPeopleChart = objConverted.WeeklyPeopleChart(mainChartDtoList);
-                        JObject weekDayChart = objConverted.WeekDayChart();
+                        ObjectConverter objConverted = new ObjectConverter();                        
+                        var obj = objConverted.MainChartDayJson(mainChartDtoList);
 
-                        var obj = new JObject();
-                        obj.Add("series", weeklyPeopleChart);
-                        obj.Add("labels", weekDayChart);
+                        //JObject weeklyPeopleChart = objConverted.WeeklyPeopleChart(mainChartDtoList);
+                        //JObject weekDayChart = objConverted.WeekDayChart();
+
+                        //var obj = new JObject();
+                        //obj.Add("series", weeklyPeopleChart);
+                        //obj.Add("labels", weekDayChart);
                         return obj;                        
                     }
                 }
