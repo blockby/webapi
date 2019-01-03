@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using BBBWebApiCodeFirst.Converters;
 using BBBWebApiCodeFirst.DataReaders;
 using BBBWebApiCodeFirst.DataTransferObjects;
+using BBBWebApiCodeFirst.Interfaces;
 using BBBWebApiCodeFirst.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,6 +14,8 @@ using Npgsql;
 
 namespace BBBWebApiCodeFirst.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class TopChartController
     {
         private readonly DataContext _context;
@@ -44,21 +47,14 @@ namespace BBBWebApiCodeFirst.Controllers
                         List<TopDTO> TopDtoList = new List<TopDTO>();
 
                         while (reader.Read())
-                        {
-                            DataReader dataReader = new DataReader();
-                            TopDTO topDTO = dataReader.ReadTopDTO(reader);
+                        {                            
+                            InterfaceDataReader idr = new DataReader();
+                            TopDTO topDTO = idr.ReadTopDTO(reader);
                             TopDtoList.Add(topDTO);
                         }
 
-                        ObjectConverter objConverted = new ObjectConverter();
-                        JObject topPeopleChart = objConverted.TopPeopleChart(TopDtoList);
-                        JObject topZoneChart = objConverted.TopZoneChart(TopDtoList);
-
-                        var obj = new JObject();
-
-                        obj.Add("series", topPeopleChart);
-                        obj.Add("labels", topZoneChart);
-
+                        IObjectConverter objConverted = new ObjectConverter();                                                                     
+                        var obj = objConverted.TopPeopleJson(TopDtoList);
                         return obj;
                     }
                 }
@@ -84,20 +80,13 @@ namespace BBBWebApiCodeFirst.Controllers
 
                         while (reader.Read())
                         {
-                            DataReader dataReader = new DataReader();
+                            InterfaceDataReader dataReader = new DataReader();
                             TopDTO topDTO = dataReader.ReadTopDTO(reader);
                             TopDtoList.Add(topDTO);
                         }
-                        ObjectConverter objConverted = new ObjectConverter();
 
-                        JObject minPeopleChart = objConverted.MinPeopleChart(TopDtoList);
-                        JObject minZoneChart = objConverted.MinZoneChart(TopDtoList);
-
-                        var obj = new JObject();
-
-                        obj.Add("series", minPeopleChart);
-                        obj.Add("labels", minZoneChart);
-
+                        IObjectConverter objConverted = new ObjectConverter();
+                        var obj = objConverted.MinPeopleJson(TopDtoList);
                         return obj;
                     }
                 }

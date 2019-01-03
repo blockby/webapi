@@ -1,4 +1,5 @@
 ﻿using BBBWebApiCodeFirst.DataTransferObjects;
+using BBBWebApiCodeFirst.Interfaces;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace BBBWebApiCodeFirst.Converters
 {
-    public class ObjectConverter
+    public class ObjectConverter: IObjectConverter
     {
         public ObjectConverter()
         {
@@ -968,6 +969,19 @@ namespace BBBWebApiCodeFirst.Converters
             return obj;
         }
 
+        public JObject TopPeopleJson(List<TopDTO> list)
+        {
+            var obj = new JObject();
+
+            var series = TopPeopleChart(list);
+            var labels = TopZoneChart(list);
+
+            obj.Add("series", series);
+            obj.Add("labels", labels);
+            
+            return obj;
+
+        }
         public JObject TopPeopleChart(List<TopDTO> list)
         {
             var obj = new JObject();
@@ -982,7 +996,6 @@ namespace BBBWebApiCodeFirst.Converters
 
             }
             serie0.Add("serie0", obj);
-
             return serie0;
         }
 
@@ -1002,6 +1015,18 @@ namespace BBBWebApiCodeFirst.Converters
         }
 
 
+        public JObject MinPeopleJson (List<TopDTO> list)
+        {
+            var obj = new JObject();
+
+            var series = MinPeopleChart(list);
+            var labels = MinZoneChart(list);
+
+            obj.Add("series", series);
+            obj.Add("labels", labels);
+
+            return obj;
+        }
 
         public JObject MinPeopleChart(List<TopDTO> list)
         {
@@ -1033,6 +1058,18 @@ namespace BBBWebApiCodeFirst.Converters
                 i++;
 
             }
+            return obj;
+        }
+
+        public JObject TableHomeDayJson(List<TableHomeDayDTO> list)
+              
+             
+             
+
+        {
+            var obj = new JObject();
+
+
 
             return obj;
         }

@@ -1,4 +1,5 @@
 ﻿using BBBWebApiCodeFirst.DataTransferObjects;
+using BBBWebApiCodeFirst.Interfaces;
 using BBBWebApiCodeFirst.Models;
 using NetTopologySuite.Geometries;
 using Newtonsoft.Json.Linq;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace BBBWebApiCodeFirst.DataReaders
 {
-    public class DataReader
+    public class DataReader: InterfaceDataReader
     {
 
         public DataReader()
@@ -54,7 +55,7 @@ namespace BBBWebApiCodeFirst.DataReaders
             string nameDay = reader.GetString(5);
             int hoursAct = reader.GetInt32(6);
             int people = reader.GetInt32(7);
-            //Geometry geom = reader.GetValue(8) as NetTopologySuite.Geometries.Geometry;
+            Geometry geom = reader.GetValue(8) as NetTopologySuite.Geometries.Geometry;
 
             MainChartDTO mainChartDTO = new MainChartDTO
             {
@@ -65,10 +66,55 @@ namespace BBBWebApiCodeFirst.DataReaders
                 NameDay = nameDay,
                 HoursAct = hoursAct,
                 People = people,
-                //Geom = geom
+                Geom = geom
             };
             return mainChartDTO;
-        }        
+        }
+
+        public TopDTO ReadTopDTO(NpgsqlDataReader reader)
+        {          
+
+            int id = reader.GetInt32(0);
+            int zoneAct = reader.GetInt32(1);
+            int people = reader.GetInt32(2);
+            Geometry geom = reader.GetValue(3) as NetTopologySuite.Geometries.Geometry;
+
+            TopDTO topDTO = new TopDTO
+            {
+                Id = id,
+                ZoneAct = zoneAct,
+                People = people,
+                Geom = geom
+            };
+            return topDTO;
+        }
+
+        public TableHomeDayDTO ReadTableHomeDayDTO (NpgsqlDataReader reader)
+        {
+            int gid = reader.GetInt32(0);
+            int id = reader.GetInt32(1);
+            int zoneAct = reader.GetInt32(2);
+            int daysAct = reader.GetInt32(3);
+            string nameDay = reader.GetString(4);
+            int hoursAct = reader.GetInt32(5);
+            long countAct = reader.GetInt64(6);
+            Geometry geom = reader.GetValue(3) as NetTopologySuite.Geometries.Geometry;
+
+            TableHomeDayDTO tableHomeDayDTO = new TableHomeDayDTO
+            {
+                Gid = gid,
+                Id = id,
+                ZoneAct = zoneAct,
+                DaysAct = daysAct,
+                NameDay = nameDay,
+                HoursAct = hoursAct,
+                CountAct = countAct,
+                Geom = geom
+            };
+
+            return tableHomeDayDTO;
+
+        }
     }
 }
 

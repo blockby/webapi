@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using BBBWebApiCodeFirst.Converters;
 using BBBWebApiCodeFirst.DataReaders;
 using BBBWebApiCodeFirst.DataTransferObjects;
+using BBBWebApiCodeFirst.Interfaces;
 using BBBWebApiCodeFirst.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -25,7 +26,6 @@ namespace BBBWebApiCodeFirst.Controllers
         public MainChartController(DataContext context)
         {
             _context = context;
-
         }
 
         //GET:api/MainChart/getmainchartday/day/longy/lat
@@ -47,12 +47,12 @@ namespace BBBWebApiCodeFirst.Controllers
 
                         while (reader.Read())
                         {
-                            DataReader dataReader = new DataReader();
+                            InterfaceDataReader dataReader = new DataReader();
                             MainChartDTO mainChartDTO = dataReader.ReadMainChartDTO(reader);
                             mainChartDtoList.Add(mainChartDTO);
                         }
                         
-                        ObjectConverter objConverted = new ObjectConverter();
+                        IObjectConverter objConverted = new ObjectConverter();
                         var obj = objConverted.MainChartDayJson(mainChartDtoList);
 
                         return obj;                        
@@ -83,27 +83,18 @@ namespace BBBWebApiCodeFirst.Controllers
 
                         while (reader.Read())
                         {
-                            DataReader dataReader = new DataReader();
+                            InterfaceDataReader dataReader = new DataReader();
                             MainChartDTO mainChartDTO = dataReader.ReadMainChartDTO(reader);
                             mainChartDtoList.Add(mainChartDTO);
                         }
 
-                        ObjectConverter objConverted = new ObjectConverter();                        
-                        var obj = objConverted.MainChartDayJson(mainChartDtoList);
-
-                        //JObject weeklyPeopleChart = objConverted.WeeklyPeopleChart(mainChartDtoList);
-                        //JObject weekDayChart = objConverted.WeekDayChart();
-
-                        //var obj = new JObject();
-                        //obj.Add("series", weeklyPeopleChart);
-                        //obj.Add("labels", weekDayChart);
+                        IObjectConverter objConverted = new ObjectConverter();                        
+                        var obj = objConverted.MainChartWeekJson(mainChartDtoList);
+                        
                         return obj;                        
                     }
                 }
             }
-        }
-
-
-       
+        }       
     }
 }
