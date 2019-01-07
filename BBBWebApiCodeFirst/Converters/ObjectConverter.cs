@@ -1062,17 +1062,24 @@ namespace BBBWebApiCodeFirst.Converters
         }
 
         public JObject TableHomeDayJson(List<TableHomeDayDTO> list)
-              
-             
-             
-
         {
             var obj = new JObject();
-
+            //foreach (TableHomeDayDTO item in list)
+            //{
+            //    CreateTableHomeObject(item);
+            //}
 
 
             return obj;
         }
+
+        //public JObject CreateTableHomeObject(TableHomeDayDTO item)
+        //{
+        //    var obj = new JObject();
+        //    obj.Add("id", item[index]);
+
+        //    return obj;
+        //}
 
     }
 }
