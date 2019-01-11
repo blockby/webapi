@@ -1063,23 +1063,88 @@ namespace BBBWebApiCodeFirst.Converters
 
         public JObject TableHomeDayJson(List<TableHomeDayDTO> list)
         {
-            var obj = new JObject();
-            //foreach (TableHomeDayDTO item in list)
-            //{
-            //    CreateTableHomeObject(item);
-            //}
+            var obj = new JObject();            
+            JArray objArray = new JArray();
+            var index = 1;         
 
+            foreach (TableHomeDayDTO item in list)
+            {                
+                var objInside = new JObject();
+                objInside.Add("id", index++);
+                objInside.Add("day", item.NameDay);
+                objInside.Add("hour", item.HoursAct);
+                objInside.Add("people", item.CountAct);
+                objArray.Add(objInside);                
+            }
+
+            obj.Add("td", objArray);
 
             return obj;
         }
 
-        //public JObject CreateTableHomeObject(TableHomeDayDTO item)
-        //{
-        //    var obj = new JObject();
-        //    obj.Add("id", item[index]);
+        public JObject TableHomeWeekJson(List<TableHomeWeekDTO> list)
+        {
+            var obj = new JObject();
+            JArray objArray = new JArray();
+            var index = 1;
 
-        //    return obj;
-        //}
+            foreach (TableHomeWeekDTO item in list)
+            {
+                var objInside = new JObject();
+                objInside.Add("id", index++);
+                objInside.Add("day", item.NameDay);               
+                objInside.Add("people", item.People);
+                objArray.Add(objInside);
+            }
 
+            obj.Add("td", objArray);
+
+            return obj;
+        }
+
+        public JObject TopDayPeopleJson(List<TopDayDTO> list)
+        {
+            var obj = new JObject();
+
+            var series = TopDayPeopleChart(list);
+            var labels = TopDayZoneChart(list);
+
+            obj.Add("series", series);
+            obj.Add("labels", labels);
+
+            return obj;
+        }
+
+        public JObject TopDayPeopleChart(List<TopDayDTO> list)
+        {
+            var obj = new JObject();
+            var serie0 = new JObject();
+            int i = 0;
+
+            foreach (var item in list)
+            {
+                string x = Convert.ToString(i);
+                obj.Add(x, item.People);
+                i++;
+
+            }
+            serie0.Add("serie0", obj);
+            return serie0;
+        }
+
+        public JObject TopDayZoneChart(List<TopDayDTO> list)
+        {
+            var obj = new JObject();
+            int i = 0;
+
+            foreach (var item in list)
+            {
+                string x = Convert.ToString(i);
+                obj.Add(x, item.ZoneAct);
+                i++;
+
+            }
+            return obj;
+        }
     }
 }

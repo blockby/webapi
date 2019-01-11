@@ -16,5 +16,7 @@ namespace BBBWebApiCodeFirst.Interfaces
         TopDTO ReadTopDTO(NpgsqlDataReader reader);
 
         TableHomeDayDTO ReadTableHomeDayDTO(NpgsqlDataReader reader);
+
+        TableHomeWeekDTO ReadTableHomeWeekDTO(NpgsqlDataReader reader);
     }
 }

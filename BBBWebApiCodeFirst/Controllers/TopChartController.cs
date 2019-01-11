@@ -34,7 +34,7 @@ namespace BBBWebApiCodeFirst.Controllers
         [HttpGet("gettopchart1week")]
         public JObject GetTopChart1Week()
         {
-            string _selectString = "SELECT b.\"Id\", a.\"ZoneAct\", SUM(a.\"CountAct\") AS People, b.\"Geom\" FROM \"MtcActivitys\" a INNER JOIN \"Mtcs\" b ON a.\"ZoneAct\" = b.\"Id\" GROUP BY b.\"Id\", a.\"ZoneAct\", b.\"Geom\" ORDER BY People DESC LIMIT 5";
+            string _selectString = "SELECT b.\"Gid\", b.\"Id\", a.\"ZoneAct\", SUM(a.\"CountAct\") AS People, b.\"Geom\" FROM \"MtcActivitys\" a INNER JOIN \"Mtcs\" b ON a.\"ZoneAct\" = b.\"Id\" GROUP BY b.\"Id\", a.\"ZoneAct\", b.\"Geom\" ORDER BY People DESC LIMIT 5";
 
             using (var conn = new NpgsqlConnection(connectionString))
             {
@@ -66,7 +66,7 @@ namespace BBBWebApiCodeFirst.Controllers
         [HttpGet("getminchart2week")]
         public JObject GetMinChart2week()
         {
-            string _selectString = "SELECT b.\"Id\", a.\"ZoneAct\", SUM(a.\"CountAct\") AS People, b.\"Geom\" FROM \"MtcActivitys\" a INNER JOIN \"Mtcs\" b ON a.\"ZoneAct\" = b.\"Id\" GROUP BY b.\"Id\", a.\"ZoneAct\", b.\"Geom\" ORDER BY People ASC LIMIT 5";
+            string _selectString = "SELECT  b.\"Gid\", b.\"Id\", a.\"ZoneAct\", SUM(a.\"CountAct\") AS People, b.\"Geom\" FROM \"MtcActivitys\" a INNER JOIN \"Mtcs\" b ON a.\"ZoneAct\" = b.\"Id\" GROUP BY b.\"Id\", a.\"ZoneAct\", b.\"Geom\" ORDER BY People ASC LIMIT 5";
 
             using (var conn = new NpgsqlConnection(connectionString))
             {
@@ -92,5 +92,37 @@ namespace BBBWebApiCodeFirst.Controllers
                 }
             }
         }
+
+        // GET:api/TopChart/gettopchart1day
+        [HttpGet("gettopchart1day")]
+        public JObject GetTopChart1Day()
+        {
+            string _selectString = "SELECT  b.\"Gid\", b.\"Id\", a.\"DaysAct\", a.\"ZoneAct\", SUM(a.\"CountAct\") AS people, b.\"Geom\" FROM \"MtcActivitys\" a INNER JOIN \"Mtcs\" b ON a.\"ZoneAct\" = b.\"Gid\" WHERE a.\"DaysAct\" = 1 GROUP BY b.\"Gid\", b.\"Id\", a.\"DaysAct\", a.\"ZoneAct\", b.\"Geom\" ORDER BY people DESC LIMIT 5";
+
+            using (var conn = new NpgsqlConnection(connectionString))
+            {
+                conn.Open();
+
+                using (var cmd = new NpgsqlCommand(_selectString, conn))
+                {
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        List<TopDayDTO> TopDayDtoList = new List<TopDayDTO>();
+
+                        while (reader.Read())
+                        {
+                            InterfaceDataReader idr = new DataReader();
+                            TopDayDTO topDayDTO = idr.ReadTopDayDTO(reader);
+                            TopDayDtoList.Add(topDayDTO);
+                        }
+
+                        IObjectConverter objConverted = new ObjectConverter();
+                        var obj = objConverted.TopDayPeopleJson(TopDayDtoList);
+                        return obj;
+                    }
+                }
+            }
+        }
+
     }
 }

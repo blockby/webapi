@@ -24,18 +24,18 @@ namespace BBBWebApiCodeFirst.DataReaders
         {
             var obj = new JObject();
 
-            int id = reader.GetInt32(0);
-            int daysAct = reader.GetInt32(1);
-            string nameDay = reader.GetString(2);
+            int gid = reader.GetInt32(0);
+            int id = reader.GetInt32(1);
+            int daysAct = reader.GetInt32(2);            
             int zoneAct = reader.GetInt32(3);
             int people = reader.GetInt32(4);
             Geometry geom = reader.GetValue(5) as NetTopologySuite.Geometries.Geometry;
 
             TopDayDTO topDayDTO = new TopDayDTO
             {
+                Gid = gid,
                 Id = id,
-                DaysAct = daysAct,
-                NameDay = nameDay,
+                DaysAct = daysAct,                
                 ZoneAct = zoneAct,
                 People = people,
                 Geom = geom
@@ -72,12 +72,12 @@ namespace BBBWebApiCodeFirst.DataReaders
         }
 
         public TopDTO ReadTopDTO(NpgsqlDataReader reader)
-        {          
-
-            int id = reader.GetInt32(0);
-            int zoneAct = reader.GetInt32(1);
-            int people = reader.GetInt32(2);
-            Geometry geom = reader.GetValue(3) as NetTopologySuite.Geometries.Geometry;
+        {
+            int gid = reader.GetInt32(0);
+            int id = reader.GetInt32(1);
+            int zoneAct = reader.GetInt32(2);
+            int people = reader.GetInt32(3);
+            Geometry geom = reader.GetValue(4) as NetTopologySuite.Geometries.Geometry;
 
             TopDTO topDTO = new TopDTO
             {
@@ -113,8 +113,30 @@ namespace BBBWebApiCodeFirst.DataReaders
             };
 
             return tableHomeDayDTO;
+        }
 
+        public TableHomeWeekDTO ReadTableHomeWeekDTO(NpgsqlDataReader reader)
+        {
+            int gid = reader.GetInt32(0);
+            int id = reader.GetInt32(1);
+            int zoneAct = reader.GetInt32(2);
+            int daysAct = reader.GetInt32(3);
+            string nameDay = reader.GetString(4);
+            long people = reader.GetInt64(5);
+            Geometry geom = reader.GetValue(6) as NetTopologySuite.Geometries.Geometry;
+
+            TableHomeWeekDTO tableHomeWeekDTO = new TableHomeWeekDTO
+            {
+                Gid = gid,
+                Id = id,
+                ZoneAct = zoneAct,
+                DaysAct = daysAct,
+                NameDay = nameDay,
+                People = people,
+                Geom = geom
+            };
+
+            return tableHomeWeekDTO;
         }
     }
 }
-

@@ -15,7 +15,7 @@ namespace BBBWebApiCodeFirst.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TableHomeController: ControllerBase
+    public class TableHomeController : ControllerBase
     {
         private readonly DataContext _context;
 
@@ -23,7 +23,7 @@ namespace BBBWebApiCodeFirst.Controllers
         //private readonly string connectionString = "User ID = postgres; Password = Cl4nd3st1n0; Server = localhost; Port = 5432; Database = BlockDb; Integrated Security = true; Pooling = true;";
         //private readonly string connectionString = "User ID = postgres; Password = postgres; Server = localhost; Port = 5432; Database = BlockDb; Integrated Security = true; Pooling = true;";
 
-        public TableHomeController (DataContext context)
+        public TableHomeController(DataContext context)
         {
             _context = context;
         }
@@ -54,6 +54,39 @@ namespace BBBWebApiCodeFirst.Controllers
 
                         IObjectConverter objConverted = new ObjectConverter();
                         var obj = objConverted.TableHomeDayJson(tableHomeDayDtoList);
+
+                        return obj;
+                    }
+                }
+            }
+        }
+
+        // GET:api/TableHome/gettablehomeweek/longy/lat
+        [HttpGet("gettablehomeweek/{longy}/{lat}")]
+        public JObject GetTableHomeWeek([FromRoute] double longy, double lat)
+        {
+            string _pointString = "POINT(" + longy + " " + lat + ")";
+            string _selectString = "SELECT  b.\"Gid\", b.\"Id\", a.\"ZoneAct\", a.\"DaysAct\", c.\"NameDay\", SUM(a.\"CountAct\") as people, b.\"Geom\" FROM \"MtcActivitys\" a INNER JOIN \"Mtcs\" b ON a.\"ZoneAct\" = b.\"Gid\" INNER JOIN \"Dayss\" c ON a.\"DaysAct\" = c.\"IdDay\" WHERE ST_Contains(b.\"Geom\", ST_GeomFromText('" + _pointString + "', 4326))= true GROUP BY b.\"Gid\", b.\"Id\", a.\"ZoneAct\", a.\"DaysAct\", c.\"NameDay\", b.\"Geom\" HAVING SUM(a.\"CountAct\") >= all(Select SUM(a.\"CountAct\") as people FROM \"MtcActivitys\" a INNER JOIN \"Mtcs\" b ON a.\"ZoneAct\" = b.\"Gid\" WHERE ST_Contains(b.\"Geom\", ST_GeomFromText('" + _pointString + "', 4326)) = true GROUP BY a.\"ZoneAct\", a.\"DaysAct\") UNION SELECT  b.\"Gid\", b.\"Id\", a.\"ZoneAct\", a.\"DaysAct\", c.\"NameDay\", SUM(a.\"CountAct\") as people, b.\"Geom\" FROM \"MtcActivitys\" a INNER JOIN \"Mtcs\" b ON a.\"ZoneAct\" = b.\"Gid\" INNER JOIN \"Dayss\" c ON a.\"DaysAct\" = c.\"IdDay\" WHERE ST_Contains(b.\"Geom\", ST_GeomFromText('" + _pointString + "', 4326))= true GROUP BY b.\"Gid\", b.\"Id\", a.\"ZoneAct\", a.\"DaysAct\", c.\"NameDay\", b.\"Geom\" HAVING SUM(a.\"CountAct\") <= all(SELECT SUM(a.\"CountAct\") as people FROM \"MtcActivitys\" a INNER JOIN \"Mtcs\" b ON a.\"ZoneAct\" = b.\"Gid\" WHERE ST_Contains(b.\"Geom\", ST_GeomFromText('" + _pointString + "', 4326)) = true group by a.\"ZoneAct\", a.\"DaysAct\") ORDER BY people DESC";
+
+            using (var conn = new NpgsqlConnection(connectionString))
+            {
+                conn.Open();
+
+                using (var cmd = new NpgsqlCommand(_selectString, conn))
+                {
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        List<TableHomeWeekDTO> tableHomeWeekDtoList = new List<TableHomeWeekDTO>();
+
+                        while (reader.Read())
+                        {
+                            InterfaceDataReader dataReader = new DataReader();
+                            TableHomeWeekDTO tableHomeWeekDTO = dataReader.ReadTableHomeWeekDTO(reader);
+                            tableHomeWeekDtoList.Add(tableHomeWeekDTO);
+                        }
+
+                        IObjectConverter objConverted = new ObjectConverter();
+                        var obj = objConverted.TableHomeWeekJson(tableHomeWeekDtoList);
 
                         return obj;
                     }

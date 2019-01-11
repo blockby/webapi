@@ -10,7 +10,6 @@ namespace BBBWebApiCodeFirst.Interfaces
 {
     interface IObjectConverter
     {
-
         JObject MainChartDayJson(List<MainChartDTO> list);
 
         JObject HourlyPeopleJson(List<MainChartDTO> list);
@@ -38,6 +37,10 @@ namespace BBBWebApiCodeFirst.Interfaces
         JObject MinZoneChart(List<TopDTO> list);
 
         JObject TableHomeDayJson(List<TableHomeDayDTO> list);
+
+        JObject TableHomeWeekJson(List<TableHomeWeekDTO> list);
+
+        JObject TopDayPeopleJson(List<TopDayDTO> list);
 
     }
 }

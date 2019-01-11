@@ -8,15 +8,19 @@ using System.Threading.Tasks;
 
 namespace BBBWebApiCodeFirst.DataTransferObjects
 {
-    public class TopDTO
+    public class TableHomeWeekDTO
     {
         public int Gid { get; set; }
-
         public int Id { get; set; }
+
 
         public int ZoneAct { get; set; }
 
-        public int People { get; set; }
+        public int DaysAct { get; set; }
+
+        public string NameDay { get; set; }       
+
+        public long People { get; set; }
 
         [JsonConverter(typeof(NetTopologySuiteConverter))]
         public Geometry Geom { get; set; }
