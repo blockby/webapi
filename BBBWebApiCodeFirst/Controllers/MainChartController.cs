@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 using BBBWebApiCodeFirst.Converters;
 using BBBWebApiCodeFirst.DataReaders;
 using BBBWebApiCodeFirst.DataTransferObjects;
@@ -10,6 +11,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using Npgsql;
+using System.IO;
+using BBBWebApiCodeFirst.Common;
 
 namespace BBBWebApiCodeFirst.Controllers
 {
@@ -19,13 +22,12 @@ namespace BBBWebApiCodeFirst.Controllers
     {
 
         private readonly DataContext _context;
-        private readonly string connectionString = "User ID = postgres; Password = Cl4nd3st1n0; Server = localhost; Port = 5432; Database = BlockDb; Integrated Security = true; Pooling = true;";
-        //private readonly string connectionString = "User ID = postgres; Password = postgres; Server = localhost; Port = 5432; Database = BlockDb; Integrated Security = true; Pooling = true;";
+        string connectionString = ConnectionStringBuilder.buildConnectionString();
+
 
         public MainChartController(DataContext context)
         {
             _context = context;
-
         }
 
         //GET:api/MainChart/getmainchartday/day/longy/lat
@@ -34,9 +36,7 @@ namespace BBBWebApiCodeFirst.Controllers
         {
             string _pointString = "POINT(" + longy + " " + lat + ")";
             string _selectString = "SELECT c.\"Id\", c.\"Gid\", c.\"Area\", a.\"ZoneAct\", b.\"IdDay\", b.\"NameDay\", a.\"HoursAct\", SUM(a.\"CountAct\") AS People, c.\"Geom\" FROM \"MtcActivitys\" a INNER JOIN \"Dayss\" b ON a.\"DaysAct\" = b.\"IdDay\" INNER JOIN \"Mtcs\" c ON a.\"ZoneAct\" = c.\"Gid\" Where ST_Contains(c.\"Geom\", ST_GeomFromText('" + _pointString + "', 4326))=true AND a.\"DaysAct\" = " + day + " GROUP BY c.\"Id\", c.\"Gid\", a.\"ZoneAct\", b.\"IdDay\", b.\"NameDay\", a.\"HoursAct\", c.\"Geom\" ORDER BY a.\"HoursAct\" ASC";
-
-
-
+                       
             using (var conn = new NpgsqlConnection(connectionString))
             {
                 conn.Open();
@@ -73,9 +73,8 @@ namespace BBBWebApiCodeFirst.Controllers
 
         //GET:api/MainChart/getmainchartweek/longy/lat
         [HttpGet("getmainchartweek/{longy}/{lat}")]
-       
-            public JObject GetMainChartWeek([FromRoute] double longy, double lat)
-            {
+        public JObject GetMainChartWeek([FromRoute] double longy, double lat)
+        {
             string _pointString = "POINT(" + longy + " " + lat + ")";
 
             string _selectString = "SELECT c.\"Id\", c.\"Gid\", c.\"Area\", a.\"ZoneAct\", b.\"IdDay\", b.\"NameDay\", a.\"HoursAct\", SUM(a.\"CountAct\") AS People, c.\"Geom\" FROM \"MtcActivitys\" a INNER JOIN \"Dayss\" b ON a.\"DaysAct\" = b.\"IdDay\" INNER JOIN \"Mtcs\" c ON a.\"ZoneAct\" = c.\"Gid\" Where ST_Contains(c.\"Geom\", ST_GeomFromText('" + _pointString + "', 4326))=true GROUP BY c.\"Id\", c.\"Gid\", a.\"ZoneAct\", b.\"IdDay\", b.\"NameDay\", a.\"HoursAct\", c.\"Geom\" ORDER BY a.\"HoursAct\" ASC";
@@ -97,8 +96,7 @@ namespace BBBWebApiCodeFirst.Controllers
                             mainChartDtoList.Add(mainChartDTO);
                         }
                         
-                        ObjectConverter objConverted = new ObjectConverter();                 
-                        
+                        ObjectConverter objConverted = new ObjectConverter();                        
                         JObject weeklyPeopleChart = objConverted.WeeklyPeopleChart(mainChartDtoList);
                         JObject weekDayChart = objConverted.WeekDayChart();
 
@@ -109,9 +107,6 @@ namespace BBBWebApiCodeFirst.Controllers
                     }
                 }
             }
-        }
-
-
-       
+        }       
     }
 }
