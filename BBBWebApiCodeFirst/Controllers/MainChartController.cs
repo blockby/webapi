@@ -22,7 +22,8 @@ namespace BBBWebApiCodeFirst.Controllers
     {
 
         private readonly DataContext _context;
-        string connectionString = ConnectionStringBuilder.buildConnectionString();
+
+        string connectionString = ConnectionStringBuilder.buildConnectionString();       
 
 
         public MainChartController(DataContext context)
@@ -39,6 +40,8 @@ namespace BBBWebApiCodeFirst.Controllers
                        
             using (var conn = new NpgsqlConnection(connectionString))
             {
+                var con = conn.FullState;
+              
                 conn.Open();
 
                 using (var cmd = new NpgsqlCommand(_selectString, conn))

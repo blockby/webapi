@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using BBBWebApiCodeFirst.Common;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -14,11 +15,7 @@ namespace BBBWebApiCodeFirst.Models
         {
 
         }
-
-        public DataContext()
-        {
-
-        }
+      
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -28,7 +25,11 @@ namespace BBBWebApiCodeFirst.Models
                    .SetBasePath(Directory.GetCurrentDirectory())
                    .AddJsonFile("appsettings.json")
                    .Build();
+
                 var connectionString = configuration.GetConnectionString("BbbApiConnection");
+
+                //var connectionString = RdsConnectionStringBuilder.GetRDSConnectionString();
+
                 optionsBuilder.UseNpgsql(connectionString);
             }
         }

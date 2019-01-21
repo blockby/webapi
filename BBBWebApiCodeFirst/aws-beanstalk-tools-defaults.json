@@ -1,18 +1,19 @@
 
 {
     "comment" : "This file is used to help set default values when using the dotnet CLI extension Amazon.ElasticBeanstalk.Tools. For more information run \"dotnet eb --help\" from the project root.",
-    "profile" : "default",
-    "region"  : "eu-central-1",
-    "application" : "BBBWebApiCodeFirst",
-    "environment" : "BBBWebApiCodeFirst-dev",
-    "cname"       : "bbbwebapicodefirst-dev",
+    "profile" : "MarioAndres",
+    "region"  : "us-west-2",
+    "application" : "BBBWebApi2",
+    "environment" : "BBBWebApi2-dev",
+    "cname"       : "bbbwebapi2-dev",
     "solution-stack" : "64bit Windows Server 2016 v1.2.0 running IIS 10.0",
-    "environment-type" : "LoadBalanced",
+    "environment-type" : "SingleInstance",
     "service-role"     : "aws-elasticbeanstalk-service-role",
     "health-check-url" : "/",
     "instance-type"    : "t2.medium",
-    "key-pair"         : "marioravina",
+    "key-pair"         : "bbb",
     "iis-website"      : "Default Web Site",
     "app-path"         : "/",
-    "enable-xray"      : false
+    "enable-xray"      : false,
+    "instance-profile" : "aws-elasticbeanstalk-TestServerAppBBB3-dev"
 }
