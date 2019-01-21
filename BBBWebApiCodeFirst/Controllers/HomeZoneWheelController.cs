@@ -1,4 +1,5 @@
-﻿using BBBWebApiCodeFirst.Models;
+﻿using BBBWebApiCodeFirst.Common;
+using BBBWebApiCodeFirst.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using Npgsql;
@@ -14,7 +15,8 @@ namespace BBBWebApiCodeFirst.Controllers
     public class HomeZoneWheelController
     {
         private readonly DataContext _context;
-        private readonly string connectionString = "User ID = postgres; Password = Cl4nd3st1n0; Server = localhost; Port = 5432; Database = BlockDb; Integrated Security = true; Pooling = true;";
+        string connectionString = ConnectionStringBuilder.buildConnectionString();
+
         public HomeZoneWheelController(DataContext context)
         {
             _context = context;

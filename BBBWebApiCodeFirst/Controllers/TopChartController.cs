@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BBBWebApiCodeFirst.Common;
 using BBBWebApiCodeFirst.Converters;
 using BBBWebApiCodeFirst.DataReaders;
 using BBBWebApiCodeFirst.DataTransferObjects;
@@ -19,11 +20,7 @@ namespace BBBWebApiCodeFirst.Controllers
     public class TopChartController
     {
         private readonly DataContext _context;
-
-        private readonly string connectionString = "User ID = mario; Password = abcd; Server = localhost; Port = 5432; Database = BlockDb; Integrated Security = true; Pooling = true;";
-        //private readonly string connectionString = "User ID = postgres; Password = Cl4nd3st1n0; Server = localhost; Port = 5432; Database = BlockDb; Integrated Security = true; Pooling = true;";
-        //private readonly string connectionString = "User ID = postgres; Password = postgres; Server = localhost; Port = 5432; Database = BlockDb; Integrated Security = true; Pooling = true;";
-
+        string connectionString = ConnectionStringBuilder.buildConnectionString();
 
         public TopChartController(DataContext context)
         {
@@ -34,7 +31,7 @@ namespace BBBWebApiCodeFirst.Controllers
         [HttpGet("gettopchart1week")]
         public JObject GetTopChart1Week()
         {
-            string _selectString = "SELECT b.\"Gid\", b.\"Id\", a.\"ZoneAct\", SUM(a.\"CountAct\") AS People, b.\"Geom\" FROM \"MtcActivitys\" a INNER JOIN \"Mtcs\" b ON a.\"ZoneAct\" = b.\"Id\" GROUP BY b.\"Id\", a.\"ZoneAct\", b.\"Geom\" ORDER BY People DESC LIMIT 5";
+            string _selectString = "SELECT b.\"Gid\", b.\"Id\", a.\"ZoneAct\", SUM(a.\"CountAct\") AS People, b.\"Geom\" FROM \"MtcActivitys\" a INNER JOIN \"Mtcs\" b ON a.\"ZoneAct\" = b.\"Id\" GROUP BY b.\"Gid\", b.\"Id\", a.\"ZoneAct\", b.\"Geom\" ORDER BY People DESC LIMIT 5";
 
             using (var conn = new NpgsqlConnection(connectionString))
             {
@@ -66,7 +63,7 @@ namespace BBBWebApiCodeFirst.Controllers
         [HttpGet("getminchart2week")]
         public JObject GetMinChart2week()
         {
-            string _selectString = "SELECT  b.\"Gid\", b.\"Id\", a.\"ZoneAct\", SUM(a.\"CountAct\") AS People, b.\"Geom\" FROM \"MtcActivitys\" a INNER JOIN \"Mtcs\" b ON a.\"ZoneAct\" = b.\"Id\" GROUP BY b.\"Id\", a.\"ZoneAct\", b.\"Geom\" ORDER BY People ASC LIMIT 5";
+            string _selectString = "SELECT  b.\"Gid\", b.\"Id\", a.\"ZoneAct\", SUM(a.\"CountAct\") AS People, b.\"Geom\" FROM \"MtcActivitys\" a INNER JOIN \"Mtcs\" b ON a.\"ZoneAct\" = b.\"Id\" GROUP BY b.\"Gid\", b.\"Id\", a.\"ZoneAct\", b.\"Geom\" ORDER BY People ASC LIMIT 5";
 
             using (var conn = new NpgsqlConnection(connectionString))
             {

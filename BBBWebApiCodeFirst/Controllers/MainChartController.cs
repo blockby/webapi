@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BBBWebApiCodeFirst.Common;
 using BBBWebApiCodeFirst.Converters;
 using BBBWebApiCodeFirst.DataReaders;
 using BBBWebApiCodeFirst.DataTransferObjects;
@@ -20,8 +21,7 @@ namespace BBBWebApiCodeFirst.Controllers
     {
 
         private readonly DataContext _context;
-        private readonly string connectionString = "User ID = postgres; Password = Cl4nd3st1n0; Server = localhost; Port = 5432; Database = BlockDb; Integrated Security = true; Pooling = true;";
-        //private readonly string connectionString = "User ID = postgres; Password = postgres; Server = localhost; Port = 5432; Database = BlockDb; Integrated Security = true; Pooling = true;";
+        string connectionString = ConnectionStringBuilder.buildConnectionString();
 
         public MainChartController(DataContext context)
         {

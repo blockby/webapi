@@ -1,4 +1,5 @@
-﻿using BBBWebApiCodeFirst.Models;
+﻿using BBBWebApiCodeFirst.Common;
+using BBBWebApiCodeFirst.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using System;
@@ -15,7 +16,7 @@ namespace BBBWebApiCodeFirst.Controllers
     {
 
         private readonly DataContext _context;
-        private readonly string connectionString = "User ID = postgres; Password = Cl4nd3st1n0; Server = localhost; Port = 5432; Database = BlockDb; Integrated Security = true; Pooling = true;";
+        string connectionString = ConnectionStringBuilder.buildConnectionString();
 
         //GET:api/AreaInfluence/getareainfluenceday/day/longy/lat
         [HttpGet("getareainfluenceday/{day}/{longy}/{lat}")]

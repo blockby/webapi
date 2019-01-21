@@ -1,4 +1,5 @@
-﻿using BBBWebApiCodeFirst.Converters;
+﻿using BBBWebApiCodeFirst.Common;
+using BBBWebApiCodeFirst.Converters;
 using BBBWebApiCodeFirst.DataReaders;
 using BBBWebApiCodeFirst.DataTransferObjects;
 using BBBWebApiCodeFirst.Interfaces;
@@ -18,9 +19,8 @@ namespace BBBWebApiCodeFirst.Controllers
     public class TableHomeController : ControllerBase
     {
         private readonly DataContext _context;
+        string connectionString = ConnectionStringBuilder.buildConnectionString();
 
-        private readonly string connectionString = "User ID = mario; Password = abcd; Server = localhost; Port = 5432; Database = BlockDb; Integrated Security = true; Pooling = true;";
-        
 
         public TableHomeController(DataContext context)
         {
