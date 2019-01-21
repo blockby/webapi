@@ -14,8 +14,7 @@ namespace BBBWebApiCodeFirst.Models
         public DataContext (DbContextOptions<DataContext> options): base(options)
         {
 
-        }
-      
+        }      
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -27,9 +26,7 @@ namespace BBBWebApiCodeFirst.Models
                    .Build();
 
                 var connectionString = configuration.GetConnectionString("BbbApiConnection");
-
-                //var connectionString = RdsConnectionStringBuilder.GetRDSConnectionString();
-
+              
                 optionsBuilder.UseNpgsql(connectionString);
             }
         }
@@ -46,5 +43,9 @@ namespace BBBWebApiCodeFirst.Models
         public DbSet<MtcHomezone> MtcHomezones { get; set; }
 
         public DbSet<Days> Dayss { get; set; }
+
+        public DbSet<MtcGender> MtcGenders { get; set; }
+
+        public DbSet<MtcAge> MtcAges { get; set; }
     }
 }

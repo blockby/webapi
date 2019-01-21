@@ -7,23 +7,24 @@ using System.Threading.Tasks;
 
 namespace BBBWebApiCodeFirst.Models
 {
-    public class MtcActivity
+    public class MtcAge
     {
-        [Key]        
-        public int IdAct { get; set; }
+        [Key]
+        public int IdAge { get; set; }
 
         public Mtc Mtc { get; set; }
         [ForeignKey("Mtc")]
-        public int ZoneAct { get; set; }        
-        
-        public long CountAct { get; set; }
+        public int ZoneAge { get; set; }
 
-        public int HoursAct { get; set; }
+
+        public long AgeAge { get; set; }
+        public int HoursAge { get; set; }
+
 
         public Days Days { get; set; }
         [ForeignKey("Days")]
-        public int DaysAct { get; set; }
+        public int DaysAge { get; set; }
 
-        public decimal? Density { get; set; }
+        public decimal ShareAge { get; set; }
     }
 }

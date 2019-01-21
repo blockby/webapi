@@ -90,11 +90,42 @@ namespace BBBWebApiCodeFirst.Controllers
             }
         }
 
-        // GET:api/TopChart/gettopchart1day
-        [HttpGet("gettopchart1day")]
+        // GET:api/TopChart/gettopchart1day/day
+        [HttpGet("gettopchart1day/{day}")]
         public JObject GetTopChart1Day()
         {
             string _selectString = "SELECT  b.\"Gid\", b.\"Id\", a.\"DaysAct\", a.\"ZoneAct\", SUM(a.\"CountAct\") AS people, b.\"Geom\" FROM \"MtcActivitys\" a INNER JOIN \"Mtcs\" b ON a.\"ZoneAct\" = b.\"Gid\" WHERE a.\"DaysAct\" = 1 GROUP BY b.\"Gid\", b.\"Id\", a.\"DaysAct\", a.\"ZoneAct\", b.\"Geom\" ORDER BY people DESC LIMIT 5";
+
+            using (var conn = new NpgsqlConnection(connectionString))
+            {
+                conn.Open();
+
+                using (var cmd = new NpgsqlCommand(_selectString, conn))
+                {
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        List<TopDayDTO> TopDayDtoList = new List<TopDayDTO>();
+
+                        while (reader.Read())
+                        {
+                            InterfaceDataReader idr = new DataReader();
+                            TopDayDTO topDayDTO = idr.ReadTopDayDTO(reader);
+                            TopDayDtoList.Add(topDayDTO);
+                        }
+
+                        IObjectConverter objConverted = new ObjectConverter();
+                        var obj = objConverted.TopDayPeopleJson(TopDayDtoList);
+                        return obj;
+                    }
+                }
+            }
+        }
+
+        // GET:api/TopChart/getminchart2day/day
+        [HttpGet("getminchart2day/{day}")]
+        public JObject GetMinChart2Day([FromRoute] int day)
+        {
+            string _selectString = "SELECT b.\"Gid\", b.\"Id\", a.\"DaysAct\", a.\"ZoneAct\", SUM(a.\"CountAct\") AS people, b.\"Geom\" FROM \"MtcActivitys\" a INNER JOIN \"Mtcs\" b ON a.\"ZoneAct\" = b.\"Gid\" WHERE a.\"DaysAct\" = " + day + " GROUP BY b.\"Gid\", b.\"Id\", a.\"DaysAct\", a.\"ZoneAct\", b.\"Geom\" ORDER BY people ASC LIMIT 5";
 
             using (var conn = new NpgsqlConnection(connectionString))
             {
