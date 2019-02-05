@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BBBWebApiCodeFirst.Common;
 using BBBWebApiCodeFirst.Converters;
 using BBBWebApiCodeFirst.DataReaders;
 using BBBWebApiCodeFirst.DataTransferObjects;
+using BBBWebApiCodeFirst.Interfaces;
 using BBBWebApiCodeFirst.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -19,13 +21,11 @@ namespace BBBWebApiCodeFirst.Controllers
     {
 
         private readonly DataContext _context;
-        private readonly string connectionString = "User ID = postgres; Password = Cl4nd3st1n0; Server = localhost; Port = 5432; Database = BlockDb; Integrated Security = true; Pooling = true;";
-        //private readonly string connectionString = "User ID = postgres; Password = postgres; Server = localhost; Port = 5432; Database = BlockDb; Integrated Security = true; Pooling = true;";
+        string connectionString = ConnectionStringBuilder.buildConnectionString();
 
         public MainChartController(DataContext context)
         {
             _context = context;
-
         }
 
         //GET:api/MainChart/getmainchartday/day/longy/lat
@@ -33,11 +33,8 @@ namespace BBBWebApiCodeFirst.Controllers
         public JObject GetMainChartDay([FromRoute] int day, double longy, double lat)
         {
             string _pointString = "POINT(" + longy + " " + lat + ")";
-
             string _selectString = "SELECT c.\"Id\", c.\"Gid\", c.\"Area\", a.\"ZoneAct\", b.\"IdDay\", b.\"NameDay\", a.\"HoursAct\", SUM(a.\"CountAct\") AS People, c.\"Geom\" FROM \"MtcActivitys\" a INNER JOIN \"Dayss\" b ON a.\"DaysAct\" = b.\"IdDay\" INNER JOIN \"Mtcs\" c ON a.\"ZoneAct\" = c.\"Gid\" Where ST_Contains(c.\"Geom\", ST_GeomFromText('" + _pointString + "', 4326))=true AND a.\"DaysAct\" = " + day + " GROUP BY c.\"Id\", c.\"Gid\", a.\"ZoneAct\", b.\"IdDay\", b.\"NameDay\", a.\"HoursAct\", c.\"Geom\" ORDER BY a.\"HoursAct\" ASC";
-
-
-
+                       
             using (var conn = new NpgsqlConnection(connectionString))
             {
                 conn.Open();
@@ -50,20 +47,13 @@ namespace BBBWebApiCodeFirst.Controllers
 
                         while (reader.Read())
                         {
-                            DataReader dataReader = new DataReader();
+                            InterfaceDataReader dataReader = new DataReader();
                             MainChartDTO mainChartDTO = dataReader.ReadMainChartDTO(reader);
                             mainChartDtoList.Add(mainChartDTO);
                         }
                         
-                        ObjectConverter objConverted = new ObjectConverter();                        
-                        JObject hourlyPeopleJson = objConverted.HourlyPeopleJson(mainChartDtoList);
-                        JObject labelsJson = objConverted.LabelsJson();
-                        JObject titleJson = objConverted.TitleJson(mainChartDtoList);
-
-                        var obj = new JObject();
-                        obj.Add("series", hourlyPeopleJson);
-                        obj.Add("labels", labelsJson);
-                        obj.Add("title", titleJson);
+                        IObjectConverter objConverted = new ObjectConverter();
+                        var obj = objConverted.MainChartDayJson(mainChartDtoList);
 
                         return obj;                        
                     }
@@ -93,26 +83,18 @@ namespace BBBWebApiCodeFirst.Controllers
 
                         while (reader.Read())
                         {
-                            DataReader dataReader = new DataReader();
+                            InterfaceDataReader dataReader = new DataReader();
                             MainChartDTO mainChartDTO = dataReader.ReadMainChartDTO(reader);
                             mainChartDtoList.Add(mainChartDTO);
                         }
-                        
-                        ObjectConverter objConverted = new ObjectConverter();                 
-                        
-                        JObject weeklyPeopleChart = objConverted.WeeklyPeopleChart(mainChartDtoList);
-                        JObject weekDayChart = objConverted.WeekDayChart();
 
-                        var obj = new JObject();
-                        obj.Add("series", weeklyPeopleChart);
-                        obj.Add("labels", weekDayChart);
+                        IObjectConverter objConverted = new ObjectConverter();                        
+                        var obj = objConverted.MainChartWeekJson(mainChartDtoList);
+                        
                         return obj;                        
                     }
                 }
             }
-        }
-
-
-       
+        }       
     }
 }

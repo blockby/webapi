@@ -3,6 +3,7 @@ using System;
 using BBBWebApiCodeFirst.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NetTopologySuite.Geometries;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -10,9 +11,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BBBWebApiCodeFirst.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20190121110444_AWSDatabase")]
+    partial class AWSDatabase
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -75,54 +77,6 @@ namespace BBBWebApiCodeFirst.Migrations
                     b.ToTable("MtcActivitys");
                 });
 
-            modelBuilder.Entity("BBBWebApiCodeFirst.Models.MtcAge", b =>
-                {
-                    b.Property<int>("IdAge")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<long>("AgeAge");
-
-                    b.Property<int>("DaysAge");
-
-                    b.Property<int>("HoursAge");
-
-                    b.Property<decimal>("ShareAge");
-
-                    b.Property<int>("ZoneAge");
-
-                    b.HasKey("IdAge");
-
-                    b.HasIndex("DaysAge");
-
-                    b.HasIndex("ZoneAge");
-
-                    b.ToTable("MtcAges");
-                });
-
-            modelBuilder.Entity("BBBWebApiCodeFirst.Models.MtcGender", b =>
-                {
-                    b.Property<int>("IdGen")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("DaysGen");
-
-                    b.Property<long>("GenderGen");
-
-                    b.Property<int>("HoursGen");
-
-                    b.Property<decimal>("ShareGen");
-
-                    b.Property<int>("ZoneGen");
-
-                    b.HasKey("IdGen");
-
-                    b.HasIndex("DaysGen");
-
-                    b.HasIndex("ZoneGen");
-
-                    b.ToTable("MtcGenders");
-                });
-
             modelBuilder.Entity("BBBWebApiCodeFirst.Models.MtcHomezone", b =>
                 {
                     b.Property<int>("IdHz")
@@ -153,32 +107,6 @@ namespace BBBWebApiCodeFirst.Migrations
                     b.HasOne("BBBWebApiCodeFirst.Models.Mtc", "Mtc")
                         .WithMany()
                         .HasForeignKey("ZoneAct")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("BBBWebApiCodeFirst.Models.MtcAge", b =>
-                {
-                    b.HasOne("BBBWebApiCodeFirst.Models.Days", "Days")
-                        .WithMany()
-                        .HasForeignKey("DaysAge")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("BBBWebApiCodeFirst.Models.Mtc", "Mtc")
-                        .WithMany()
-                        .HasForeignKey("ZoneAge")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("BBBWebApiCodeFirst.Models.MtcGender", b =>
-                {
-                    b.HasOne("BBBWebApiCodeFirst.Models.Days", "Days")
-                        .WithMany()
-                        .HasForeignKey("DaysGen")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("BBBWebApiCodeFirst.Models.Mtc", "Mtc")
-                        .WithMany()
-                        .HasForeignKey("ZoneGen")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 

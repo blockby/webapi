@@ -15,7 +15,6 @@ namespace BBBWebApiCodeFirst.Models
         public int ZoneHz { get; set; }
 
         public Mtc Mtc { get; set; }
-
         [ForeignKey("Mtc")]
         public int HomeHz { get; set; }
 

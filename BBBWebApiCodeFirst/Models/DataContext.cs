@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using BBBWebApiCodeFirst.Common;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -13,12 +14,7 @@ namespace BBBWebApiCodeFirst.Models
         public DataContext (DbContextOptions<DataContext> options): base(options)
         {
 
-        }
-
-        public DataContext()
-        {
-
-        }
+        }      
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -28,7 +24,9 @@ namespace BBBWebApiCodeFirst.Models
                    .SetBasePath(Directory.GetCurrentDirectory())
                    .AddJsonFile("appsettings.json")
                    .Build();
+
                 var connectionString = configuration.GetConnectionString("BbbApiConnection");
+              
                 optionsBuilder.UseNpgsql(connectionString);
             }
         }
@@ -45,5 +43,9 @@ namespace BBBWebApiCodeFirst.Models
         public DbSet<MtcHomezone> MtcHomezones { get; set; }
 
         public DbSet<Days> Dayss { get; set; }
+
+        public DbSet<MtcGender> MtcGenders { get; set; }
+
+        public DbSet<MtcAge> MtcAges { get; set; }
     }
 }

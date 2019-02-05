@@ -1,4 +1,5 @@
 ﻿using BBBWebApiCodeFirst.DataTransferObjects;
+using BBBWebApiCodeFirst.Interfaces;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -7,11 +8,25 @@ using System.Threading.Tasks;
 
 namespace BBBWebApiCodeFirst.Converters
 {
-    public class ObjectConverter
+    public class ObjectConverter: IObjectConverter
     {
         public ObjectConverter()
         {
 
+        }
+
+        public JObject MainChartDayJson(List<MainChartDTO> list)
+        {
+            var obj = new JObject();
+            var series = HourlyPeopleJson(list);
+            var labels = TimeJson();
+            var day = DayJson(list);
+            
+            obj.Add("series", series);
+            obj.Add("labels", labels);
+            obj.Add("title", day);
+
+            return obj;
         }
 
         public JObject HourlyPeopleJson(List<MainChartDTO> list)
@@ -119,59 +134,49 @@ namespace BBBWebApiCodeFirst.Converters
                 }
             }
             series.Add("serie0", obj);
-
             return series;
         }
 
-        public JObject LabelsJson()
+
+        public JObject TimeJson()
         {
-            var obj = new JObject();            
-                
-                    obj.Add("0",0);               
-                    obj.Add("1",1);               
-                    obj.Add("2",2);               
-                    obj.Add("3",3);               
-                    obj.Add("4",4);               
-                    obj.Add("5",5);               
-                    obj.Add("6",6);               
-                    obj.Add("7",7);               
-                    obj.Add("8",8);                
-                    obj.Add("9",9);
-                    obj.Add("10",10);                
-                    obj.Add("11",11);                
-                    obj.Add("12",12);                
-                    obj.Add("13",13);               
-                    obj.Add("14",14);               
-                    obj.Add("15",15);               
-                    obj.Add("16",16);               
-                    obj.Add("17",17);               
-                    obj.Add("18",18);              
-                    obj.Add("19",19);               
-                    obj.Add("20",20);               
-                    obj.Add("21",21);               
-                    obj.Add("22",22);           
-                    obj.Add("23",23);
-          
+            var obj = new JObject();
+
+            for (int i = 0; i < 24; i++)
+            {
+                string stringValue = i.ToString();
+                int intValue = i;
+                obj.Add(stringValue, intValue);
+            }      
             return obj;
         }
 
 
-
-        public JObject TitleJson(List<MainChartDTO> list)
+        public JObject DayJson(List<MainChartDTO> list)
         {
             var obj = new JObject();
-            foreach (var item in list) {
-                
-                    obj.Add("0", item.NameDay);
-                
+
+            foreach (var item in list)
+            {                
+                obj.Add("0", item.NameDay);                
                 break;
             }
+
             return obj ;
         }
 
+        public JObject MainChartWeekJson (List<MainChartDTO> list)
+        {
+            var obj = new JObject();
+            var series = WeeklyPeopleJson(list);
+            var labels = WeekDayJson();
 
+            obj.Add("series", series);
+            obj.Add("labels", labels);
+            return obj;
+        }
 
-        public JObject WeeklyPeopleChart(List<MainChartDTO> list)
+        public JObject WeeklyPeopleJson(List<MainChartDTO> list)
         {
             var obj = new JObject();
             var serie0 = new JObject(); var serie1 = new JObject();
@@ -189,9 +194,8 @@ namespace BBBWebApiCodeFirst.Converters
 
             foreach (var item in list)
             {
-
                 if (item.HoursAct == 0 )
-                {                                       
+                {           
                     if (item.NameDay == "MON") {
                         serie0.Add("0", item.People);
                     }
@@ -950,7 +954,7 @@ namespace BBBWebApiCodeFirst.Converters
         }
 
 
-        public JObject WeekDayChart()
+        public JObject WeekDayJson()
         {
             var obj = new JObject();           
                 
@@ -960,32 +964,44 @@ namespace BBBWebApiCodeFirst.Converters
                     obj.Add("3", "THU");
                     obj.Add("4", "FRI");                
                     obj.Add("5", "SAT");      
-                    obj.Add("6", "SUN");         
+                    obj.Add("6", "SUN");       
             
             return obj;
         }
 
+        public JObject TopPeopleJson(List<TopDTO> list)
+        {
+            var obj = new JObject();
 
+            var series = TopPeopleChart(list);
+            var labels = TopZoneChart(list);
+
+            obj.Add("series", series);
+            obj.Add("labels", labels);
+            
+            return obj;
+
+        }
         public JObject TopPeopleChart(List<TopDTO> list)
         {
             var obj = new JObject();
             var serie0 = new JObject();
-            int i = 0;          
+            int i = 0;
 
-            foreach(var item in list)
+            foreach (var item in list)
             {
-                string x = Convert.ToString(i);          
-                    obj.Add(x, item.People);
-                i++;              
+                string x = Convert.ToString(i);
+                obj.Add(x, item.People);
+                i++;
+
             }
             serie0.Add("serie0", obj);
             return serie0;
         }
 
-
         public JObject TopZoneChart(List<TopDTO> list)
         {
-            var obj = new JObject();            
+            var obj = new JObject();
             int i = 0;
 
             foreach (var item in list)
@@ -994,10 +1010,23 @@ namespace BBBWebApiCodeFirst.Converters
                 obj.Add(x, item.ZoneAct);
                 i++;
 
-            }            
+            }
             return obj;
         }
 
+
+        public JObject MinPeopleJson (List<TopDTO> list)
+        {
+            var obj = new JObject();
+
+            var series = MinPeopleChart(list);
+            var labels = MinZoneChart(list);
+
+            obj.Add("series", series);
+            obj.Add("labels", labels);
+
+            return obj;
+        }
 
         public JObject MinPeopleChart(List<TopDTO> list)
         {
@@ -1017,7 +1046,6 @@ namespace BBBWebApiCodeFirst.Converters
             return serie0;
         }
 
-
         public JObject MinZoneChart(List<TopDTO> list)
         {
             var obj = new JObject();
@@ -1029,7 +1057,93 @@ namespace BBBWebApiCodeFirst.Converters
                 obj.Add(x, item.ZoneAct);
                 i++;
 
-            }        
+            }
+            return obj;
+        }
+
+        public JObject TableHomeDayJson(List<TableHomeDayDTO> list)
+        {
+            var obj = new JObject();            
+            JArray objArray = new JArray();
+            var index = 1;         
+
+            foreach (TableHomeDayDTO item in list)
+            {                
+                var objInside = new JObject();
+                objInside.Add("id", index++);
+                objInside.Add("day", item.NameDay);
+                objInside.Add("hour", item.HoursAct);
+                objInside.Add("people", item.CountAct);
+                objArray.Add(objInside);                
+            }
+
+            obj.Add("td", objArray);
+
+            return obj;
+        }
+
+        public JObject TableHomeWeekJson(List<TableHomeWeekDTO> list)
+        {
+            var obj = new JObject();
+            JArray objArray = new JArray();
+            var index = 1;
+
+            foreach (TableHomeWeekDTO item in list)
+            {
+                var objInside = new JObject();
+                objInside.Add("id", index++);
+                objInside.Add("day", item.NameDay);               
+                objInside.Add("people", item.People);
+                objArray.Add(objInside);
+            }
+
+            obj.Add("td", objArray);
+
+            return obj;
+        }
+
+        public JObject TopDayPeopleJson(List<TopDayDTO> list)
+        {
+            var obj = new JObject();
+
+            var series = TopDayPeopleChart(list);
+            var labels = TopDayZoneChart(list);
+
+            obj.Add("series", series);
+            obj.Add("labels", labels);
+
+            return obj;
+        }
+
+        public JObject TopDayPeopleChart(List<TopDayDTO> list)
+        {
+            var obj = new JObject();
+            var serie0 = new JObject();
+            int i = 0;
+
+            foreach (var item in list)
+            {
+                string x = Convert.ToString(i);
+                obj.Add(x, item.People);
+                i++;
+
+            }
+            serie0.Add("serie0", obj);
+            return serie0;
+        }
+
+        public JObject TopDayZoneChart(List<TopDayDTO> list)
+        {
+            var obj = new JObject();
+            int i = 0;
+
+            foreach (var item in list)
+            {
+                string x = Convert.ToString(i);
+                obj.Add(x, item.ZoneAct);
+                i++;
+
+            }
             return obj;
         }
     }

@@ -10,6 +10,8 @@ namespace BBBWebApiCodeFirst.DataTransferObjects
 {
     public class TopDTO
     {
+        public int Gid { get; set; }
+
         public int Id { get; set; }
 
         public int ZoneAct { get; set; }
