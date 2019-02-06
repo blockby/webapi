@@ -1146,5 +1146,10 @@ namespace BBBWebApiCodeFirst.Converters
             }
             return obj;
         }
+
+        public JObject AreaOfInfluenceDayJson(List<AreaOfInfluenceDTO> list)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

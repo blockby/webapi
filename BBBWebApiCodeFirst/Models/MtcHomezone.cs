@@ -12,17 +12,17 @@ namespace BBBWebApiCodeFirst.Models
         [Key]
         public int id { get; set; }
 
-        public Mtc Mtc { get; set; }
-        [ForeignKey("Mtc")]
         public long zone { get; set; }
-      
+
+        [ForeignKey("zone")]
+        public Mtc Mtc { get; set; }
+             
         public long homezone { get; set; }
 
-        public Day Day { get; set; }
-        [ForeignKey("Day")]
         public int day { get; set; }
-
+        [ForeignKey("day")]
+        public Day Day { get; set; }
+                
         public decimal fraction { get; set; }
-
     }
 }

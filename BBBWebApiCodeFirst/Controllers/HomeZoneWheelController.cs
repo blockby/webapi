@@ -12,7 +12,7 @@ namespace BBBWebApiCodeFirst.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class HomeZoneWheelController
+    public class HomeZoneWheelController: ControllerBase
     {
         private readonly DataContext _context;
         string connectionString = ConnectionStringBuilder.buildConnectionString();

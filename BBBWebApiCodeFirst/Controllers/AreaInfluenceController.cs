@@ -17,7 +17,7 @@ namespace BBBWebApiCodeFirst.Controllers
     [Route("api/[controller]")]
     [ApiController]
 
-    public class AreaInfluenceController
+    public class AreaInfluenceController: ControllerBase
     {
 
         private readonly DataContext _context;
@@ -89,9 +89,6 @@ namespace BBBWebApiCodeFirst.Controllers
             //        }
             //    }
             //}
-
-
-
 
 
             return new JObject();
