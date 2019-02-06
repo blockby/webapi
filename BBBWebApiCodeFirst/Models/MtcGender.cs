@@ -10,21 +10,22 @@ namespace BBBWebApiCodeFirst.Models
     public class MtcGender
     {
         [Key]
-        public int IdGen { get; set; }
+        public int id { get; set; }
 
         public Mtc Mtc { get; set; }
         [ForeignKey("Mtc")]
-        public int ZoneGen { get; set; }
+        public long zone { get; set; }
 
+        public Day Day { get; set; }
+        [ForeignKey("Day")]
+        public int day { get; set; }
 
-        public long GenderGen { get; set; }
-        public int HoursGen { get; set; }
+        public int hour { get; set; }
 
-
-        public Days Days { get; set; }
-        [ForeignKey("Days")]
-        public int DaysGen { get; set; }
-
-        public decimal ShareGen { get; set; }
+        public Gender Gender { get; set; }
+        [ForeignKey("Gender")]
+        public long gender { get; set; }
+        
+        public decimal fraction { get; set; }
     }
 }

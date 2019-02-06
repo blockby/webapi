@@ -7,12 +7,11 @@ using System.Threading.Tasks;
 
 namespace BBBWebApiCodeFirst.Models
 {
-    public class Days
+    public class Day
     {
         [Key]
-        public int IdDay { get; set; }
+        public int id { get; set; }
 
-        public string NameDay { get; set; }
-
+        public string name { get; set; }
     }
 }

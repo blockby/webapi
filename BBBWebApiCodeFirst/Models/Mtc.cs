@@ -10,19 +10,13 @@ using Newtonsoft.Json;
 namespace BBBWebApiCodeFirst.Models
 {
     public class Mtc
-    {
+    {        
         [Key]
-        public int Gid { get; set; }
+        public long id { get; set; }
 
-        public decimal? Id { get; set; }
-
-        public decimal? Groesse { get; set; }
+        public int groesse { get; set; }
 
         [JsonConverter(typeof(NetTopologySuiteConverter))]
-        public Geometry Geom { get; set; }
-
-        public decimal? Area { get; set; }
-
-
+        public Geometry geom { get; set; }
     }
 }

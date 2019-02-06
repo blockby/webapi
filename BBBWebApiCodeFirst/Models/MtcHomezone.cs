@@ -10,22 +10,19 @@ namespace BBBWebApiCodeFirst.Models
     public class MtcHomezone
     {
         [Key]
-        public int IdHz { get; set; }
-   
-        public int ZoneHz { get; set; }
+        public int id { get; set; }
 
         public Mtc Mtc { get; set; }
         [ForeignKey("Mtc")]
-        public int HomeHz { get; set; }
+        public long zone { get; set; }
+      
+        public long homezone { get; set; }
 
-        public int DaysHz { get; set; }
+        public Day Day { get; set; }
+        [ForeignKey("Day")]
+        public int day { get; set; }
 
-        public decimal SharedHz { get; set; }
-
-               
-
-
-
+        public decimal fraction { get; set; }
 
     }
 }

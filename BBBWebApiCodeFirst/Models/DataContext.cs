@@ -42,7 +42,7 @@ namespace BBBWebApiCodeFirst.Models
 
         public DbSet<MtcHomezone> MtcHomezones { get; set; }
 
-        public DbSet<Days> Dayss { get; set; }
+        public DbSet<Day> Dayss { get; set; }
 
         public DbSet<MtcGender> MtcGenders { get; set; }
 

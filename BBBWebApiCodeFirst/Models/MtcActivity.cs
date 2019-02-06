@@ -10,20 +10,20 @@ namespace BBBWebApiCodeFirst.Models
     public class MtcActivity
     {
         [Key]        
-        public int IdAct { get; set; }
+        public int id { get; set; }
 
         public Mtc Mtc { get; set; }
         [ForeignKey("Mtc")]
-        public int ZoneAct { get; set; }        
-        
-        public long CountAct { get; set; }
+        public long zone { get; set; }
 
-        public int HoursAct { get; set; }
+        public Day Day { get; set; }
+        [ForeignKey("Day")]
+        public int day { get; set; }
 
-        public Days Days { get; set; }
-        [ForeignKey("Days")]
-        public int DaysAct { get; set; }
+        public int hour { get; set; }
 
-        public decimal? Density { get; set; }
+        public int people { get; set; }       
+
+        public decimal? density { get; set; }
     }
 }
