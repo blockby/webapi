@@ -42,5 +42,7 @@ namespace BBBWebApiCodeFirst.Interfaces
 
         JObject TopDayPeopleJson(List<TopDayDTO> list);
 
+        JObject AreaOfInfluenceDayJson(List<AreaOfInfluenceDTO> list);
+
     }
 }

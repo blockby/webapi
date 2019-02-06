@@ -18,5 +18,8 @@ namespace BBBWebApiCodeFirst.Interfaces
         TableHomeDayDTO ReadTableHomeDayDTO(NpgsqlDataReader reader);
 
         TableHomeWeekDTO ReadTableHomeWeekDTO(NpgsqlDataReader reader);
+
+        AreaOfInfluenceDTO ReadAreaOfInfluenceDTO(NpgsqlDataReader reader);
+
     }
 }

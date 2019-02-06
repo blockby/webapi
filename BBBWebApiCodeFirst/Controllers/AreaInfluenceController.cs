@@ -1,7 +1,12 @@
 ﻿using BBBWebApiCodeFirst.Common;
+using BBBWebApiCodeFirst.Converters;
+using BBBWebApiCodeFirst.DataReaders;
+using BBBWebApiCodeFirst.DataTransferObjects;
+using BBBWebApiCodeFirst.Interfaces;
 using BBBWebApiCodeFirst.Models;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
+using Npgsql;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,30 +30,30 @@ namespace BBBWebApiCodeFirst.Controllers
             string _pointString = "POINT(" + longy + " " + lat + ")";
             string _selectString = "SELECT SUM(ST_Area(zone.\"Geom\"::geography))/1000000 AS area FROM \"MtcHomezones\" AS hz INNER JOIN \"Mtcs\" AS zone ON zone.\"Gid\" = hz.\"HomeHz\" WHERE hz.\"ZoneHz = " + _pointString + " AND hz.days_hz = " + day + "";
 
-            //using (var conn = new NpgsqlConnection(connectionString))
-            //{
-            //    conn.Open();
+            using (var conn = new NpgsqlConnection(connectionString))
+            {
+                conn.Open();
 
-            //    using (var cmd = new NpgsqlCommand(_selectString, conn))
-            //    {
-            //        using (var reader = cmd.ExecuteReader())
-            //        {
-            //            List<MainChartDTO> mainChartDtoList = new List<MainChartDTO>();
+                using (var cmd = new NpgsqlCommand(_selectString, conn))
+                {
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        List<AreaOfInfluenceDTO> AreaOfInfluenceDtoList = new List<AreaOfInfluenceDTO>();
 
-            //            while (reader.Read())
-            //            {
-            //                InterfaceDataReader dataReader = new DataReader();
-            //                MainChartDTO mainChartDTO = dataReader.ReadMainChartDTO(reader);
-            //                mainChartDtoList.Add(mainChartDTO);
-            //            }
+                        while (reader.Read())
+                        {
+                            InterfaceDataReader dataReader = new DataReader();
+                            AreaOfInfluenceDTO areaOfInfluenceDTO = dataReader.ReadAreaOfInfluenceDTO(reader);
+                            AreaOfInfluenceDtoList.Add(areaOfInfluenceDTO);
+                        }
 
-            //            IObjectConverter objConverted = new ObjectConverter();
-            //            var obj = objConverted.MainChartDayJson(mainChartDtoList);
+                        IObjectConverter objConverted = new ObjectConverter();
+                        var obj = objConverted.AreaOfInfluenceDayJson(AreaOfInfluenceDtoList);
 
-            //            return obj;
-            //        }
-            //    }
-            //}
+                        return obj;
+                    }
+                }
+            }
 
             return new JObject();
         }

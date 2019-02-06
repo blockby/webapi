@@ -138,5 +138,18 @@ namespace BBBWebApiCodeFirst.DataReaders
 
             return tableHomeWeekDTO;
         }
+
+        public AreaOfInfluenceDTO ReadAreaOfInfluenceDTO(NpgsqlDataReader reader)
+        {
+            decimal area = reader.GetDecimal(0);
+
+            AreaOfInfluenceDTO areaOfInfluenceDTO = new AreaOfInfluenceDTO
+            {
+                Area = area
+            };
+            return areaOfInfluenceDTO;
+            
+            
+        }
     }
 }
