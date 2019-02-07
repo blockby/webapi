@@ -22,7 +22,7 @@ namespace BBBWebApiCodeFirst.Models
 
         public int hour { get; set; }
 
-        public long gender { get; set; }
+        public int gender { get; set; }
         [ForeignKey("gender")]
         public Gender Gender { get; set; }
                
