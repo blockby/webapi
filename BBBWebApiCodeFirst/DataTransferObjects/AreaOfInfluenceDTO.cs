@@ -10,6 +10,6 @@ namespace BBBWebApiCodeFirst.DataTransferObjects
 {
     public class AreaOfInfluenceDTO
     {
-        public decimal Area { get; set; }
+        public double Area { get; set; }
     }  
 }

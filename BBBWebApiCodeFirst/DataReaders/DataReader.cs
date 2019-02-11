@@ -48,7 +48,7 @@ namespace BBBWebApiCodeFirst.DataReaders
             var obj = new JObject();
 
             int id = reader.GetInt32(0);
-            string description = reader.GetString(1);
+            string day = reader.GetString(1);
             int hour = reader.GetInt32(2);
             int people = reader.GetInt32(3);
             decimal density = reader.GetDecimal(4);
@@ -56,7 +56,7 @@ namespace BBBWebApiCodeFirst.DataReaders
             MainChartDTO mainChartDTO = new MainChartDTO
             {
                 Id = id,
-                Description = description,
+                Day = day,
                 Hour = hour,
                 People = people,
                 Density = density
@@ -86,14 +86,14 @@ namespace BBBWebApiCodeFirst.DataReaders
         public TableHomeDayDTO ReadTableHomeDayDTO (NpgsqlDataReader reader)
         {
             int id = reader.GetInt32(0);
-            string description = reader.GetString(1);
+            string day = reader.GetString(1);
             int hour = reader.GetInt32(2);
             int people = reader.GetInt32(3);
 
             TableHomeDayDTO tableHomeDayDTO = new TableHomeDayDTO
             {
                 Id = id,
-                Description = description,
+                Day = day,
                 Hour = hour,
                 People = people                
             };
@@ -104,13 +104,13 @@ namespace BBBWebApiCodeFirst.DataReaders
         public TableHomeWeekDTO ReadTableHomeWeekDTO(NpgsqlDataReader reader)
         {
             int id = reader.GetInt32(0);
-            string description = reader.GetString(1);
+            string day = reader.GetString(1);
             int people = reader.GetInt32(2);            
             
             TableHomeWeekDTO tableHomeWeekDTO = new TableHomeWeekDTO
             {                
                 Id = id,
-                Description = description,
+                Day = day,
                 People = people                
             };
 
@@ -119,7 +119,7 @@ namespace BBBWebApiCodeFirst.DataReaders
 
         public AreaOfInfluenceDTO ReadAreaOfInfluenceDTO(NpgsqlDataReader reader)
         {
-            decimal area = reader.GetDecimal(0);
+            double area = reader.GetDouble(0);
 
             AreaOfInfluenceDTO areaOfInfluenceDTO = new AreaOfInfluenceDTO
             {
@@ -127,6 +127,25 @@ namespace BBBWebApiCodeFirst.DataReaders
             };
             return areaOfInfluenceDTO;            
             
+        }
+
+        public HomezoneWheelDTO ReadHomezoneWheelDTO(NpgsqlDataReader reader)
+        {
+            decimal percent = reader.GetDecimal(0);
+
+            double distance = reader.GetDouble(1);
+
+            int people = reader.GetInt32(2);
+
+            HomezoneWheelDTO homezoneWheelDTO = new HomezoneWheelDTO()
+            {
+                Percent = percent,
+                Distance = distance,
+                People = people
+            };
+
+            return homezoneWheelDTO;
+
         }
     }
 }

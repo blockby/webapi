@@ -42,7 +42,9 @@ namespace BBBWebApiCodeFirst.Interfaces
 
         JObject TopDayPeopleJson(List<TopDayDTO> list);
 
-        JObject AreaOfInfluenceDayJson(List<AreaOfInfluenceDTO> list);
+        JObject AreaOfInfluenceJson(List<AreaOfInfluenceDTO> list);
+
+        JArray HomezoneWheelJson(List<HomezoneWheelDTO> list);
 
     }
 }
