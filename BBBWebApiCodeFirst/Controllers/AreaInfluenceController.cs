@@ -21,7 +21,12 @@ namespace BBBWebApiCodeFirst.Controllers
     {
 
         private readonly DataContext _context;
-        string connectionString = ConnectionStringBuilder.buildConnectionString();
+        private readonly string connectionString = ConnectionStringBuilder.buildConnectionString();
+
+        public AreaInfluenceController(DataContext context)
+        {
+            _context = context;
+        }
 
         //GET:api/AreaInfluence/getareainfluenceday/day/longy/lat
         [HttpGet("getareainfluenceday/{day}/{longy}/{lat}")]
@@ -52,9 +57,7 @@ namespace BBBWebApiCodeFirst.Controllers
                         return obj;
                     }
                 }
-            }
-
-            return new JObject();
+            }            
         }
 
         //GET:api/AreaInfluence/getareainfluenceweek/longy/lat
@@ -87,10 +90,7 @@ namespace BBBWebApiCodeFirst.Controllers
                         return obj;
                     }
                 }
-            }
-
-
-            return new JObject();
+            }            
         }
     }
 }

@@ -20,7 +20,7 @@ namespace BBBWebApiCodeFirst.Controllers
     public class MainChartController : ControllerBase
     {
         private readonly DataContext _context;
-        string connectionString = ConnectionStringBuilder.buildConnectionString();
+        private readonly string connectionString = ConnectionStringBuilder.buildConnectionString();
 
         public MainChartController(DataContext context)
         {
