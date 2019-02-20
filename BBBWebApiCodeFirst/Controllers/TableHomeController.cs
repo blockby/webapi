@@ -31,7 +31,7 @@ namespace BBBWebApiCodeFirst.Controllers
         [HttpGet("gettablehomeday/{day}/{longy}/{lat}")]
         public JObject GetTableHomeDay([FromRoute] int day, double longy, double lat)
         {
-             string _selectString = "SELECT day.id AS day, day.description, act.hour, act.people FROM \"MtcActivitys\" AS act INNER JOIN day ON act.day = day.id WHERE ST_Contains(zone.geom, ST_SetSRID(ST_MakePoint($1, $2), 4326)) AND day = 1 AND (people = (SELECT MAX(act.people) FROM \"MtcActivitys\" As act INNER JOIN mtc AS zone ON act.zone = zone.id WHERE ST_Contains(zone.geom, ST_SetSRID(ST_MakePoint(" + longy + "," + lat + "), 4326)) AND act.day = "+day+ ") OR people = (SELECT MIN(act.people) FROM \"MtcActivitys\" AS act INNER JOIN mtc AS zone ON act.zone = zone.id WHERE ST_Contains(zone.geom, ST_SetSRID(ST_MakePoint(" + longy + "," + lat + "), 4326)) AND act.day = "+day+")) ORDER BY people DESC";
+             string _selectString = "SELECT day.id AS day, day.description, act.hour, act.people FROM \"MtcActivitys\" AS act INNER JOIN \"Days\" As day ON act.day = day.id INNER JOIN \"Mtcs\" AS zone ON act.zone = zone.id WHERE ST_Contains(zone.geom, ST_SetSRID(ST_MakePoint("+longy+", "+lat+"), 4326)) AND day = "+day+" AND (people = (SELECT MAX(act.people) FROM \"MtcActivitys\" AS act INNER JOIN \"Mtcs\" AS zone ON act.zone = zone.id WHERE ST_Contains(zone.geom, ST_SetSRID(ST_MakePoint("+longy+", "+lat+"), 4326)) AND act.day = "+day+") OR people = (SELECT MIN(act.people) FROM \"MtcActivitys\" AS act INNER JOIN \"Mtcs\" AS zone ON act.zone = zone.id  WHERE ST_Contains(zone.geom, ST_SetSRID(ST_MakePoint("+longy+", "+lat+"), 4326)) AND act.day = "+day+")) ORDER BY people DESC";
             
             using (var conn = new NpgsqlConnection(connectionString))
             {
@@ -49,7 +49,6 @@ namespace BBBWebApiCodeFirst.Controllers
                             TableHomeDayDTO tableHomeDayDTO = dataReader.ReadTableHomeDayDTO(reader);
                             tableHomeDayDtoList.Add(tableHomeDayDTO);
                         }
-
                         IObjectConverter objConverted = new ObjectConverter();
                         var obj = objConverted.TableHomeDayJson(tableHomeDayDtoList);
 
@@ -63,7 +62,7 @@ namespace BBBWebApiCodeFirst.Controllers
         [HttpGet("gettablehomeweek/{longy}/{lat}")]
         public JObject GetTableHomeWeek([FromRoute] double longy, double lat)
         {
-            string _selectString = "SELECT day.id AS day, day.description, SUM(act.people) AS people FROM \"MtcActivitys\" AS act INNER JOIN day ON act.day = day.id INNER JOIN mtc AS zone ON act.zone = zone.id WHERE ST_Contains(zone.geom, ST_SetSRID(ST_MakePoint("+longy+","+lat+"), 4326)) GROUP BY day.id HAVING SUM(people) >= ALL(SELECT SUM(people) FROM \"MtcActivitys\" AS act INNER JOIN \"Mtc\" AS zone ON act.zone = zone.id WHERE ST_Contains(zone.geom, ST_SetSRID(ST_MakePoint(+"+longy+", "+lat+"), 4326)) GROUP BY day) OR SUM(people) <= ALL(SELECT SUM(people) FROM \"MtcActivity\" AS act INNER JOIN \"Mtc\" AS zone ON act.zone = zone.id WHERE ST_Contains(zone.geom, ST_SetSRID(ST_MakePoint("+longy+","+lat+"), 4326)) GROUP BY day) ORDER BY people DESC";
+            string _selectString = "SELECT day.id AS day, day.description, SUM(act.people) AS people FROM \"MtcActivitys\" AS act INNER JOIN \"Days\" as day ON act.day = day.id INNER JOIN \"Mtcs\" AS zone ON act.zone = zone.id WHERE ST_Contains(zone.geom, ST_SetSRID(ST_MakePoint("+longy+", "+lat+"), 4326)) GROUP BY day.id HAVING SUM(people) >= ALL(SELECT SUM(people) FROM \"MtcActivitys\" AS act INNER JOIN \"Mtcs\" AS zone ON act.zone = zone.id WHERE ST_Contains(zone.geom, ST_SetSRID(ST_MakePoint("+longy+", "+lat+"), 4326)) GROUP BY day) OR SUM(people) <= ALL(SELECT SUM(people) FROM \"MtcActivitys\" AS act INNER JOIN \"Mtcs\" AS zone ON act.zone = zone.id WHERE ST_Contains(zone.geom, ST_SetSRID(ST_MakePoint("+longy+", "+lat+"), 4326)) GROUP BY day) ORDER BY people DESC";
             
             using (var conn = new NpgsqlConnection(connectionString))
             {
