@@ -36,7 +36,7 @@ namespace BBBWebApiCodeFirst.Models
             builder.HasPostgresExtension("postgis");
         }        
 
-        //public DbSet<Mtc> Mtcs { get; set; }
+        public DbSet<User> Users { get; set; }
 
     }
 }
