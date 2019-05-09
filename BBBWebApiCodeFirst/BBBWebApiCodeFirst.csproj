@@ -10,6 +10,9 @@
 
   <ItemGroup>
     <Folder Include="Controllers\" />
+    <Folder Include="DataReaders\" />
+    <Folder Include="DataTransferObjects\" />
+    <Folder Include="Interfaces\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 

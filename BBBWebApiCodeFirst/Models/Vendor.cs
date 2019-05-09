@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace BBBWebApiCodeFirst.Models
 {
-    public class Type_user
+    public class Vendor
     {
         [Key]
-        public int id_type_user { get; set; }
+        public int id_vendor { get; set; }
 
-        public string type_user { get; set; }
+        public string name_vendor { get; set; }
 
         public string description { get; set; }
     }

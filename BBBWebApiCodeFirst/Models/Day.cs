@@ -7,18 +7,16 @@ using System.Threading.Tasks;
 
 namespace BBBWebApiCodeFirst.Models
 {
-    public class User
+    public class Day
     {
         [Key]
-        public int id_user { get; set; }
+        public int id_day { get; set; }
 
-        public string name { get; set; }
+        public int id_day_type { get; set; }
+        [ForeignKey("id_day_type")]
+        public Day_type day_type { get; set; }
 
-        public int id_user_type {get; set;}
-        [ForeignKey("id_user_type")]
-        public User_type user_type { get; set; }
-
-        public int depent { get; set; }
+        public string name_day { get; set; }
 
         public string description { get; set; }
     }

@@ -34,9 +34,31 @@ namespace BBBWebApiCodeFirst.Models
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.HasPostgresExtension("postgis");
-        }        
+        }
 
-        public DbSet<User> Users { get; set; }
+        public DbSet<Collected_data> collected_data { get; set; }
 
+        public DbSet<Day> days { get; set; }
+
+        public DbSet<Day_period> day_periods { get; set; }
+
+        public DbSet<Day_type> day_types { get; set; }
+
+        public DbSet<Location> locations { get; set; }
+
+        public DbSet<Property_type> property_types { get; set; }
+
+        public DbSet<Shared_location> shared_locations { get; set; }
+
+        public DbSet<User> users { get; set; }
+
+        public DbSet<User_type> user_types { get; set; }
+
+        public DbSet<Vendor> vendors { get; set; }
+
+        
+        
+        
+        
     }
 }
