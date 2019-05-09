@@ -24,23 +24,23 @@ namespace BBBWebApiCodeFirst.DataReaders
         {
             var obj = new JObject();
 
-            int gid = reader.GetInt32(0);
-            int id = reader.GetInt32(1);
-            int daysAct = reader.GetInt32(2);            
-            int zoneAct = reader.GetInt32(3);
-            int people = reader.GetInt32(4);
-            Geometry geom = reader.GetValue(5) as NetTopologySuite.Geometries.Geometry;
+            int id = reader.GetInt32(0);
+            int daysAct = reader.GetInt32(1);            
+            int zoneAct = reader.GetInt32(2);
+            int people = reader.GetInt32(3);
+            Geometry geom = reader.GetValue(4) as NetTopologySuite.Geometries.Geometry;
 
             TopDayDTO topDayDTO = new TopDayDTO
             {
-                Gid = gid,
                 Id = id,
                 DaysAct = daysAct,                
                 ZoneAct = zoneAct,
                 People = people,
                 Geom = geom
             };
+
             return topDayDTO;
+
         }
 
         public MainChartDTO ReadMainChartDTO(NpgsqlDataReader reader)
@@ -67,11 +67,10 @@ namespace BBBWebApiCodeFirst.DataReaders
 
         public TopDTO ReadTopDTO(NpgsqlDataReader reader)
         {
-            int gid = reader.GetInt32(0);
-            int id = reader.GetInt32(1);
-            int zoneAct = reader.GetInt32(2);
-            int people = reader.GetInt32(3);
-            Geometry geom = reader.GetValue(4) as NetTopologySuite.Geometries.Geometry;
+            int id = reader.GetInt32(0);
+            int zoneAct = reader.GetInt32(1);
+            int people = reader.GetInt32(2);
+            Geometry geom = reader.GetValue(3) as NetTopologySuite.Geometries.Geometry;
 
             TopDTO topDTO = new TopDTO
             {
@@ -80,6 +79,7 @@ namespace BBBWebApiCodeFirst.DataReaders
                 People = people,
                 Geom = geom
             };
+
             return topDTO;
         }
 

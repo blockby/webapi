@@ -58,7 +58,7 @@ namespace BBBWebApiCodeFirst.Controllers
             }
         }
 
-        // GET:api/TableHome/gettablehomeweek/longy/lat
+                // GET:api/TableHome/gettablehomeweek/longy/lat
         [HttpGet("gettablehomeweek/{longy}/{lat}")]
         public JObject GetTableHomeWeek([FromRoute] double longy, double lat)
         {

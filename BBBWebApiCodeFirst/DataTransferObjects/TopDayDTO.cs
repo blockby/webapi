@@ -10,7 +10,6 @@ namespace BBBWebApiCodeFirst.DataTransferObjects
 {
     public class TopDayDTO
     {
-        public int Gid { get; set; }
         public int Id { get; set; }
 
         public int DaysAct { get; set; }

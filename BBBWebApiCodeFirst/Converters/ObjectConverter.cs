@@ -982,6 +982,7 @@ namespace BBBWebApiCodeFirst.Converters
             return obj;
 
         }
+
         public JObject TopPeopleChart(List<TopDTO> list)
         {
             var obj = new JObject();
