@@ -20,7 +20,18 @@ namespace BBBWebApiCodeFirst.Models
         public string description { get; set; }
 
 
+    
+
+        public long zone { get; set; }
+        [ForeignKey("zone")]
+        public Mtc Mtc { get; set; }
+
+        public int day { get; set; }
+        [ForeignKey("day")]
+        public Day Day { get; set; }
 
         
+
+
     }
 }
