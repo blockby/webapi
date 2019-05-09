@@ -36,13 +36,13 @@ namespace BBBWebApiCodeFirst.Models
             builder.HasPostgresExtension("postgis");
         }
 
-        public DbSet<Collected_data> collected_data { get; set; }
-
-        public DbSet<Day> days { get; set; }
+        public DbSet<Collected_data> collected_data { get; set; }       
 
         public DbSet<Day_period> day_periods { get; set; }
 
         public DbSet<Day_type> day_types { get; set; }
+
+        public DbSet<Day> days_table { get; set; }
 
         public DbSet<Location> locations { get; set; }
 

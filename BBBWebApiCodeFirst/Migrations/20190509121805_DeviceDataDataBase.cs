@@ -8,56 +8,7 @@ namespace BBBWebApiCodeFirst.Migrations
     public partial class DeviceDataDataBase : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropTable(
-                name: "MtcActivitys");
-
-            migrationBuilder.DropTable(
-                name: "MtcAges");
-
-            migrationBuilder.DropTable(
-                name: "MtcGenders");
-
-            migrationBuilder.DropTable(
-                name: "MtcHomezones");
-
-            migrationBuilder.DropTable(
-                name: "Ages");
-
-            migrationBuilder.DropTable(
-                name: "Genders");
-
-            migrationBuilder.DropTable(
-                name: "Mtcs");
-
-            migrationBuilder.DropPrimaryKey(
-                name: "PK_Days",
-                table: "Days");
-
-            migrationBuilder.RenameTable(
-                name: "Days",
-                newName: "days");
-
-            migrationBuilder.RenameColumn(
-                name: "id",
-                table: "days",
-                newName: "id_day");
-
-            migrationBuilder.AddColumn<int>(
-                name: "id_day_type",
-                table: "days",
-                nullable: false,
-                defaultValue: 0);
-
-            migrationBuilder.AddColumn<string>(
-                name: "name_day",
-                table: "days",
-                nullable: true);
-
-            migrationBuilder.AddPrimaryKey(
-                name: "PK_days",
-                table: "days",
-                column: "id_day");
+        {            
 
             migrationBuilder.CreateTable(
                 name: "day_periods",
