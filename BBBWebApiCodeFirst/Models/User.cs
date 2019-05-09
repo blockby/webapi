@@ -9,7 +9,7 @@ namespace BBBWebApiCodeFirst.Models
     public class User
     {
         [Key]
-        public long id_user { get; set; }
+        public int id_user { get; set; }
 
         public string name { get; set; }
 
