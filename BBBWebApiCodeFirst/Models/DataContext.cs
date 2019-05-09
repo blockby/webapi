@@ -42,7 +42,7 @@ namespace BBBWebApiCodeFirst.Models
 
         public DbSet<Day_type> day_types { get; set; }
 
-        public DbSet<Day> days_table { get; set; }
+        public DbSet<Day> day_table { get; set; }
 
         public DbSet<Location> locations { get; set; }
 

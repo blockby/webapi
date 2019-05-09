@@ -80,7 +80,7 @@ namespace BBBWebApiCodeFirst.Migrations
 
                     b.HasIndex("id_day_type");
 
-                    b.ToTable("days");
+                    b.ToTable("days_table");
                 });
 
             modelBuilder.Entity("BBBWebApiCodeFirst.Models.Day_period", b =>

@@ -11,8 +11,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BBBWebApiCodeFirst.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20190509122106_NewDatabaseWithDeviceData")]
-    partial class NewDatabaseWithDeviceData
+    [Migration("20190509130614_newmigrationdevicedata")]
+    partial class newmigrationdevicedata
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -82,7 +82,7 @@ namespace BBBWebApiCodeFirst.Migrations
 
                     b.HasIndex("id_day_type");
 
-                    b.ToTable("days");
+                    b.ToTable("days_table");
                 });
 
             modelBuilder.Entity("BBBWebApiCodeFirst.Models.Day_period", b =>
