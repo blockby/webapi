@@ -19,7 +19,6 @@
 
   <ItemGroup>
     <Folder Include="DataTransferObjects\" />
-    <Folder Include="Interfaces\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
 
