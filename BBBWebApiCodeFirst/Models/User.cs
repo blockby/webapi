@@ -10,6 +10,7 @@ namespace BBBWebApiCodeFirst.Models
     public class User
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_user { get; set; }
 
         public string name { get; set; }
@@ -19,7 +20,5 @@ namespace BBBWebApiCodeFirst.Models
         public User_type user_type { get; set; }
 
         public int depent { get; set; }
-
-        public string description { get; set; }
     }
 }

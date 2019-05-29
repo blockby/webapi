@@ -2,7 +2,7 @@
 
 namespace BBBWebApiCodeFirst.Migrations
 {
-    public partial class newmigrationdevicedata : Migration
+    public partial class autoincrementupdate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

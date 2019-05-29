@@ -10,6 +10,7 @@ namespace BBBWebApiCodeFirst.Models
     public class Shared_location
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_sh_location { get; set; }
 
         public int id_user { get; set; }

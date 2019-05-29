@@ -11,15 +11,14 @@ namespace BBBWebApiCodeFirst.Models
     public class Collected_data
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_coll_data { get; set; }
 
         public int id_location { get; set; }
         [ForeignKey("id_location")]
         public Location location { get; set; }
 
-        public int id_vendor { get; set; }
-        [ForeignKey("id_vendor")]
-        public Vendor vendor { get; set; }
+        public string id_oui { get; set; }
 
         public DateTime data_created { get; set; }
 
@@ -46,5 +45,12 @@ namespace BBBWebApiCodeFirst.Models
         public int sn { get; set; }
 
         public string ssid { get; set; }
+
+        public double stay { get; set; }
+
+        public int id_activity { get; set; }
+        [ForeignKey("id_activity")]
+        public Activity activity { get; set; }
+
     }
 }

@@ -3,6 +3,7 @@ using System;
 using BBBWebApiCodeFirst.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NetTopologySuite.Geometries;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -10,9 +11,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BBBWebApiCodeFirst.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20190510122325_autoincrementupdate")]
+    partial class autoincrementupdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -20,18 +22,6 @@ namespace BBBWebApiCodeFirst.Migrations
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
                 .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
-
-            modelBuilder.Entity("BBBWebApiCodeFirst.Models.Activity", b =>
-                {
-                    b.Property<int>("id_activity")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("name_activity");
-
-                    b.HasKey("id_activity");
-
-                    b.ToTable("activitys");
-                });
 
             modelBuilder.Entity("BBBWebApiCodeFirst.Models.Collected_data", b =>
                 {
@@ -44,15 +34,13 @@ namespace BBBWebApiCodeFirst.Migrations
 
                     b.Property<string>("dst");
 
-                    b.Property<int>("id_activity");
-
                     b.Property<int>("id_day");
 
                     b.Property<int>("id_day_period");
 
                     b.Property<int>("id_location");
 
-                    b.Property<string>("id_oui");
+                    b.Property<string>("oui");
 
                     b.Property<int>("sn");
 
@@ -61,8 +49,6 @@ namespace BBBWebApiCodeFirst.Migrations
                     b.Property<string>("src_resolved");
 
                     b.Property<string>("ssid");
-
-                    b.Property<double>("stay");
 
                     b.Property<string>("subtype");
 
@@ -76,6 +62,8 @@ namespace BBBWebApiCodeFirst.Migrations
 
                     b.HasIndex("id_location");
 
+                    b.HasIndex("oui");
+
                     b.ToTable("collected_data");
                 });
 
@@ -83,6 +71,8 @@ namespace BBBWebApiCodeFirst.Migrations
                 {
                     b.Property<int>("id_day")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<string>("description");
 
                     b.Property<int>("id_day_type");
 
@@ -97,12 +87,14 @@ namespace BBBWebApiCodeFirst.Migrations
 
             modelBuilder.Entity("BBBWebApiCodeFirst.Models.Day_period", b =>
                 {
-                    b.Property<int>("id_day_period")
+                    b.Property<int>("id_period_day")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<string>("description");
 
                     b.Property<string>("name_period");
 
-                    b.HasKey("id_day_period");
+                    b.HasKey("id_period_day");
 
                     b.ToTable("day_periods");
                 });
@@ -111,6 +103,8 @@ namespace BBBWebApiCodeFirst.Migrations
                 {
                     b.Property<int>("id_type_day")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<string>("description");
 
                     b.Property<string>("type_day");
 
@@ -127,6 +121,8 @@ namespace BBBWebApiCodeFirst.Migrations
                     b.Property<string>("address");
 
                     b.Property<Point>("coordinates");
+
+                    b.Property<string>("description");
 
                     b.Property<int>("id_prop_type");
 
@@ -145,6 +141,8 @@ namespace BBBWebApiCodeFirst.Migrations
                 {
                     b.Property<int>("id_type_prop")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<string>("description");
 
                     b.Property<string>("type_prop");
 
@@ -178,6 +176,8 @@ namespace BBBWebApiCodeFirst.Migrations
 
                     b.Property<int>("depent");
 
+                    b.Property<string>("description");
+
                     b.Property<int>("id_user_type");
 
                     b.Property<string>("name");
@@ -194,11 +194,27 @@ namespace BBBWebApiCodeFirst.Migrations
                     b.Property<int>("id_type_user")
                         .ValueGeneratedOnAdd();
 
+                    b.Property<string>("description");
+
                     b.Property<string>("type_user");
 
                     b.HasKey("id_type_user");
 
                     b.ToTable("user_types");
+                });
+
+            modelBuilder.Entity("BBBWebApiCodeFirst.Models.Vendor", b =>
+                {
+                    b.Property<string>("oui")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("description");
+
+                    b.Property<string>("name_vendor");
+
+                    b.HasKey("oui");
+
+                    b.ToTable("vendors");
                 });
 
             modelBuilder.Entity("BBBWebApiCodeFirst.Models.Collected_data", b =>
@@ -217,6 +233,10 @@ namespace BBBWebApiCodeFirst.Migrations
                         .WithMany()
                         .HasForeignKey("id_location")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("BBBWebApiCodeFirst.Models.Vendor", "vendor")
+                        .WithMany()
+                        .HasForeignKey("oui");
                 });
 
             modelBuilder.Entity("BBBWebApiCodeFirst.Models.Day", b =>

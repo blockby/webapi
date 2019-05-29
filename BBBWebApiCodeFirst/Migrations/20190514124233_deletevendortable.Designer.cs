@@ -3,6 +3,7 @@ using System;
 using BBBWebApiCodeFirst.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NetTopologySuite.Geometries;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -10,9 +11,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BBBWebApiCodeFirst.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20190514124233_deletevendortable")]
+    partial class deletevendortable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -20,18 +22,6 @@ namespace BBBWebApiCodeFirst.Migrations
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
                 .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
-
-            modelBuilder.Entity("BBBWebApiCodeFirst.Models.Activity", b =>
-                {
-                    b.Property<int>("id_activity")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("name_activity");
-
-                    b.HasKey("id_activity");
-
-                    b.ToTable("activitys");
-                });
 
             modelBuilder.Entity("BBBWebApiCodeFirst.Models.Collected_data", b =>
                 {
@@ -44,15 +34,11 @@ namespace BBBWebApiCodeFirst.Migrations
 
                     b.Property<string>("dst");
 
-                    b.Property<int>("id_activity");
-
                     b.Property<int>("id_day");
 
                     b.Property<int>("id_day_period");
 
                     b.Property<int>("id_location");
-
-                    b.Property<string>("id_oui");
 
                     b.Property<int>("sn");
 
@@ -61,8 +47,6 @@ namespace BBBWebApiCodeFirst.Migrations
                     b.Property<string>("src_resolved");
 
                     b.Property<string>("ssid");
-
-                    b.Property<double>("stay");
 
                     b.Property<string>("subtype");
 

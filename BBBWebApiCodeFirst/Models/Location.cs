@@ -13,6 +13,7 @@ namespace BBBWebApiCodeFirst.Models
     public class Location
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_location { get; set; }
 
         public int id_user { get; set; }
@@ -27,7 +28,5 @@ namespace BBBWebApiCodeFirst.Models
 
         [JsonConverter(typeof(NetTopologySuiteConverter))]
         public Point coordinates { get; set; }
-
-        public string description { get; set; }
     }
 }

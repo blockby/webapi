@@ -3,6 +3,7 @@ using System;
 using BBBWebApiCodeFirst.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NetTopologySuite.Geometries;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -10,9 +11,10 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BBBWebApiCodeFirst.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20190527131944_premigration")]
+    partial class premigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,7 +32,7 @@ namespace BBBWebApiCodeFirst.Migrations
 
                     b.HasKey("id_activity");
 
-                    b.ToTable("activitys");
+                    b.ToTable("activities");
                 });
 
             modelBuilder.Entity("BBBWebApiCodeFirst.Models.Collected_data", b =>
@@ -43,8 +45,6 @@ namespace BBBWebApiCodeFirst.Migrations
                     b.Property<DateTime>("date_created");
 
                     b.Property<string>("dst");
-
-                    b.Property<int>("id_activity");
 
                     b.Property<int>("id_day");
 

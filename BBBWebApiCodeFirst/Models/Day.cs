@@ -10,6 +10,7 @@ namespace BBBWebApiCodeFirst.Models
     public class Day
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int id_day { get; set; }
 
         public int id_day_type { get; set; }
@@ -17,7 +18,5 @@ namespace BBBWebApiCodeFirst.Models
         public Day_type day_type { get; set; }
 
         public string name_day { get; set; }
-
-        public string description { get; set; }
     }
 }
