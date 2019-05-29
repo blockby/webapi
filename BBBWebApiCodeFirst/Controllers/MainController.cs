@@ -51,7 +51,7 @@ namespace BBBWebApiCodeFirst.Controllers
                             mainChartDtoList.Add(mainChartDTO);
                         }
 
-                        IObjectConverter objConverted = new ObjectConverter();
+                        ObjectConverter objConverted = new ObjectConverter();
                         var obj = objConverted.MainChartDayJson(mainChartDtoList);
 
                         return obj;
@@ -85,7 +85,7 @@ namespace BBBWebApiCodeFirst.Controllers
                             mainChartDtoList.Add(mainChartDTO);
                         }
 
-                        IObjectConverter objConverted = new ObjectConverter();
+                        ObjectConverter objConverted = new ObjectConverter();
                         var obj = objConverted.MainChartWeekJson(mainChartDtoList);
 
                         return obj;
