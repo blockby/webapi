@@ -29,6 +29,26 @@ namespace BBBWebApiCodeFirst.Converters
             return obj;
         }
 
+        public JObject BydayJson(List<BydayDTO> list)
+        {
+            var individualObj = new JObject();
+            var obj = new JObject();
+
+            foreach (var item in list)
+            {
+                individualObj.Add("day", item.Day);
+                individualObj.Add("hour", item.Hour);
+                individualObj.Add("people", item.People);
+                obj.Add("Data", individualObj);
+                
+            }
+
+
+            return obj;
+            
+
+        }
+
         public JObject HourlyPeopleJson(List<MainChartDTO> list)
         {
             var obj = new JObject();
@@ -969,217 +989,6 @@ namespace BBBWebApiCodeFirst.Converters
 
             return obj;
         }
-
-        public JObject TopPeopleJson(List<TopDTO> list)
-        {
-            var obj = new JObject();
-
-            var series = TopPeopleChart(list);
-            var labels = TopZoneChart(list);
-
-            obj.Add("series", series);
-            obj.Add("labels", labels);
-
-            return obj;
-
-        }
-        public JObject TopPeopleChart(List<TopDTO> list)
-        {
-            var obj = new JObject();
-            var serie0 = new JObject();
-            int i = 0;
-
-            foreach (var item in list)
-            {
-                string x = Convert.ToString(i);
-                obj.Add(x, item.People);
-                i++;
-
-            }
-            serie0.Add("serie0", obj);
-            return serie0;
-        }
-
-        public JObject TopZoneChart(List<TopDTO> list)
-        {
-            var obj = new JObject();
-            int i = 0;
-
-            foreach (var item in list)
-            {
-                string x = Convert.ToString(i);
-                obj.Add(x, item.ZoneAct);
-                i++;
-
-            }
-            return obj;
-        }
-
-
-        public JObject MinPeopleJson(List<TopDTO> list)
-        {
-            var obj = new JObject();
-
-            var series = MinPeopleChart(list);
-            var labels = MinZoneChart(list);
-
-            obj.Add("series", series);
-            obj.Add("labels", labels);
-
-            return obj;
-        }
-
-        public JObject MinPeopleChart(List<TopDTO> list)
-        {
-            var obj = new JObject();
-            var serie0 = new JObject();
-            int i = 0;
-
-            foreach (var item in list)
-            {
-                string x = Convert.ToString(i);
-                obj.Add(x, item.People);
-                i++;
-
-            }
-            serie0.Add("serie0", obj);
-
-            return serie0;
-        }
-
-        public JObject MinZoneChart(List<TopDTO> list)
-        {
-            var obj = new JObject();
-            int i = 0;
-
-            foreach (var item in list)
-            {
-                string x = Convert.ToString(i);
-                obj.Add(x, item.ZoneAct);
-                i++;
-
-            }
-            return obj;
-        }
-
-        public JObject TableHomeDayJson(List<TableHomeDayDTO> list)
-        {
-            var obj = new JObject();
-            JArray objArray = new JArray();
-            var index = 1;
-
-            foreach (TableHomeDayDTO item in list)
-            {
-                var objInside = new JObject();
-                objInside.Add("id", index++);
-                objInside.Add("day", item.Day);
-                objInside.Add("hour", item.Hour);
-                objInside.Add("people", item.People);
-                objArray.Add(objInside);
-            }
-
-            obj.Add("td", objArray);
-
-            return obj;
-        }
-
-        public JObject TableHomeWeekJson(List<TableHomeWeekDTO> list)
-        {
-            var obj = new JObject();
-            JArray objArray = new JArray();
-            var index = 1;
-
-            foreach (TableHomeWeekDTO item in list)
-            {
-                var objInside = new JObject();
-                objInside.Add("id", index++);
-                objInside.Add("day", item.Day);
-                objInside.Add("people", item.People);
-                objArray.Add(objInside);
-            }
-
-            obj.Add("td", objArray);
-
-            return obj;
-        }
-
-        public JObject TopDayPeopleJson(List<TopDayDTO> list)
-        {
-            var obj = new JObject();
-
-            var series = TopDayPeopleChart(list);
-            var labels = TopDayZoneChart(list);
-
-            obj.Add("series", series);
-            obj.Add("labels", labels);
-
-            return obj;
-        }
-
-        public JObject TopDayPeopleChart(List<TopDayDTO> list)
-        {
-            var obj = new JObject();
-            var serie0 = new JObject();
-            int i = 0;
-
-            foreach (var item in list)
-            {
-                string x = Convert.ToString(i);
-                obj.Add(x, item.People);
-                i++;
-
-            }
-            serie0.Add("serie0", obj);
-            return serie0;
-        }
-
-        public JObject TopDayZoneChart(List<TopDayDTO> list)
-        {
-            var obj = new JObject();
-            int i = 0;
-
-            foreach (var item in list)
-            {
-                string x = Convert.ToString(i);
-                obj.Add(x, item.ZoneAct);
-                i++;
-
-            }
-            return obj;
-        }
-
-        public JObject AreaOfInfluenceJson(List<AreaOfInfluenceDTO> list)
-        {
-            var obj = new JObject();
-
-            foreach (var item in list)
-            {
-
-                obj.Add("Area", item.Area);
-            }
-            return obj;
-        }
-
-
-
-        public JArray HomezoneWheelJson(List<HomezoneWheelDTO> list)
-        {
-            var obj = new JObject();
-            JArray objArray = new JArray();
-
-
-            foreach (HomezoneWheelDTO item in list)
-            {
-                var objInside = new JObject();
-                objInside.Add("Percent", item.Percent);
-                objInside.Add("Distance", item.Distance);
-                objInside.Add("People", item.People);
-                objArray.Add(objInside);
-            }
-
-
-
-            return objArray;
-        }
+        
     }
 }
