@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BBBWebApiCodeFirst.Common;
-using BBBWebApiCodeFirst.Converters;
 using BBBWebApiCodeFirst.DataReaders;
 using BBBWebApiCodeFirst.DataTransferObjects;
 using BBBWebApiCodeFirst.Interfaces;
@@ -13,42 +12,44 @@ using BBBWebApiCodeFirst.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
+using BBBWebApiCodeFirst.Converters;
 using Npgsql;
 
 namespace BBBWebApiCodeFirst.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BydayController : ControllerBase
+    public class FullDaysByPeriodController : ControllerBase
     {
         private readonly DataContext _context;
         private readonly string connectionString = ConnectionStringBuilder.buildConnectionString();
 
-        public BydayController(DataContext context)
+        public FullDaysByPeriodController(DataContext context)
         {
             _context = context;
         }
 
-        [HttpPost("getbyday")]
-        public async Task<JObject> GetByDay()
+        [HttpPost("getfulldaysbyperiod")]
+        public async Task<JObject> GetFullDaysByPeriod()
         {
             using (StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8))
             {
                 string result = await reader.ReadToEndAsync();
+
                 var locationObj = JObject.Parse(result)["id_location"];
-                var dayObj = JObject.Parse(result)["id_day"];
+                var idPeriodDayObj = JObject.Parse(result)["id_period_day"];
 
                 string location = locationObj.ToObject<string>();
-                string day = dayObj.ToObject<string>();
+                string idPeriodDay = idPeriodDayObj.ToObject<string>();
 
-                return ExecuteQuery(location, day);
+                return ExecuteQuery(location, idPeriodDay);
             }
         }
 
-        
-        private  JObject ExecuteQuery(string location, string day)
+
+        private JObject ExecuteQuery(string id_location, string id_period_day)
         {
-            string _selectString = "SELECT b.name_day AS day, extract(hour from a.time_created) as hour, COUNT(a.src) AS people FROM collected_data a INNER JOIN days b ON a.id_day = b.id_day WHERE a.id_location = " + location + " AND a.id_day = " + day + " GROUP BY b.name_day, hour ORDER BY hour ASC";
+            string _selectString = "SELECT a.id_day, b.name_day AS day, c.name_period, COUNT(a.src) AS people FROM collected_data a INNER JOIN days b ON a.id_day = b.id_day INNER JOIN day_periods c ON a.id_period_day = c.id_day_period WHERE a.id_location = "+id_location+" AND a.id_period_day IN ("+id_period_day+") GROUP BY a.id_day,b.name_day, c.name_period,a.id_period_day ORDER BY a.id_day,a.id_period_day";
 
             using (var conn = new NpgsqlConnection(connectionString))
             {
@@ -58,21 +59,19 @@ namespace BBBWebApiCodeFirst.Controllers
                 {
                     using (var reader = cmd.ExecuteReader())
                     {
-                        List<BydayDTO> BydayDTOList = new List<BydayDTO>();
+                        List<FullDaysByPeriodDTO> FullDaysByPeriodDTOList = new List<FullDaysByPeriodDTO>();
 
                         while (reader.Read())
                         {
                             InterfaceDataReader dataReader = new DataReader();
-                            BydayDTO bydayDTO = dataReader.ReadBydayDTO(reader);
-                            BydayDTOList.Add(bydayDTO);
+                            FullDaysByPeriodDTO fullDaysByPeriodDTO = dataReader.ReadFullDaysByPeriodDTO(reader);
+                            FullDaysByPeriodDTOList.Add(fullDaysByPeriodDTO);
                         }
 
                         IObjectConverter objConverted = new ObjectConverter();
-                        var obj = objConverted.BydayJson(BydayDTOList);
+                        var obj = objConverted.FullDaysByPeriodJson(FullDaysByPeriodDTOList);
 
                         return obj;
-
-
                     }
                 }
             }

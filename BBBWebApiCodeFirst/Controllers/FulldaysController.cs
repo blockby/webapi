@@ -19,36 +19,34 @@ namespace BBBWebApiCodeFirst.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BydayController : ControllerBase
+    public class FulldaysController : ControllerBase
     {
         private readonly DataContext _context;
         private readonly string connectionString = ConnectionStringBuilder.buildConnectionString();
 
-        public BydayController(DataContext context)
+        public FulldaysController(DataContext context)
         {
             _context = context;
         }
 
-        [HttpPost("getbyday")]
-        public async Task<JObject> GetByDay()
+        [HttpPost("getfulldays")]
+        public async Task<JObject> GetFullDays()
         {
             using (StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8))
             {
                 string result = await reader.ReadToEndAsync();
                 var locationObj = JObject.Parse(result)["id_location"];
-                var dayObj = JObject.Parse(result)["id_day"];
-
                 string location = locationObj.ToObject<string>();
-                string day = dayObj.ToObject<string>();
+    
 
-                return ExecuteQuery(location, day);
+                return ExecuteQuery(location);
             }
         }
 
-        
-        private  JObject ExecuteQuery(string location, string day)
+
+        private JObject ExecuteQuery(string id_location)
         {
-            string _selectString = "SELECT b.name_day AS day, extract(hour from a.time_created) as hour, COUNT(a.src) AS people FROM collected_data a INNER JOIN days b ON a.id_day = b.id_day WHERE a.id_location = " + location + " AND a.id_day = " + day + " GROUP BY b.name_day, hour ORDER BY hour ASC";
+            string _selectString = "SELECT a.id_day, b.name_day AS day, COUNT(a.src) AS people FROM collected_data a INNER JOIN days b ON a.id_day = b.id_day WHERE a.id_location = "+id_location+" GROUP BY a.id_day,b.name_day ORDER BY a.id_day";
 
             using (var conn = new NpgsqlConnection(connectionString))
             {
@@ -58,21 +56,19 @@ namespace BBBWebApiCodeFirst.Controllers
                 {
                     using (var reader = cmd.ExecuteReader())
                     {
-                        List<BydayDTO> BydayDTOList = new List<BydayDTO>();
+                        List<FullDaysDTO> FulldaysDTOList = new List<FullDaysDTO>();
 
                         while (reader.Read())
                         {
                             InterfaceDataReader dataReader = new DataReader();
-                            BydayDTO bydayDTO = dataReader.ReadBydayDTO(reader);
-                            BydayDTOList.Add(bydayDTO);
+                            FullDaysDTO fulldaysDTO = dataReader.ReadFulldaysDTO(reader);
+                            FulldaysDTOList.Add(fulldaysDTO);
                         }
 
                         IObjectConverter objConverted = new ObjectConverter();
-                        var obj = objConverted.BydayJson(BydayDTOList);
+                        var obj = objConverted.FulldaysJson(FulldaysDTOList);
 
                         return obj;
-
-
                     }
                 }
             }

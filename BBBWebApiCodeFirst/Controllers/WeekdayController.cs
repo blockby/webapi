@@ -5,13 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BBBWebApiCodeFirst.Common;
-using BBBWebApiCodeFirst.Converters;
 using BBBWebApiCodeFirst.DataReaders;
 using BBBWebApiCodeFirst.DataTransferObjects;
 using BBBWebApiCodeFirst.Interfaces;
 using BBBWebApiCodeFirst.Models;
+using BBBWebApiCodeFirst.Converters;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Npgsql;
 
@@ -19,36 +20,36 @@ namespace BBBWebApiCodeFirst.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BydayController : ControllerBase
+    public class WeekdaysController : ControllerBase
     {
         private readonly DataContext _context;
         private readonly string connectionString = ConnectionStringBuilder.buildConnectionString();
 
-        public BydayController(DataContext context)
+        public WeekdaysController(DataContext context)
         {
             _context = context;
         }
 
-        [HttpPost("getbyday")]
-        public async Task<JObject> GetByDay()
+        [HttpPost("getweekday")]
+        public async Task<JObject> GetWeekday()
         {
             using (StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8))
             {
                 string result = await reader.ReadToEndAsync();
                 var locationObj = JObject.Parse(result)["id_location"];
-                var dayObj = JObject.Parse(result)["id_day"];
-
+                var dayTypeObj = JObject.Parse(result)["id_day_type"];
+                
                 string location = locationObj.ToObject<string>();
-                string day = dayObj.ToObject<string>();
+                string dayType = dayTypeObj.ToObject<string>();
 
-                return ExecuteQuery(location, day);
+                return ExecuteQuery(location, dayType);
             }
         }
 
-        
-        private  JObject ExecuteQuery(string location, string day)
+
+        private JObject ExecuteQuery(string location, string day_type)
         {
-            string _selectString = "SELECT b.name_day AS day, extract(hour from a.time_created) as hour, COUNT(a.src) AS people FROM collected_data a INNER JOIN days b ON a.id_day = b.id_day WHERE a.id_location = " + location + " AND a.id_day = " + day + " GROUP BY b.name_day, hour ORDER BY hour ASC";
+            string _selectString = "SELECT a.id_day AS id_day, b.name_day AS day, c.type_day, COUNT(a.src) AS people FROM collected_data a INNER JOIN days b ON a.id_day = b.id_day INNER JOIN day_types c ON c.id_type_day = b.id_day_type WHERE a.id_location = "+location+" AND b.id_day_type = "+day_type+" GROUP BY a.id_day,b.name_day, c.type_day ORDER BY a.id_day";
 
             using (var conn = new NpgsqlConnection(connectionString))
             {
@@ -58,24 +59,23 @@ namespace BBBWebApiCodeFirst.Controllers
                 {
                     using (var reader = cmd.ExecuteReader())
                     {
-                        List<BydayDTO> BydayDTOList = new List<BydayDTO>();
+                        List<WeekdaysDTO> WeekdaysDTOList = new List<WeekdaysDTO>();
 
                         while (reader.Read())
                         {
                             InterfaceDataReader dataReader = new DataReader();
-                            BydayDTO bydayDTO = dataReader.ReadBydayDTO(reader);
-                            BydayDTOList.Add(bydayDTO);
+                            WeekdaysDTO weekdaysDTO = dataReader.ReadWeekdaysDTO(reader);
+                            WeekdaysDTOList.Add(weekdaysDTO);
                         }
 
                         IObjectConverter objConverted = new ObjectConverter();
-                        var obj = objConverted.BydayJson(BydayDTOList);
+                        var obj = objConverted.WeekdaysJson(WeekdaysDTOList);
 
                         return obj;
-
-
                     }
                 }
             }
         }
+
     }
 }

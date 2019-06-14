@@ -9,8 +9,22 @@ namespace BBBWebApiCodeFirst.Interfaces
 {
     interface InterfaceDataReader    {
 
-        MainChartDTO ReadMainChartDTO(NpgsqlDataReader reader);
         BydayDTO ReadBydayDTO (NpgsqlDataReader reader);
+        WeekdaysDTO ReadWeekdaysDTO(NpgsqlDataReader reader);
+        FullDaysDTO ReadFulldaysDTO(NpgsqlDataReader reader);
+        ByDayPeriodDTO ReadByDayPeriodDTO(NpgsqlDataReader reader);
+        FullDaysByPeriodDTO ReadFullDaysByPeriodDTO(NpgsqlDataReader reader);
+        WeekDayByPeriodDTO ReadWeekDayByPeriodDTO(NpgsqlDataReader reader);
+        WeekendByPeriodDTO ReadWeekendByPeriodDTO(NpgsqlDataReader reader);
+        ByDayByActivityDTO ReadByDayByActivityDTO(NpgsqlDataReader reader);
+        FullDaysByActivityDTO ReadFullDaysByActivityDTO(NpgsqlDataReader reader);
+        WeekDaysByActivityDTO ReadWeekDaysByActivityDTO(NpgsqlDataReader reader);
+        WeekendByActivityDTO ReadWeekendByActivityDTO(NpgsqlDataReader reader);
+        ByDayByPeriodByActivityDTO ReadByDayByPeriodByActivityDTO(NpgsqlDataReader reader);
+        ByWeekdaysByPeriodByActivityDTO ReadByWeekdaysByPeriodByActivityDTO(NpgsqlDataReader reader);
+        WeekendByPeriodByActivityDTO ReadWeekendByPeriodByActivityDTO(NpgsqlDataReader reader);
+        FullDaysByPeriodByActivityDTO ReadFullDaysByPeriodByActivityDTO(NpgsqlDataReader reader);
+        WeekendDTO ReadWeekendDTO(NpgsqlDataReader reader);
 
     }
 }
