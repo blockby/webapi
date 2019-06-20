@@ -89,6 +89,12 @@ namespace BBBWebApiCodeFirst.Converters
         int[] yAxisPeriodArrayFullDaysEvening = new int[7];
         int[] yAxisPeriodArrayFullDaysNight = new int[7];
 
+        int[] yAxisActivityByPeriodLiveArray = new int[4];
+        int[] yAxisActivityByPeriodWorkArray = new int[4];
+        int[] yAxisActivityByPeriodCommuteArray = new int[4];
+        int[] yAxisActivityByPeriodPasserbyArray = new int[4];
+        int[] yAxisActivityByPeriodLeisureArray = new int[4];
+
 
 
         public ObjectConverter()
@@ -113,7 +119,7 @@ namespace BBBWebApiCodeFirst.Converters
                 objArray.Add(individualObj);
             }
 
-            obj.Add("Data", objArray);
+            obj.Add("data", objArray);
 
             return obj;
         }
@@ -133,7 +139,7 @@ namespace BBBWebApiCodeFirst.Converters
                 objArray.Add(individualObj);
             }
 
-            obj.Add("Data", objArray);
+            obj.Add("data", objArray);
 
 
             return obj;
@@ -152,7 +158,7 @@ namespace BBBWebApiCodeFirst.Converters
                 individualObj.Add("yAxis", item.People);
                 objArray.Add(individualObj);
             }
-            obj.Add("Data", objArray);
+            obj.Add("data", objArray);
 
             return obj;
         }
@@ -172,7 +178,7 @@ namespace BBBWebApiCodeFirst.Converters
                 individualObj.Add("yAxis", item.People);
                 objArray.Add(individualObj);
             }
-            obj.Add("Data", objArray);
+            obj.Add("data", objArray);
 
             return obj;
         }
@@ -326,13 +332,13 @@ namespace BBBWebApiCodeFirst.Converters
             yAxisArray.Insert(2, eveningArray);
             yAxisArray.Insert(3, nightArray);
 
-            obj.Add("Title", "Full Days by period");
+            obj.Add("title", "Full Days by period");
             obj.Add("xAxis", daysArray);
             obj.Add("legend", periodArray);
             obj.Add("yAxis", yAxisArray);
 
             JObject finalObj = new JObject();
-            finalObj.Add("Data", obj);
+            finalObj.Add("data", obj);
 
             return finalObj;
         }
@@ -446,13 +452,13 @@ namespace BBBWebApiCodeFirst.Converters
             yAxisArray.Insert(2, eveningArray);
             yAxisArray.Insert(3, nightArray);
 
-            obj.Add("Title", "Week Days by period");
+            obj.Add("title", "Week Days by period");
             obj.Add("xAxis", weekdayArray);
             obj.Add("legend", periodArray);
             obj.Add("yAxis", yAxisArray);
 
             JObject finalObj = new JObject();
-            finalObj.Add("Data", obj);
+            finalObj.Add("data", obj);
 
             return finalObj;
         }
@@ -509,13 +515,13 @@ namespace BBBWebApiCodeFirst.Converters
             yAxisArray.Insert(2, eveningArray);
             yAxisArray.Insert(3, nightArray);
 
-            obj.Add("Title", "Weekend by period");
+            obj.Add("title", "Weekend by period");
             obj.Add("xAxis", weekendArray);
             obj.Add("legend", periodArray);
             obj.Add("yAxis", yAxisArray);
 
             JObject finalObj = new JObject();
-            finalObj.Add("Data", obj);
+            finalObj.Add("data", obj);
 
             return finalObj;
         }
@@ -583,7 +589,7 @@ namespace BBBWebApiCodeFirst.Converters
 
                 objArray.Add(individualObj);
             }
-            obj.Add("Data", objArray);
+            obj.Add("data", objArray);
 
             return obj;
         }
@@ -765,13 +771,13 @@ namespace BBBWebApiCodeFirst.Converters
             yAxisArray.Insert(3, passerByArray);
             yAxisArray.Insert(4, leisureArray);
 
-            obj.Add("Title", "Full Days by Activity");
+            obj.Add("title", "Full Days by Activity");
             obj.Add("xAxis", daysArray);
             obj.Add("legend", periodArray);
             obj.Add("yAxis", yAxisArray);
 
             JObject finalObj = new JObject();
-            finalObj.Add("Data", obj);
+            finalObj.Add("data", obj);
 
             return finalObj;
         }
@@ -907,13 +913,13 @@ namespace BBBWebApiCodeFirst.Converters
             yAxisArray.Insert(3, passerByArray);
             yAxisArray.Insert(4, leisureArray);
 
-            obj.Add("Title", "Week Days by Activity");
+            obj.Add("title", "Week Days by Activity");
             obj.Add("xAxis", weekdayArray);
             obj.Add("legend", periodArray);
             obj.Add("yAxis", yAxisArray);
 
             JObject finalObj = new JObject();
-            finalObj.Add("Data", obj);
+            finalObj.Add("data", obj);
 
             return finalObj;
         }
@@ -981,13 +987,13 @@ namespace BBBWebApiCodeFirst.Converters
             yAxisArray.Insert(3, passerByArray);
             yAxisArray.Insert(4, leisureArray);
 
-            obj.Add("Title", "Weekend by Activity");
+            obj.Add("title", "Weekend by Activity");
             obj.Add("xAxis", weekendArray);
             obj.Add("legend", periodArray);
             obj.Add("yAxis", yAxisArray);
 
             JObject finalObj = new JObject();
-            finalObj.Add("Data", obj);
+            finalObj.Add("data", obj);
 
             return finalObj;
         }
@@ -998,67 +1004,122 @@ namespace BBBWebApiCodeFirst.Converters
             var obj = new JObject();
             ConverterHandler converterHandler = new ConverterHandler();
             string dayToConcat = converterHandler.getDayById(day);
-            string title = "" + dayToConcat + " by Periods By Activity";
+            string title = "" + dayToConcat + " by Periods & By Activities";
             JArray xAxisArray = new JArray();
             xAxisArray.Add(dayToConcat);
 
-            foreach (var item in list)
-            {
-                if (item.NameActivity == "Live")
-                {
-                    yAxisActivityArray[0] = item.People;
-                }
-                if (item.NameActivity == "Work")
-                {
-                    yAxisActivityArray[1] = item.People;
-                }
-                if (item.NameActivity == "Commute")
-                {
-                    yAxisActivityArray[2] = item.People;
-                }
-                if (item.NameActivity == "Passer-by")
-                {
-                    yAxisActivityArray[3] = item.People;
-                }
-                if (item.NameActivity == "Leisure")
-                {
-                    yAxisActivityArray[4] = item.People;
-                }
-            }
 
             foreach (var item in list)
             {
                 if (item.NamePeriod == "Morning")
                 {
-                    yAxisPeriodArray[0] = item.People;
+                    if (item.NameActivity == "Live")
+                    {
+                        yAxisActivityByPeriodLiveArray[0] = item.People;
+                    }
+                    if (item.NameActivity == "Work")
+                    {
+                        yAxisActivityByPeriodWorkArray[0] = item.People;
+                    }
+                    if (item.NameActivity == "Commute")
+                    {
+                        yAxisActivityByPeriodCommuteArray[0] = item.People;
+                    }
+                    if (item.NameActivity == "Passer-by")
+                    {
+                        yAxisActivityByPeriodPasserbyArray[0] = item.People;
+                    }
+                    if (item.NameActivity == "Leisure")
+                    {
+                        yAxisActivityByPeriodLeisureArray[0] = item.People;
+                    }
                 }
                 if (item.NamePeriod == "Afternoon")
                 {
-                    yAxisPeriodArray[1] = item.People;
+                    if (item.NameActivity == "Live")
+                    {
+                        yAxisActivityByPeriodLiveArray[1] = item.People;
+                    }
+                    if (item.NameActivity == "Work")
+                    {
+                        yAxisActivityByPeriodWorkArray[1] = item.People;
+                    }
+                    if (item.NameActivity == "Commute")
+                    {
+                        yAxisActivityByPeriodCommuteArray[1] = item.People;
+                    }
+                    if (item.NameActivity == "Passer-by")
+                    {
+                        yAxisActivityByPeriodPasserbyArray[1] = item.People;
+                    }
+                    if (item.NameActivity == "Leisure")
+                    {
+                        yAxisActivityByPeriodLeisureArray[1] = item.People;
+                    }
                 }
                 if (item.NamePeriod == "Evening")
                 {
-                    yAxisPeriodArray[2] = item.People;
+                    if (item.NameActivity == "Live")
+                    {
+                        yAxisActivityByPeriodLiveArray[2] = item.People;
+                    }
+                    if (item.NameActivity == "Work")
+                    {
+                        yAxisActivityByPeriodWorkArray[2] = item.People;
+                    }
+                    if (item.NameActivity == "Commute")
+                    {
+                        yAxisActivityByPeriodCommuteArray[2] = item.People;
+                    }
+                    if (item.NameActivity == "Passer-by")
+                    {
+                        yAxisActivityByPeriodPasserbyArray[2] = item.People;
+                    }
+                    if (item.NameActivity == "Leisure")
+                    {
+                        yAxisActivityByPeriodLeisureArray[2] = item.People;
+                    }
                 }
                 if (item.NamePeriod == "Night")
                 {
-                    yAxisPeriodArray[3] = item.People;
+                    if (item.NameActivity == "Live")
+                    {
+                        yAxisActivityByPeriodLiveArray[3] = item.People;
+                    }
+                    if (item.NameActivity == "Work")
+                    {
+                        yAxisActivityByPeriodWorkArray[3] = item.People;
+                    }
+                    if (item.NameActivity == "Commute")
+                    {
+                        yAxisActivityByPeriodCommuteArray[3] = item.People;
+                    }
+                    if (item.NameActivity == "Passer-by")
+                    {
+                        yAxisActivityByPeriodPasserbyArray[3] = item.People;
+                    }
+                    if (item.NameActivity == "Leisure")
+                    {
+                        yAxisActivityByPeriodLeisureArray[3] = item.People;
+                    }
                 }
             }
 
+            JArray yAxisArray = new JArray();
+            yAxisArray.Insert(0, JArray.FromObject(yAxisActivityByPeriodLiveArray));
+            yAxisArray.Insert(1, JArray.FromObject(yAxisActivityByPeriodWorkArray));
+            yAxisArray.Insert(2, JArray.FromObject(yAxisActivityByPeriodCommuteArray));
+            yAxisArray.Insert(3, JArray.FromObject(yAxisActivityByPeriodPasserbyArray));
+            yAxisArray.Insert(4, JArray.FromObject(yAxisActivityByPeriodLeisureArray));
+            
 
-            JArray yAxisActivityJArray = JArray.FromObject(yAxisActivityArray);
-            JArray yAxisPeriodJArray = JArray.FromObject(yAxisPeriodArray);
-
-            obj.Add("Title", title);
-            obj.Add("xAxis", xAxisArray);
-            obj.Add("legendActivities", activityArray);
-            obj.Add("legendPeriod", periodArray);
-            obj.Add("yAxisActivity", yAxisActivityJArray);
-            obj.Add("yAxisPeriods", yAxisPeriodJArray);
+            obj.Add("title", title);
+            obj.Add("xAxis", periodArray);
+            obj.Add("legend", activityArray);            
+            obj.Add("yAxisActivity", yAxisArray);            
 
             JObject finalObj = new JObject();
-            finalObj.Add("Data", obj);
+            finalObj.Add("data", obj);
 
             return finalObj;
         }
@@ -1288,7 +1349,7 @@ namespace BBBWebApiCodeFirst.Converters
             JArray yAxisActivityJArray = new JArray();
             JArray yAxisPeriodJArray = new JArray();
 
-            obj.Add("Title", title);
+            obj.Add("title", title);
             obj.Add("xAxis", weekdayArray);
             obj.Add("legendActivities", activityArray);
             obj.Add("legendPeriod", periodArray);
@@ -1307,7 +1368,7 @@ namespace BBBWebApiCodeFirst.Converters
             obj.Add("yAxisPeriods", yAxisPeriodJArray);
 
             JObject finalObj = new JObject();
-            finalObj.Add("Data", obj);
+            finalObj.Add("data", obj);
 
             return finalObj;
         }
@@ -1431,7 +1492,7 @@ namespace BBBWebApiCodeFirst.Converters
             JArray yAxisActivityJArray = new JArray();
             JArray yAxisPeriodJArray = new JArray();
 
-            obj.Add("Title", title);
+            obj.Add("title", title);
             obj.Add("xAxis", weekendArray );
             obj.Add("legendActivities", activityArray);
             obj.Add("legendPeriod", periodArray);
@@ -1449,7 +1510,7 @@ namespace BBBWebApiCodeFirst.Converters
             yAxisPeriodJArray.Add(JArray.FromObject(yAxisPeriodArrayWeekendNight));
             obj.Add("yAxisPeriods", yAxisPeriodJArray);
             JObject finalObj = new JObject();
-            finalObj.Add("Data", obj);
+            finalObj.Add("data", obj);
 
             return finalObj;
         }
@@ -1751,7 +1812,7 @@ namespace BBBWebApiCodeFirst.Converters
             JArray yAxisActivityJArray = new JArray();
                 JArray yAxisPeriodJArray = new JArray();
 
-                obj.Add("Title", title);
+                obj.Add("title", title);
                 obj.Add("xAxis", daysArray);
                 obj.Add("legendActivities", activityArray);
                 obj.Add("legendPeriod", periodArray);
@@ -1771,7 +1832,7 @@ namespace BBBWebApiCodeFirst.Converters
                 obj.Add("yAxisPeriods", yAxisPeriodJArray);
 
                 JObject finalObj = new JObject();
-                finalObj.Add("Data", obj);
+                finalObj.Add("data", obj);
 
                 return finalObj;
         }
@@ -1810,10 +1871,68 @@ namespace BBBWebApiCodeFirst.Converters
             individualObj.Add(individualObjSunday);       
             
 
-            obj.Add("Data", individualObj);
+            obj.Add("data", individualObj);
 
 
             return obj;
+        }
+
+        public JObject AllWeekByHoursJson(List<AllWeekByHoursDTO> list)
+        {
+            var obj = new JObject();
+            var individualObj = new JObject();
+            List<int> yArray = new List<int>(168);            
+
+            foreach (var item in list)
+            {
+                yArray.Add(item.People);
+            }
+
+            JArray yJArray = JArray.FromObject(yArray);
+
+            individualObj.Add("title", "All week by hours");
+
+            JArray xJArray = getXArray();
+            individualObj.Add("x", xJArray);
+            individualObj.Add("y", yJArray);
+
+            obj.Add("data", individualObj);
+            return obj;
+        }
+
+        public JArray getXArray()
+        {
+            JArray xArray = new JArray();
+
+            for (int i = 0; i < 24; i++)
+            {
+                xArray.Add("Monday");
+            }
+            for (int i = 0; i < 24; i++)
+            {
+                xArray.Add("Tuesday");
+            }
+            for (int i = 0; i < 24; i++)
+            {
+                xArray.Add("Wednesday");
+            }
+            for (int i = 0; i < 24; i++)
+            {
+                xArray.Add("Thursday");
+            }
+            for (int i = 0; i < 24; i++)
+            {
+                xArray.Add("Friday");
+            }
+            for (int i = 0; i < 24; i++)
+            {
+                xArray.Add("Saturday");
+            }
+            for (int i = 0; i < 24; i++)
+            {
+                xArray.Add("Sunday");
+            }
+            return xArray;
         }
     }
 }

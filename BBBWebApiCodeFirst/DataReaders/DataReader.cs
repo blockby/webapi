@@ -317,5 +317,23 @@ namespace BBBWebApiCodeFirst.DataReaders
 
             return weekendDTO;
         }
+
+        public AllWeekByHoursDTO ReadAllWeekByHoursDTO(NpgsqlDataReader reader)
+        {
+            var obj = new JObject();
+
+            string day = reader.GetString(0);
+            double hour = reader.GetDouble(1);
+            int people = reader.GetInt32(2);
+
+            AllWeekByHoursDTO allWeekByHoursDTO = new AllWeekByHoursDTO()
+            {
+                Day = day,
+                Hour = hour,
+                People = people
+            };
+
+            return allWeekByHoursDTO;
+        }
     }
 }
