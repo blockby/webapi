@@ -46,7 +46,7 @@ namespace BBBWebApiCodeFirst.Controllers
 
         private JObject ExecuteQuery(string id_location)
         {
-            string _selectString = "SELECT a.id_day, b.name_day AS day, COUNT(a.src) AS people FROM collected_data a INNER JOIN days b ON a.id_day = b.id_day WHERE a.id_location = "+id_location+" GROUP BY a.id_day,b.name_day ORDER BY a.id_day";
+            string _selectString = "SELECT a.id_day, b.name_day AS day, COUNT(DISTINCT a.src) AS people FROM collected_data a INNER JOIN days b ON a.id_day = b.id_day WHERE a.id_location = " + id_location+" GROUP BY a.id_day,b.name_day ORDER BY a.id_day";
 
             using (var conn = new NpgsqlConnection(connectionString))
             {

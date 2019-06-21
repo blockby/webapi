@@ -155,6 +155,7 @@ namespace BBBWebApiCodeFirst.Converters
                 var individualObj = new JObject();
                 individualObj.Add("id_day", item.IdDay);
                 individualObj.Add("title", "Full Days");
+                individualObj.Add("xAxis", item.Day);
                 individualObj.Add("yAxis", item.People);
                 objArray.Add(individualObj);
             }
@@ -1112,11 +1113,10 @@ namespace BBBWebApiCodeFirst.Converters
             yAxisArray.Insert(3, JArray.FromObject(yAxisActivityByPeriodPasserbyArray));
             yAxisArray.Insert(4, JArray.FromObject(yAxisActivityByPeriodLeisureArray));
             
-
             obj.Add("title", title);
             obj.Add("xAxis", periodArray);
             obj.Add("legend", activityArray);            
-            obj.Add("yAxisActivity", yAxisArray);            
+            obj.Add("yAxis", yAxisArray);            
 
             JObject finalObj = new JObject();
             finalObj.Add("data", obj);
@@ -1893,8 +1893,10 @@ namespace BBBWebApiCodeFirst.Converters
             individualObj.Add("title", "All week by hours");
 
             JArray xJArray = getXArray();
+            JArray zJArray = getZArray();
             individualObj.Add("x", xJArray);
             individualObj.Add("y", yJArray);
+            individualObj.Add("z", zJArray);
 
             obj.Add("data", individualObj);
             return obj;
@@ -1933,6 +1935,23 @@ namespace BBBWebApiCodeFirst.Converters
                 xArray.Add("Sunday");
             }
             return xArray;
+        }
+
+        public JArray getZArray()
+        {
+            JArray zArray = new JArray();
+
+            for (int i = 0; i < 7; i++)
+            {
+                for (int x = 0; x < 24; x++)
+                {
+                    zArray.Add(x);
+                }
+            }
+            return zArray;
+
+            
+
         }
     }
 }
