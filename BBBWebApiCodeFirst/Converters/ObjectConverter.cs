@@ -1163,92 +1163,92 @@ namespace BBBWebApiCodeFirst.Converters
                 {
                     if (item.NamePeriod == "Morning")
                     {
-                        if (item.Day == "Monday")
+                        if (item.IdDay == 1)
                         {
                             yAxisPeriodArrayMorningLive[0] = item.People;
                         }
-                        if (item.Day == "Tuesday")
+                        if (item.IdDay == 2)
                         {
                             yAxisPeriodArrayMorningLive[1] = item.People;
                         }
-                        if (item.Day == "Wednesday")
+                        if (item.IdDay == 3)
                         {
                             yAxisPeriodArrayMorningLive[2] = item.People;
                         }
-                        if (item.Day == "Thursday")
+                        if (item.IdDay == 4)
                         {
                             yAxisPeriodArrayMorningLive[3] = item.People;
                         }
-                        if (item.Day == "Friday")
+                        if (item.IdDay == 5)
                         {
                             yAxisPeriodArrayMorningLive[4] = item.People;
                         }
                     }
                     if (item.NamePeriod == "Afternoon")
                     {
-                        if (item.Day == "Monday")
+                        if (item.IdDay == 1)
                         {
                             yAxisPeriodArrayAfternoonLive[0] = item.People;
                         }
-                        if (item.Day == "Tuesday")
+                        if (item.IdDay == 2)
                         {
                             yAxisPeriodArrayAfternoonLive[1] = item.People;
                         }
-                        if (item.Day == "Wednesday")
+                        if (item.IdDay == 3)
                         {
                             yAxisPeriodArrayAfternoonLive[2] = item.People;
                         }
-                        if (item.Day == "Thursday")
+                        if (item.IdDay == 4)
                         {
                             yAxisPeriodArrayAfternoonLive[3] = item.People;
                         }
-                        if (item.Day == "Friday")
+                        if (item.IdDay == 5)
                         {
                             yAxisPeriodArrayAfternoonLive[4] = item.People;
                         }
                     }
                     if (item.NamePeriod == "Evening")
                     {
-                        if (item.Day == "Monday")
+                        if (item.IdDay == 1)
                         {
                             yAxisPeriodArrayEveningLive[0] = item.People;
                         }
-                        if (item.Day == "Tuesday")
+                        if (item.IdDay == 2)
                         {
                             yAxisPeriodArrayEveningLive[1] = item.People;
                         }
-                        if (item.Day == "Wednesday")
+                        if (item.IdDay == 3)
                         {
                             yAxisPeriodArrayEveningLive[2] = item.People;
                         }
-                        if (item.Day == "Thursday")
+                        if (item.IdDay == 4)
                         {
                             yAxisPeriodArrayEveningLive[3] = item.People;
                         }
-                        if (item.Day == "Friday")
+                        if (item.IdDay == 5)
                         {
                             yAxisPeriodArrayEveningLive[4] = item.People;
                         }
                     }
                     if (item.NamePeriod == "Night")
                     {
-                        if (item.Day == "Monday")
+                        if (item.IdDay == 1)
                         {
                             yAxisPeriodArrayNightLive[0] = item.People;
                         }
-                        if (item.Day == "Tuesday")
+                        if (item.IdDay == 2)
                         {
                             yAxisPeriodArrayNightLive[1] = item.People;
                         }
-                        if (item.Day == "Wednesday")
+                        if (item.IdDay == 3)
                         {
                             yAxisPeriodArrayNightLive[2] = item.People;
                         }
-                        if (item.Day == "Thursday")
+                        if (item.IdDay == 4)
                         {
                             yAxisPeriodArrayNightLive[3] = item.People;
                         }
-                        if (item.Day == "Friday")
+                        if (item.IdDay == 5)
                         {
                             yAxisPeriodArrayNightLive[4] = item.People;
                         }
@@ -1258,92 +1258,92 @@ namespace BBBWebApiCodeFirst.Converters
                 {
                     if (item.NamePeriod == "Morning")
                     {
-                        if (item.Day == "Monday")
+                        if (item.IdDay == 1)
                         {
                             yAxisPeriodArrayMorningWork[0] = item.People;
                         }
-                        if (item.Day == "Tuesday")
+                        if (item.IdDay == 2)
                         {
                             yAxisPeriodArrayMorningWork[1] = item.People;
                         }
-                        if (item.Day == "Wednesday")
+                        if (item.IdDay == 3)
                         {
                             yAxisPeriodArrayMorningWork[2] = item.People;
                         }
-                        if (item.Day == "Thursday")
+                        if (item.IdDay == 4)
                         {
                             yAxisPeriodArrayMorningWork[3] = item.People;
                         }
-                        if (item.Day == "Friday")
+                        if (item.IdDay == 5)
                         {
                             yAxisPeriodArrayMorningWork[4] = item.People;
                         }
                     }
                     if (item.NamePeriod == "Afternoon")
                     {
-                        if (item.Day == "Monday")
+                        if (item.IdDay == 1)
                         {
                             yAxisPeriodArrayAfternoonWork[0] = item.People;
                         }
-                        if (item.Day == "Tuesday")
+                        if (item.IdDay == 2)
                         {
                             yAxisPeriodArrayAfternoonWork[1] = item.People;
                         }
-                        if (item.Day == "Wednesday")
+                        if (item.IdDay == 3)
                         {
                             yAxisPeriodArrayAfternoonWork[2] = item.People;
                         }
-                        if (item.Day == "Thursday")
+                        if (item.IdDay == 4)
                         {
                             yAxisPeriodArrayAfternoonWork[3] = item.People;
                         }
-                        if (item.Day == "Friday")
+                        if (item.IdDay == 5)
                         {
                             yAxisPeriodArrayAfternoonWork[4] = item.People;
                         }
                     }
                     if (item.NamePeriod == "Evening")
                     {
-                        if (item.Day == "Monday")
+                        if (item.IdDay == 1)
                         {
                             yAxisPeriodArrayEveningWork[0] = item.People;
                         }
-                        if (item.Day == "Tuesday")
+                        if (item.IdDay == 2)
                         {
                             yAxisPeriodArrayEveningWork[1] = item.People;
                         }
-                        if (item.Day == "Wednesday")
+                        if (item.IdDay == 3)
                         {
                             yAxisPeriodArrayEveningWork[2] = item.People;
                         }
-                        if (item.Day == "Thursday")
+                        if (item.IdDay == 4)
                         {
                             yAxisPeriodArrayEveningWork[3] = item.People;
                         }
-                        if (item.Day == "Friday")
+                        if (item.IdDay == 5)
                         {
                             yAxisPeriodArrayEveningWork[4] = item.People;
                         }
                     }
                     if (item.NamePeriod == "Night")
                     {
-                        if (item.Day == "Monday")
+                        if (item.IdDay == 1)
                         {
                             yAxisPeriodArrayNightWork[0] = item.People;
                         }
-                        if (item.Day == "Tuesday")
+                        if (item.IdDay == 2)
                         {
                             yAxisPeriodArrayNightWork[1] = item.People;
                         }
-                        if (item.Day == "Wednesday")
+                        if (item.IdDay == 3)
                         {
                             yAxisPeriodArrayNightWork[2] = item.People;
                         }
-                        if (item.Day == "Thursday")
+                        if (item.IdDay == 4)
                         {
                             yAxisPeriodArrayNightWork[3] = item.People;
                         }
-                        if (item.Day == "Friday")
+                        if (item.IdDay == 5)
                         {
                             yAxisPeriodArrayNightWork[4] = item.People;
                         }
@@ -1353,92 +1353,92 @@ namespace BBBWebApiCodeFirst.Converters
                 {
                     if (item.NamePeriod == "Morning")
                     {
-                        if (item.Day == "Monday")
+                        if (item.IdDay == 1)
                         {
                             yAxisPeriodArrayMorningCommute[0] = item.People;
                         }
-                        if (item.Day == "Tuesday")
+                        if (item.IdDay == 2)
                         {
                             yAxisPeriodArrayMorningCommute[1] = item.People;
                         }
-                        if (item.Day == "Wednesday")
+                        if (item.IdDay == 3)
                         {
                             yAxisPeriodArrayMorningCommute[2] = item.People;
                         }
-                        if (item.Day == "Thursday")
+                        if (item.IdDay == 4)
                         {
                             yAxisPeriodArrayMorningCommute[3] = item.People;
                         }
-                        if (item.Day == "Friday")
+                        if (item.IdDay == 5)
                         {
                             yAxisPeriodArrayMorningCommute[4] = item.People;
                         }
                     }
                     if (item.NamePeriod == "Afternoon")
                     {
-                        if (item.Day == "Monday")
+                        if (item.IdDay == 1)
                         {
                             yAxisPeriodArrayAfternoonCommute[0] = item.People;
                         }
-                        if (item.Day == "Tuesday")
+                        if (item.IdDay == 2)
                         {
                             yAxisPeriodArrayAfternoonCommute[1] = item.People;
                         }
-                        if (item.Day == "Wednesday")
+                        if (item.IdDay == 3)
                         {
                             yAxisPeriodArrayAfternoonCommute[2] = item.People;
                         }
-                        if (item.Day == "Thursday")
+                        if (item.IdDay == 4)
                         {
                             yAxisPeriodArrayAfternoonCommute[3] = item.People;
                         }
-                        if (item.Day == "Friday")
+                        if (item.IdDay == 5)
                         {
                             yAxisPeriodArrayAfternoonCommute[4] = item.People;
                         }
                     }
                     if (item.NamePeriod == "Evening")
                     {
-                        if (item.Day == "Monday")
+                        if (item.IdDay == 1)
                         {
                             yAxisPeriodArrayEveningCommute[0] = item.People;
                         }
-                        if (item.Day == "Tuesday")
+                        if (item.IdDay == 2)
                         {
                             yAxisPeriodArrayEveningCommute[1] = item.People;
                         }
-                        if (item.Day == "Wednesday")
+                        if (item.IdDay == 3)
                         {
                             yAxisPeriodArrayEveningCommute[2] = item.People;
                         }
-                        if (item.Day == "Thursday")
+                        if (item.IdDay == 4)
                         {
                             yAxisPeriodArrayEveningCommute[3] = item.People;
                         }
-                        if (item.Day == "Friday")
+                        if (item.IdDay == 5)
                         {
                             yAxisPeriodArrayEveningCommute[4] = item.People;
                         }
                     }
                     if (item.NamePeriod == "Night")
                     {
-                        if (item.Day == "Monday")
+                        if (item.IdDay == 1)
                         {
                             yAxisPeriodArrayNightCommute[0] = item.People;
                         }
-                        if (item.Day == "Tuesday")
+                        if (item.IdDay == 2)
                         {
                             yAxisPeriodArrayNightCommute[1] = item.People;
                         }
-                        if (item.Day == "Wednesday")
+                        if (item.IdDay == 3)
                         {
                             yAxisPeriodArrayNightCommute[2] = item.People;
                         }
-                        if (item.Day == "Thursday")
+                        if (item.IdDay == 4)
                         {
                             yAxisPeriodArrayNightCommute[3] = item.People;
                         }
-                        if (item.Day == "Friday")
+                        if (item.IdDay == 5)
                         {
                             yAxisPeriodArrayNightCommute[4] = item.People;
                         }
@@ -1448,92 +1448,92 @@ namespace BBBWebApiCodeFirst.Converters
                 {
                     if (item.NamePeriod == "Morning")
                     {
-                        if (item.Day == "Monday")
+                        if (item.IdDay == 1)
                         {
                             yAxisPeriodArrayMorningPasserBy[0] = item.People;
                         }
-                        if (item.Day == "Tuesday")
+                        if (item.IdDay == 2)
                         {
                             yAxisPeriodArrayMorningPasserBy[1] = item.People;
                         }
-                        if (item.Day == "Wednesday")
+                        if (item.IdDay == 3)
                         {
                             yAxisPeriodArrayMorningPasserBy[2] = item.People;
                         }
-                        if (item.Day == "Thursday")
+                        if (item.IdDay == 4)
                         {
                             yAxisPeriodArrayMorningPasserBy[3] = item.People;
                         }
-                        if (item.Day == "Friday")
+                        if (item.IdDay == 5)
                         {
                             yAxisPeriodArrayMorningPasserBy[4] = item.People;
                         }
                     }
                     if (item.NamePeriod == "Afternoon")
                     {
-                        if (item.Day == "Monday")
+                        if (item.IdDay == 1)
                         {
                             yAxisPeriodArrayAfternoonPasserBy[0] = item.People;
                         }
-                        if (item.Day == "Tuesday")
+                        if (item.IdDay == 2)
                         {
                             yAxisPeriodArrayAfternoonPasserBy[1] = item.People;
                         }
-                        if (item.Day == "Wednesday")
+                        if (item.IdDay == 3)
                         {
                             yAxisPeriodArrayAfternoonPasserBy[2] = item.People;
                         }
-                        if (item.Day == "Thursday")
+                        if (item.IdDay == 4)
                         {
                             yAxisPeriodArrayAfternoonPasserBy[3] = item.People;
                         }
-                        if (item.Day == "Friday")
+                        if (item.IdDay == 5)
                         {
                             yAxisPeriodArrayAfternoonPasserBy[4] = item.People;
                         }
                     }
                     if (item.NamePeriod == "Evening")
                     {
-                        if (item.Day == "Monday")
+                        if (item.IdDay == 1)
                         {
                             yAxisPeriodArrayEveningPasserBy[0] = item.People;
                         }
-                        if (item.Day == "Tuesday")
+                        if (item.IdDay == 2)
                         {
                             yAxisPeriodArrayEveningPasserBy[1] = item.People;
                         }
-                        if (item.Day == "Wednesday")
+                        if (item.IdDay == 3)
                         {
                             yAxisPeriodArrayEveningPasserBy[2] = item.People;
                         }
-                        if (item.Day == "Thursday")
+                        if (item.IdDay == 4)
                         {
                             yAxisPeriodArrayEveningPasserBy[3] = item.People;
                         }
-                        if (item.Day == "Friday")
+                        if (item.IdDay == 5)
                         {
                             yAxisPeriodArrayEveningPasserBy[4] = item.People;
                         }
                     }
                     if (item.NamePeriod == "Night")
                     {
-                        if (item.Day == "Monday")
+                        if (item.IdDay == 1)
                         {
                             yAxisPeriodArrayNightPasserBy[0] = item.People;
                         }
-                        if (item.Day == "Tuesday")
+                        if (item.IdDay == 2)
                         {
                             yAxisPeriodArrayNightPasserBy[1] = item.People;
                         }
-                        if (item.Day == "Wednesday")
+                        if (item.IdDay == 3)
                         {
                             yAxisPeriodArrayNightPasserBy[2] = item.People;
                         }
-                        if (item.Day == "Thursday")
+                        if (item.IdDay == 4)
                         {
                             yAxisPeriodArrayNightPasserBy[3] = item.People;
                         }
-                        if (item.Day == "Friday")
+                        if (item.IdDay == 5)
                         {
                             yAxisPeriodArrayNightPasserBy[4] = item.People;
                         }
@@ -1543,92 +1543,92 @@ namespace BBBWebApiCodeFirst.Converters
                 {
                     if (item.NamePeriod == "Morning")
                     {
-                        if (item.Day == "Monday")
+                        if (item.IdDay == 1)
                         {
                             yAxisPeriodArrayMorningLeisure[0] = item.People;
                         }
-                        if (item.Day == "Tuesday")
+                        if (item.IdDay == 2)
                         {
                             yAxisPeriodArrayMorningLeisure[1] = item.People;
                         }
-                        if (item.Day == "Wednesday")
+                        if (item.IdDay == 3)
                         {
                             yAxisPeriodArrayMorningLeisure[2] = item.People;
                         }
-                        if (item.Day == "Thursday")
+                        if (item.IdDay == 4)
                         {
                             yAxisPeriodArrayMorningLeisure[3] = item.People;
                         }
-                        if (item.Day == "Friday")
+                        if (item.IdDay == 5)
                         {
                             yAxisPeriodArrayMorningLeisure[4] = item.People;
                         }
                     }
                     if (item.NamePeriod == "Afternoon")
                     {
-                        if (item.Day == "Monday")
+                        if (item.IdDay == 1)
                         {
                             yAxisPeriodArrayAfternoonLeisure[0] = item.People;
                         }
-                        if (item.Day == "Tuesday")
+                        if (item.IdDay == 2)
                         {
                             yAxisPeriodArrayAfternoonLeisure[1] = item.People;
                         }
-                        if (item.Day == "Wednesday")
+                        if (item.IdDay == 3)
                         {
                             yAxisPeriodArrayAfternoonLeisure[2] = item.People;
                         }
-                        if (item.Day == "Thursday")
+                        if (item.IdDay == 4)
                         {
                             yAxisPeriodArrayAfternoonLeisure[3] = item.People;
                         }
-                        if (item.Day == "Friday")
+                        if (item.IdDay == 5)
                         {
                             yAxisPeriodArrayAfternoonLeisure[4] = item.People;
                         }
                     }
                     if (item.NamePeriod == "Evening")
                     {
-                        if (item.Day == "Monday")
+                        if (item.IdDay == 1)
                         {
                             yAxisPeriodArrayEveningLeisure[0] = item.People;
                         }
-                        if (item.Day == "Tuesday")
+                        if (item.IdDay == 2)
                         {
                             yAxisPeriodArrayEveningLeisure[1] = item.People;
                         }
-                        if (item.Day == "Wednesday")
+                        if (item.IdDay == 3)
                         {
                             yAxisPeriodArrayEveningLeisure[2] = item.People;
                         }
-                        if (item.Day == "Thursday")
+                        if (item.IdDay == 4)
                         {
                             yAxisPeriodArrayEveningLeisure[3] = item.People;
                         }
-                        if (item.Day == "Friday")
+                        if (item.IdDay == 5)
                         {
                             yAxisPeriodArrayEveningLeisure[4] = item.People;
                         }
                     }
                     if (item.NamePeriod == "Night")
                     {
-                        if (item.Day == "Monday")
+                        if (item.IdDay == 1)
                         {
                             yAxisPeriodArrayNightLeisure[0] = item.People;
                         }
-                        if (item.Day == "Tuesday")
+                        if (item.IdDay == 2)
                         {
                             yAxisPeriodArrayNightLeisure[1] = item.People;
                         }
-                        if (item.Day == "Wednesday")
+                        if (item.IdDay == 3)
                         {
                             yAxisPeriodArrayNightLeisure[2] = item.People;
                         }
-                        if (item.Day == "Thursday")
+                        if (item.IdDay == 4)
                         {
                             yAxisPeriodArrayNightLeisure[3] = item.People;
                         }
-                        if (item.Day == "Friday")
+                        if (item.IdDay == 5)
                         {
                             yAxisPeriodArrayNightLeisure[4] = item.People;
                         }
