@@ -30,8 +30,8 @@ namespace BBBWebApiCodeFirst.Models
         [ForeignKey("id_day")]
         public Day day { get; set; }
 
-        public int id_day_period { get; set; }
-        [ForeignKey("id_day_period")]
+        public int id_period_day { get; set; }
+        [ForeignKey("id_period_day")]
         public Day_period day_period { get; set; }
 
         public string src { get; set; }

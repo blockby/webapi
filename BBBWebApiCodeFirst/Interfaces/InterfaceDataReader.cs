@@ -26,6 +26,7 @@ namespace BBBWebApiCodeFirst.Interfaces
         FullDaysByPeriodByActivityDTO ReadFullDaysByPeriodByActivityDTO(NpgsqlDataReader reader);
         WeekendDTO ReadWeekendDTO(NpgsqlDataReader reader);
         AllWeekByHoursDTO ReadAllWeekByHoursDTO(NpgsqlDataReader reader);
+        SharedLocationDTO ReadSharedLocationDTO(NpgsqlDataReader reader);
 
     }
 }

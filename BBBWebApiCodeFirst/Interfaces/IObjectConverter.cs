@@ -44,5 +44,7 @@ namespace BBBWebApiCodeFirst.Interfaces
 
         JObject AllWeekByHoursJson(List<AllWeekByHoursDTO> list);
 
+        JObject sharedLocationJson(List<SharedLocationDTO>list);
+
     }
 }

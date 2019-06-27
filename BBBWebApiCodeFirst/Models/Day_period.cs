@@ -11,7 +11,7 @@ namespace BBBWebApiCodeFirst.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int id_day_period { get; set; }
+        public int id_period_day { get; set; }
 
         public string name_period { get; set; }
     }

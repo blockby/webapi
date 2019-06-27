@@ -76,7 +76,7 @@ namespace BBBWebApiCodeFirst.DataReaders
 
         public ByDayPeriodDTO ReadByDayPeriodDTO(NpgsqlDataReader reader)
         {
-            int id_day = reader.GetInt32(0);
+            double id_day = reader.GetDouble(0);
             string day = reader.GetString(1);
             string name_period = reader.GetString(2);
             int people = reader.GetInt32(3);
@@ -144,7 +144,7 @@ namespace BBBWebApiCodeFirst.DataReaders
 
         public ByDayByActivityDTO ReadByDayByActivityDTO(NpgsqlDataReader reader)
         {
-            int id_day = reader.GetInt32(0);
+            double id_day = reader.GetDouble(0);
             string day = reader.GetString(1);
             string name_activity = reader.GetString(2);
             int people = reader.GetInt32(3);
@@ -219,7 +219,7 @@ namespace BBBWebApiCodeFirst.DataReaders
 
         public ByDayByPeriodByActivityDTO ReadByDayByPeriodByActivityDTO(NpgsqlDataReader reader)
         {
-            int id_day = reader.GetInt32(0);
+            double id_day = reader.GetDouble(0);
             string day = reader.GetString(1);
             string name_period = reader.GetString(2);
             string name_activity = reader.GetString(3);
@@ -239,7 +239,7 @@ namespace BBBWebApiCodeFirst.DataReaders
 
         public ByWeekdaysByPeriodByActivityDTO ReadByWeekdaysByPeriodByActivityDTO (NpgsqlDataReader reader)
         {
-            int id_day = reader.GetInt32(0);
+            double id_day = reader.GetDouble(0);
             string day = reader.GetString(1);
             string name_period = reader.GetString(2);
             string name_activity = reader.GetString(3);
@@ -260,7 +260,7 @@ namespace BBBWebApiCodeFirst.DataReaders
 
         public WeekendByPeriodByActivityDTO ReadWeekendByPeriodByActivityDTO(NpgsqlDataReader reader)
         {
-            int id_day = reader.GetInt32(0);
+            double id_day = reader.GetDouble(0);
             string day = reader.GetString(1);
             string name_period = reader.GetString(2);
             string name_activity = reader.GetString(3);
@@ -334,6 +334,34 @@ namespace BBBWebApiCodeFirst.DataReaders
             };
 
             return allWeekByHoursDTO;
+        }
+
+        public SharedLocationDTO ReadSharedLocationDTO(NpgsqlDataReader reader)
+        {
+            var obj = new JObject();
+
+            int id_location = reader.GetInt32(0);
+            int id_user = reader.GetInt32(1);
+            string owner = reader.GetString(2);
+            string address = reader.GetString(3);
+            string type_prop = reader.GetString(4);
+            double longitude = reader.GetDouble(5);
+            double latitude = reader.GetDouble(6);
+            bool state = reader.GetBoolean(7);
+            
+            SharedLocationDTO sharedLocationDTO = new SharedLocationDTO()
+            {
+                IdLocation = id_location,
+                IdUser = id_user,
+                Owner = owner,
+                Address = address,
+                TypeProp = type_prop,
+                Longitude = longitude,
+                Latitude = latitude,
+                State = state
+            };
+
+            return sharedLocationDTO;
         }
     }
 }
