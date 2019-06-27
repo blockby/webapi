@@ -59,17 +59,17 @@ namespace BBBWebApiCodeFirst.Controllers
                 {
                     using (var reader = cmd.ExecuteReader())
                     {
-                        List<WeekdaysDTO> WeekdaysDTOList = new List<WeekdaysDTO>();
+                        List<TypeDayDTO> WeekdaysDTOList = new List<TypeDayDTO>();
 
                         while (reader.Read())
                         {
                             InterfaceDataReader dataReader = new DataReader();
-                            WeekdaysDTO weekdaysDTO = dataReader.ReadWeekdaysDTO(reader);
+                            TypeDayDTO weekdaysDTO = dataReader.ReadTypeDayDTO(reader);
                             WeekdaysDTOList.Add(weekdaysDTO);
                         }
 
                         IObjectConverter objConverted = new ObjectConverter();
-                        var obj = objConverted.WeekdaysJson(WeekdaysDTOList);
+                        var obj = objConverted.TypeDayJson(WeekdaysDTOList);
 
                         return obj;
                     }

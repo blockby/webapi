@@ -10,7 +10,6 @@ namespace BBBWebApiCodeFirst.Interfaces
 {
     interface IObjectConverter
     {
-        JObject WeekdaysJson(List<WeekdaysDTO> list);
 
         JObject BydayJson(List<BydayDTO> list);
 
@@ -40,11 +39,13 @@ namespace BBBWebApiCodeFirst.Interfaces
 
         JObject FullDaysByPeriodByActivityJson(List<FullDaysByPeriodByActivityDTO> list);
 
-        JObject WeekendJson(List<WeekendDTO> list);
-
         JObject AllWeekByHoursJson(List<AllWeekByHoursDTO> list);
 
         JObject sharedLocationJson(List<SharedLocationDTO>list);
+
+        JObject TypeDayJson (List<TypeDayDTO> list);
+
+
 
     }
 }

@@ -132,8 +132,6 @@ namespace BBBWebApiCodeFirst.Converters
 
         }
 
-
-
         public JObject BydayJson(List<BydayDTO> list)
         {
 
@@ -154,7 +152,7 @@ namespace BBBWebApiCodeFirst.Converters
             return obj;
         }
 
-        public JObject WeekdaysJson(List<WeekdaysDTO> list)
+        public JObject TypeDayJson(List<TypeDayDTO> list)
         {
             var obj = new JObject();
             JArray objArray = new JArray();
@@ -164,16 +162,16 @@ namespace BBBWebApiCodeFirst.Converters
                 var individualObj = new JObject();
                 individualObj.Add("id_day", item.IdDay);
                 individualObj.Add("day", item.Day);
-                individualObj.Add("category", item.Category);
+                individualObj.Add("category", item.TypeDay);
                 individualObj.Add("people", item.People);
                 objArray.Add(individualObj);
             }
 
             obj.Add("data", objArray);
 
-
             return obj;
         }
+
 
         public JObject FulldaysJson(List<FullDaysDTO> list)
         {
@@ -2725,45 +2723,7 @@ namespace BBBWebApiCodeFirst.Converters
             return jObject;
         }
 
-        public JObject WeekendJson(List<WeekendDTO> list)
-        {
-            var obj = new JObject();
-           
-            var individualObjSaturday = new JObject();
-            var individualObjSunday = new JObject();
 
-
-            foreach (var item in list)
-            {
-                if (item.Day == "Saturday")
-                {
-                    
-                    individualObjSaturday.Add("id_day", item.IdDay);
-                    individualObjSaturday.Add("day", item.Day);
-                    individualObjSaturday.Add("category", "Weekend");
-                    individualObjSaturday.Add("people", item.People);
-                   
-                }
-                if (item.Day == "Sunday")
-                {
-                    
-                    individualObjSunday.Add("id_day", item.IdDay);
-                    individualObjSunday.Add("day", item.Day);
-                    individualObjSunday.Add("category", "Weekend");
-                    individualObjSunday.Add("people", item.People);
-                }              
-            }
-
-            JArray individualObj = new JArray();
-            individualObj.Add(individualObjSaturday);
-            individualObj.Add(individualObjSunday);       
-            
-
-            obj.Add("data", individualObj);
-
-
-            return obj;
-        }
 
         public JObject AllWeekByHoursJson(List<AllWeekByHoursDTO> list)
         {

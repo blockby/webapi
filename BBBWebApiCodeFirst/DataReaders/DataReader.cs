@@ -58,6 +58,26 @@ namespace BBBWebApiCodeFirst.DataReaders
             return weekdaysDTO;
         }
 
+        public TypeDayDTO ReadTypeDayDTO(NpgsqlDataReader reader)
+        {
+            var obj = new JObject();
+
+            double id_day = reader.GetDouble(0);
+            string day = reader.GetString(1);
+            string type_day = reader.GetString(2);
+            int people = reader.GetInt32(3);
+
+            TypeDayDTO typeDayDTO = new TypeDayDTO()
+            {
+                IdDay = id_day,
+                Day = day,
+                TypeDay = type_day,
+                People = people
+            };
+
+            return typeDayDTO;
+        }
+
         public FullDaysDTO ReadFulldaysDTO (NpgsqlDataReader reader)
         {
             double id_day = reader.GetDouble(0);
@@ -298,25 +318,6 @@ namespace BBBWebApiCodeFirst.DataReaders
             return fullDaysByPeriodByActivityDTO;
         }
 
-        public WeekendDTO ReadWeekendDTO(NpgsqlDataReader reader)
-        {
-            var obj = new JObject();
-
-            double id_day = reader.GetDouble(0);
-            string day = reader.GetString(1);
-            string type_day = reader.GetString(2);
-            int people = reader.GetInt32(3);
-
-            WeekendDTO weekendDTO = new WeekendDTO()
-            {
-                IdDay = id_day,
-                Day = day,
-                TypeDay = type_day,
-                People = people
-            };
-
-            return weekendDTO;
-        }
 
         public AllWeekByHoursDTO ReadAllWeekByHoursDTO(NpgsqlDataReader reader)
         {
