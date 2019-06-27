@@ -32,20 +32,17 @@ namespace BBBWebApiCodeFirst.Controllers
         [HttpPost("getbyday")]
         public async Task<JObject> GetByDay()
         {
-            string location;
-            string day;
-
             using (StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8))
             {
                 string result = await reader.ReadToEndAsync();
                 var locationObj = JObject.Parse(result)["id_location"];
                 var dayObj = JObject.Parse(result)["id_day"];
 
-                location = locationObj.ToObject<string>();
-                day = dayObj.ToObject<string>();                
-            }
+                string location = locationObj.ToObject<string>();
+                string day = dayObj.ToObject<string>();
 
-            return ExecuteQuery(location, day);
+                return ExecuteQuery(location, day);
+            }            
         }
 
         
