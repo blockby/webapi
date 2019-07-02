@@ -11,7 +11,7 @@ namespace BBBWebApiCodeFirst.DataTransferObjects
 
         public string Day { get; set; }
 
-        public string TypeDay { get; set; }
+        public int TypeDay { get; set; }
 
         public int People { get; set; }
     }

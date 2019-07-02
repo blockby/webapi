@@ -15,13 +15,13 @@ namespace BBBWebApiCodeFirst.Interfaces
 
         JObject FulldaysJson(List<FullDaysDTO> list);
 
-        JObject ByDayPeriodJson(List<ByDayPeriodDTO> list);
+        JObject ByDayPeriodJson(List<TypeDayByPeriodDTO> list);
 
-        JObject FullDaysByPeriodJson(List<FullDaysByPeriodDTO> list);
+        JObject FullDaysByPeriodJson(List<TypeDayByPeriodDTO> list);
 
-        JObject WeekDayByPeriodJson(List<WeekDayByPeriodDTO> list);
+        JObject WeekDayByPeriodJson(List<TypeDayByPeriodDTO> list);
 
-        JObject WeekendByPeriodJson(List<WeekendByPeriodDTO> list);
+        JObject WeekendByPeriodJson(List<TypeDayByPeriodDTO> list);
 
         JObject ByDayByActivityJson(List<ByDayByActivityDTO> list);
 
@@ -43,7 +43,7 @@ namespace BBBWebApiCodeFirst.Interfaces
 
         JObject sharedLocationJson(List<SharedLocationDTO>list);
 
-        JObject TypeDayJson (List<TypeDayDTO> list);
+        JObject TypeDayJson (List<TypeDayDTO> list, string typeday);
 
 
 

@@ -152,7 +152,7 @@ namespace BBBWebApiCodeFirst.Converters
             return obj;
         }
 
-        public JObject TypeDayJson(List<TypeDayDTO> list)
+        public JObject TypeDayJson(List<TypeDayDTO> list, string typeDay)
         {
             var obj = new JObject();
             JArray objArray = new JArray();
@@ -162,7 +162,7 @@ namespace BBBWebApiCodeFirst.Converters
                 var individualObj = new JObject();
                 individualObj.Add("id_day", item.IdDay);
                 individualObj.Add("day", item.Day);
-                individualObj.Add("category", item.TypeDay);
+                individualObj.Add("category", typeDay);
                 individualObj.Add("people", item.People);
                 objArray.Add(individualObj);
             }
@@ -171,6 +171,8 @@ namespace BBBWebApiCodeFirst.Converters
 
             return obj;
         }
+
+        
 
 
         public JObject FulldaysJson(List<FullDaysDTO> list)
@@ -192,7 +194,7 @@ namespace BBBWebApiCodeFirst.Converters
             return obj;
         }
 
-        public JObject ByDayPeriodJson(List<ByDayPeriodDTO> list)
+        public JObject ByDayPeriodJson(List<TypeDayByPeriodDTO> list)
         {
             var obj = new JObject();
             JArray objArray = new JArray();
@@ -213,7 +215,7 @@ namespace BBBWebApiCodeFirst.Converters
         }
 
 
-        public JObject FullDaysByPeriodJson(List<FullDaysByPeriodDTO> list)
+        public JObject FullDaysByPeriodJson(List<TypeDayByPeriodDTO> list)
         {
             var obj = new JObject();
 
@@ -372,7 +374,7 @@ namespace BBBWebApiCodeFirst.Converters
             return finalObj;
         }
 
-        public JObject WeekDayByPeriodJson(List<WeekDayByPeriodDTO> list)
+        public JObject WeekDayByPeriodJson(List<TypeDayByPeriodDTO> list)
         {
             var obj = new JObject();
 
@@ -492,7 +494,7 @@ namespace BBBWebApiCodeFirst.Converters
             return finalObj;
         }
 
-        public JObject WeekendByPeriodJson(List<WeekendByPeriodDTO> list)
+        public JObject WeekendByPeriodJson(List<TypeDayByPeriodDTO> list)
         {
             var obj = new JObject();
 

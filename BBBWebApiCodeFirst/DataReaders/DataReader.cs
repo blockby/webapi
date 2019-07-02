@@ -38,25 +38,7 @@ namespace BBBWebApiCodeFirst.DataReaders
             return bydayDTO;
         }
 
-        public WeekdaysDTO ReadWeekdaysDTO (NpgsqlDataReader reader)
-        {
-            var obj = new JObject();
-
-            double id_day = reader.GetDouble(0);
-            string day = reader.GetString(1);
-            string category = reader.GetString(2);
-            int people = reader.GetInt32(3);
-
-            WeekdaysDTO weekdaysDTO = new WeekdaysDTO()
-            {
-                IdDay = id_day,
-                Day = day,
-                Category = category,
-                People = people
-            };
-
-            return weekdaysDTO;
-        }
+        
 
         public TypeDayDTO ReadTypeDayDTO(NpgsqlDataReader reader)
         {
@@ -64,7 +46,7 @@ namespace BBBWebApiCodeFirst.DataReaders
 
             double id_day = reader.GetDouble(0);
             string day = reader.GetString(1);
-            string type_day = reader.GetString(2);
+            int type_day = reader.GetInt32(2);
             int people = reader.GetInt32(3);
 
             TypeDayDTO typeDayDTO = new TypeDayDTO()
@@ -128,14 +110,14 @@ namespace BBBWebApiCodeFirst.DataReaders
             return byDayPeriodDTO;
         }
 
-        public WeekDayByPeriodDTO ReadWeekDayByPeriodDTO(NpgsqlDataReader reader)
+        public TypeDayByPeriodDTO ReadTypeDayByPeriodDTO(NpgsqlDataReader reader)
         {
             double id_day = reader.GetDouble(0);
             string day = reader.GetString(1);
             string name_period = reader.GetString(2);
             int people = reader.GetInt32(3);
 
-            WeekDayByPeriodDTO weekDayByPeriodDTO = new WeekDayByPeriodDTO()
+            TypeDayByPeriodDTO weekDayByPeriodDTO = new TypeDayByPeriodDTO()
             {
                 IdDay = id_day,
                 Day = day,
@@ -143,23 +125,6 @@ namespace BBBWebApiCodeFirst.DataReaders
                 People = people
             };
             return weekDayByPeriodDTO;
-        }
-
-        public WeekendByPeriodDTO ReadWeekendByPeriodDTO (NpgsqlDataReader reader)
-        {
-            double id_day = reader.GetDouble(0);
-            string day = reader.GetString(1);
-            string name_period = reader.GetString(2);
-            int people = reader.GetInt32(3);
-
-            WeekendByPeriodDTO weekendByPeriodDTO = new WeekendByPeriodDTO()
-            {
-                IdDay = id_day,
-                Day = day,
-                NamePeriod = name_period,
-                People = people
-            };
-            return weekendByPeriodDTO;
         }
 
         public ByDayByActivityDTO ReadByDayByActivityDTO(NpgsqlDataReader reader)

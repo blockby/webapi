@@ -52,5 +52,9 @@ namespace BBBWebApiCodeFirst.Models
         [ForeignKey("id_activity")]
         public Activity activity { get; set; }
 
+        public int hours { get; set; }
+
+        public int id_type_day { get; set; }
+
     }
 }

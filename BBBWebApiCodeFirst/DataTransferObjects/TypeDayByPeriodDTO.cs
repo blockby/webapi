@@ -5,14 +5,11 @@ using System.Threading.Tasks;
 
 namespace BBBWebApiCodeFirst.DataTransferObjects
 {
-    public class WeekdaysDTO
+    public class TypeDayByPeriodDTO
     {
         public double IdDay { get; set; }
-
         public string Day { get; set; }
-
-        public string Category { get; set; }
-
+        public string NamePeriod { get; set; }
         public int People { get; set; }
     }
 }
