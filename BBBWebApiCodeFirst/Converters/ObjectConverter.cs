@@ -18,115 +18,19 @@ namespace BBBWebApiCodeFirst.Converters
         private JArray weekdayArray = JArray.Parse(@"['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']");
         private JArray periodArray = JArray.Parse(@"['Morning', 'Afternoon', 'Evening', 'Night']");
         private JArray activityArray = JArray.Parse(@"['Living', 'Working', 'Commuters', 'Passer-by', 'Leisure/Fun']");
+
+        private JObject obj;
+        private JObject finalObj;
         JArray yAxisArray = new JArray();
-
-        JArray morningArray = new JArray();
-        JArray afternoonArray = new JArray();
-        JArray eveningArray = new JArray();
-        JArray nightArray = new JArray();
-
-        JArray liveArray = new JArray();
-        JArray workArray = new JArray();
-        JArray leisureArray = new JArray();
-        JArray commuteArray = new JArray();
-        JArray passerByArray = new JArray();
 
         JArray yAxisActivityJArray = new JArray();
         JArray yAxisPeriodJArray = new JArray();
         
-
         int[] yAxisActivityArray = new int[5];
         int[] yAxisPeriodArray = new int[4];
 
-        int[] yAxisActivityArrayMonday = new int[5];
-        int[] yAxisActivityArrayTuesday = new int[5];
-        int[] yAxisActivityArrayWednesday = new int[5];
-        int[] yAxisActivityArrayThursday = new int[5];
-        int[] yAxisActivityArrayFriday = new int[5];
-        int[] yAxisActivityArraySaturday = new int[5];
-        int[] yAxisActivityArraySunday = new int[5];
-
-        int[] yAxisPeriodArrayMonday = new int[4];
-        int[] yAxisPeriodArrayTuesday = new int[4];
-        int[] yAxisPeriodArrayWednesday = new int[4];
-        int[] yAxisPeriodArrayThursday = new int[4];
-        int[] yAxisPeriodArrayFriday = new int[4];
-        int[] yAxisPeriodArraySaturday = new int[4];
-        int[] yAxisPeriodArraySunday = new int[4];
-
-       
-
-        int[] yAxisActivityArrayLive = new int[5];
-        int[] yAxisActivityArrayWork = new int[5];
-        int[] yAxisActivityArrayCommute = new int[5];
-        int[] yAxisActivityArrayPasserBy = new int[5];
-        int[] yAxisActivityArrayLeisure = new int[5];
-
-        int[] yAxisPeriodArrayMorning = new int[5];
-        int[] yAxisPeriodArrayAfternoon = new int[5];
-        int[] yAxisPeriodArrayEvening = new int[5];
-        int[] yAxisPeriodArrayNight = new int[5];
-
-        int[] yAxisActivityArrayWeekendLive = new int[2];
-        int[] yAxisActivityArrayWeekendWork = new int[2];
-        int[] yAxisActivityArrayWeekendCommute = new int[2];
-        int[] yAxisActivityArrayWeekendPasserBy = new int[2];
-        int[] yAxisActivityArrayWeekendLeisure = new int[2];
-
-        int[] yAxisPeriodArrayWeekendMorning = new int[2];
-        int[] yAxisPeriodArrayWeekendAfternoon = new int[2];
-        int[] yAxisPeriodArrayWeekendEvening = new int[2];
-        int[] yAxisPeriodArrayWeekendNight = new int[2];
-
-        int[] yAxisActivityArrayFullDaysLive = new int[7];
-        int[] yAxisActivityArrayFullDaysWork = new int[7];
-        int[] yAxisActivityArrayFullDaysCommute = new int[7];
-        int[] yAxisActivityArrayFullDaysPasserBy = new int[7];
-        int[] yAxisActivityArrayFullDaysLeisure = new int[7];
-
-        int[] yAxisPeriodArrayFullDaysMorning = new int[7];
-        int[] yAxisPeriodArrayFullDaysAfternoon = new int[7];
-        int[] yAxisPeriodArrayFullDaysEvening = new int[7];
-        int[] yAxisPeriodArrayFullDaysNight = new int[7];
-
-        int[] yAxisActivityByPeriodLiveArray = new int[4];
-        int[] yAxisActivityByPeriodWorkArray = new int[4];
-        int[] yAxisActivityByPeriodCommuteArray = new int[4];
-        int[] yAxisActivityByPeriodPasserbyArray = new int[4];
-        int[] yAxisActivityByPeriodLeisureArray = new int[4];
-
-        int[][] jaggedArrayLive = new int[4][];
-        int[][] jaggedArrayWork = new int[4][];
-        int[][] jaggedArrayCommute = new int[4][];
-        int[][] jaggedArrayPasserBy = new int[4][];
-        int[][] jaggedArrayLeisure = new int[4][];
-
-        int[] yAxisPeriodArrayMorningLive = new int[5];
-        int[] yAxisPeriodArrayAfternoonLive = new int[5];
-        int[] yAxisPeriodArrayEveningLive = new int[5];
-        int[] yAxisPeriodArrayNightLive = new int[5];
-
-        int[] yAxisPeriodArrayMorningWork = new int[5];
-        int[] yAxisPeriodArrayAfternoonWork = new int[5];
-        int[] yAxisPeriodArrayEveningWork = new int[5];
-        int[] yAxisPeriodArrayNightWork = new int[5];
-
-        int[] yAxisPeriodArrayMorningCommute = new int[5];
-        int[] yAxisPeriodArrayAfternoonCommute = new int[5];
-        int[] yAxisPeriodArrayEveningCommute = new int[5];
-        int[] yAxisPeriodArrayNightCommute = new int[5];
-
-        int[] yAxisPeriodArrayMorningPasserBy = new int[5];
-        int[] yAxisPeriodArrayAfternoonPasserBy = new int[5];
-        int[] yAxisPeriodArrayEveningPasserBy = new int[5];
-        int[] yAxisPeriodArrayNightPasserBy = new int[5];
-
-        int[] yAxisPeriodArrayMorningLeisure = new int[5];
-        int[] yAxisPeriodArrayAfternoonLeisure = new int[5];
-        int[] yAxisPeriodArrayEveningLeisure = new int[5];
-        int[] yAxisPeriodArrayNightLeisure = new int[5];
-
-
+        JArray objArray = new JArray();  
+        
         public ObjectConverter()
         {
 
@@ -134,55 +38,45 @@ namespace BBBWebApiCodeFirst.Converters
 
         public JObject BydayJson(List<BydayDTO> list)
         {
-
-            var obj = new JObject();
-            JArray objArray = new JArray();
+            obj = new JObject();
 
             foreach (var item in list)
             {
-                var individualObj = new JObject();
+                JObject individualObj = new JObject();
                 individualObj.Add("day", item.Day);
                 individualObj.Add("hour", item.Hour);
                 individualObj.Add("people", item.People);
                 objArray.Add(individualObj);
             }
-
             obj.Add("data", objArray);
-
             return obj;
         }
 
+
         public JObject TypeDayJson(List<TypeDayDTO> list, string typeDay)
         {
-            var obj = new JObject();
-            JArray objArray = new JArray();
+            obj = new JObject();
 
             foreach (var item in list)
             {
-                var individualObj = new JObject();
+                JObject individualObj = new JObject();
                 individualObj.Add("id_day", item.IdDay);
                 individualObj.Add("day", item.Day);
                 individualObj.Add("category", typeDay);
                 individualObj.Add("people", item.People);
                 objArray.Add(individualObj);
             }
-
             obj.Add("data", objArray);
-
             return obj;
         }
 
-        
-
-
         public JObject FulldaysJson(List<FullDaysDTO> list)
         {
-            var obj = new JObject();
-            JArray objArray = new JArray();
+            obj = new JObject();
 
             foreach (var item in list)
             {
-                var individualObj = new JObject();
+                JObject individualObj = new JObject();
                 individualObj.Add("id_day", item.IdDay);
                 individualObj.Add("title", "All Week by Days");
                 individualObj.Add("xAxis", item.Day);
@@ -190,22 +84,19 @@ namespace BBBWebApiCodeFirst.Converters
                 objArray.Add(individualObj);
             }
             obj.Add("data", objArray);
-
             return obj;
         }
 
-        public JObject ByDayPeriodJson(List<TypeDayByPeriodDTO> list)
+        public JObject ByDayPeriodJson(List<DayByTypeDTO> list)
         {
-            var obj = new JObject();
-            JArray objArray = new JArray();
+            obj = new JObject();
 
             foreach (var item in list)
             {
-                var individualObj = new JObject();
-
+                JObject individualObj = new JObject();
                 individualObj.Add("id", item.IdDay);
                 individualObj.Add("title", item.Day);
-                individualObj.Add("xAxis", item.NamePeriod);
+                individualObj.Add("xAxis", item.Type);
                 individualObj.Add("yAxis", item.People);
                 objArray.Add(individualObj);
             }
@@ -215,142 +106,146 @@ namespace BBBWebApiCodeFirst.Converters
         }
 
 
-        public JObject FullDaysByPeriodJson(List<TypeDayByPeriodDTO> list)
+        public JObject FullDaysByPeriodJson(List<DayByTypeDTO> list)
         {
-            var obj = new JObject();
+            obj = new JObject();
+
+            JArray morningArray = new JArray();
+            JArray afternoonArray = new JArray();
+            JArray eveningArray = new JArray();
+            JArray nightArray = new JArray();
 
             foreach (var item in list)
             {
-
                 if (item.IdDay == 1)
                 {
-                    if (item.NamePeriod == "Morning")
+                    if (item.Type == "Morning")
                     {
                         morningArray.Insert(0, item.People);
                     }
-                    if (item.NamePeriod == "Afternoon")
+                    if (item.Type == "Afternoon")
                     {
                         afternoonArray.Insert(0, item.People);
                     }
-                    if (item.NamePeriod == "Evening")
+                    if (item.Type == "Evening")
                     {
                         eveningArray.Insert(0, item.People);
                     }
-                    if (item.NamePeriod == "Night")
+                    if (item.Type == "Night")
                     {
                         nightArray.Insert(0, item.People);
                     }
                 }
                 if (item.IdDay == 2)
                 {
-                    if (item.NamePeriod == "Morning")
+                    if (item.Type == "Morning")
                     {
                         morningArray.Insert(1, item.People);
                     }
-                    if (item.NamePeriod == "Afternoon")
+                    if (item.Type == "Afternoon")
                     {
                         afternoonArray.Insert(1, item.People);
                     }
-                    if (item.NamePeriod == "Evening")
+                    if (item.Type == "Evening")
                     {
                         eveningArray.Insert(1, item.People);
                     }
-                    if (item.NamePeriod == "Night")
+                    if (item.Type == "Night")
                     {
                         nightArray.Insert(1, item.People);
                     }
                 }
                 if (item.IdDay == 3)
                 {
-                    if (item.NamePeriod == "Morning")
+                    if (item.Type == "Morning")
                     {
                         morningArray.Insert(2, item.People);
                     }
-                    if (item.NamePeriod == "Afternoon")
+                    if (item.Type == "Afternoon")
                     {
                         afternoonArray.Insert(2, item.People);
                     }
-                    if (item.NamePeriod == "Evening")
+                    if (item.Type == "Evening")
                     {
                         eveningArray.Insert(2, item.People);
                     }
-                    if (item.NamePeriod == "Night")
+                    if (item.Type == "Night")
                     {
                         nightArray.Insert(2, item.People);
                     }
                 }
                 if (item.IdDay == 4)
                 {
-                    if (item.NamePeriod == "Morning")
+                    if (item.Type == "Morning")
                     {
                         morningArray.Insert(3, item.People);
                     }
-                    if (item.NamePeriod == "Afternoon")
+                    if (item.Type == "Afternoon")
                     {
                         afternoonArray.Insert(3, item.People);
                     }
-                    if (item.NamePeriod == "Evening")
+                    if (item.Type == "Evening")
                     {
                         eveningArray.Insert(3, item.People);
                     }
-                    if (item.NamePeriod == "Night")
+                    if (item.Type == "Night")
                     {
                         nightArray.Insert(3, item.People);
                     }
                 }
                 if (item.IdDay == 5)
                 {
-                    if (item.NamePeriod == "Morning")
+                    if (item.Type == "Morning")
                     {
                         morningArray.Insert(4, item.People);
                     }
-                    if (item.NamePeriod == "Afternoon")
+                    if (item.Type == "Afternoon")
                     {
                         afternoonArray.Insert(4, item.People);
                     }
-                    if (item.NamePeriod == "Evening")
+                    if (item.Type == "Evening")
                     {
                         eveningArray.Insert(4, item.People);
                     }
-                    if (item.NamePeriod == "Night")
+                    if (item.Type == "Night")
                     {
                         nightArray.Insert(4, item.People);
                     }
                 }
                 if (item.IdDay == 6)
                 {
-                    if (item.NamePeriod == "Morning")
+                    if (item.Type == "Morning")
                     {
                         morningArray.Insert(5, item.People);
                     }
-                    if (item.NamePeriod == "Afternoon")
+                    if (item.Type == "Afternoon")
                     {
                         afternoonArray.Insert(5, item.People);
                     }
-                    if (item.NamePeriod == "Evening")
+                    if (item.Type == "Evening")
                     {
                         eveningArray.Insert(5, item.People);
                     }
-                    if (item.NamePeriod == "Night")
+                    if (item.Type == "Night")
                     {
                         nightArray.Insert(5, item.People);
                     }
                 }
                 if (item.IdDay == 7)
                 {
-                    if (item.NamePeriod == "Morning")
+                    if (item.Type == "Morning")
                     {
                         morningArray.Insert(6, item.People);
                     }
-                    if (item.NamePeriod == "Afternoon")
+                    if (item.Type == "Afternoon")
                     {
                         afternoonArray.Insert(6, item.People);
                     }
-                    if (item.NamePeriod == "Evening")
+                    if (item.Type == "Evening")
                     {
                         eveningArray.Insert(6, item.People);
                     }
-                    if (item.NamePeriod == "Night")
+                    if (item.Type == "Night")
                     {
                         nightArray.Insert(6, item.People);
                     }
@@ -367,111 +262,116 @@ namespace BBBWebApiCodeFirst.Converters
             obj.Add("xAxis", daysArray);
             obj.Add("legend", periodArray);
             obj.Add("yAxis", yAxisArray);
-
-            JObject finalObj = new JObject();
+            finalObj = new JObject();
             finalObj.Add("data", obj);
 
             return finalObj;
         }
 
-        public JObject WeekDayByPeriodJson(List<TypeDayByPeriodDTO> list)
+
+        public JObject WeekDayByPeriodJson(List<DayByTypeDTO> list)
         {
-            var obj = new JObject();
+            obj = new JObject();
+
+            JArray morningArray = new JArray();
+            JArray afternoonArray = new JArray();
+            JArray eveningArray = new JArray();
+            JArray nightArray = new JArray();
 
             foreach (var item in list)
             {
 
                 if (item.IdDay == 1)
                 {
-                    if (item.NamePeriod == "Morning")
+                    if (item.Type == "Morning")
                     {
                         morningArray.Insert(0, item.People);
                     }
-                    if (item.NamePeriod == "Afternoon")
+                    if (item.Type == "Afternoon")
                     {
                         afternoonArray.Insert(0, item.People);
                     }
-                    if (item.NamePeriod == "Evening")
+                    if (item.Type == "Evening")
                     {
                         eveningArray.Insert(0, item.People);
                     }
-                    if (item.NamePeriod == "Night")
+                    if (item.Type == "Night")
                     {
                         nightArray.Insert(0, item.People);
                     }
                 }
                 if (item.IdDay == 2)
                 {
-                    if (item.NamePeriod == "Morning")
+                    if (item.Type == "Morning")
                     {
                         morningArray.Insert(1, item.People);
                     }
-                    if (item.NamePeriod == "Afternoon")
+                    if (item.Type == "Afternoon")
                     {
                         afternoonArray.Insert(1, item.People);
                     }
-                    if (item.NamePeriod == "Evening")
+                    if (item.Type == "Evening")
                     {
                         eveningArray.Insert(1, item.People);
                     }
-                    if (item.NamePeriod == "Night")
+                    if (item.Type == "Night")
                     {
                         nightArray.Insert(1, item.People);
                     }
                 }
                 if (item.IdDay == 3)
                 {
-                    if (item.NamePeriod == "Morning")
+                    if (item.Type == "Morning")
                     {
                         morningArray.Insert(2, item.People);
                     }
-                    if (item.NamePeriod == "Afternoon")
+                    if (item.Type == "Afternoon")
                     {
                         afternoonArray.Insert(2, item.People);
                     }
-                    if (item.NamePeriod == "Evening")
+                    if (item.Type == "Evening")
                     {
                         eveningArray.Insert(2, item.People);
                     }
-                    if (item.NamePeriod == "Night")
+                    if (item.Type == "Night")
                     {
                         nightArray.Insert(2, item.People);
                     }
                 }
                 if (item.IdDay == 4)
                 {
-                    if (item.NamePeriod == "Morning")
+                    if (item.Type == "Morning")
                     {
                         morningArray.Insert(3, item.People);
                     }
-                    if (item.NamePeriod == "Afternoon")
+                    if (item.Type == "Afternoon")
                     {
                         afternoonArray.Insert(3, item.People);
                     }
-                    if (item.NamePeriod == "Evening")
+                    if (item.Type == "Evening")
                     {
                         eveningArray.Insert(3, item.People);
                     }
-                    if (item.NamePeriod == "Night")
+                    if (item.Type == "Night")
                     {
                         nightArray.Insert(3, item.People);
                     }
                 }
                 if (item.IdDay == 5)
                 {
-                    if (item.NamePeriod == "Morning")
+                    if (item.Type == "Morning")
                     {
                         morningArray.Insert(4, item.People);
                     }
-                    if (item.NamePeriod == "Afternoon")
+                    if (item.Type == "Afternoon")
                     {
                         afternoonArray.Insert(4, item.People);
                     }
-                    if (item.NamePeriod == "Evening")
+                    if (item.Type == "Evening")
                     {
                         eveningArray.Insert(4, item.People);
                     }
-                    if (item.NamePeriod == "Night")
+                    if (item.Type == "Night")
                     {
                         nightArray.Insert(4, item.People);
                     }
@@ -488,53 +388,57 @@ namespace BBBWebApiCodeFirst.Converters
             obj.Add("legend", periodArray);
             obj.Add("yAxis", yAxisArray);
 
-            JObject finalObj = new JObject();
+            finalObj = new JObject();
             finalObj.Add("data", obj);
-
             return finalObj;
         }
 
-        public JObject WeekendByPeriodJson(List<TypeDayByPeriodDTO> list)
+        public JObject WeekendByPeriodJson(List<DayByTypeDTO> list)
         {
-            var obj = new JObject();
+            obj = new JObject();
+
+            JArray morningArray = new JArray();
+            JArray afternoonArray = new JArray();
+            JArray eveningArray = new JArray();
+            JArray nightArray = new JArray();
 
             foreach (var item in list)
             {
 
                 if (item.IdDay == 6)
                 {
-                    if (item.NamePeriod == "Morning")
+                    if (item.Type == "Morning")
                     {
                         morningArray.Insert(0, item.People);
                     }
-                    if (item.NamePeriod == "Afternoon")
+                    if (item.Type == "Afternoon")
                     {
                         afternoonArray.Insert(0, item.People);
                     }
-                    if (item.NamePeriod == "Evening")
+                    if (item.Type == "Evening")
                     {
                         eveningArray.Insert(0, item.People);
                     }
-                    if (item.NamePeriod == "Night")
+                    if (item.Type == "Night")
                     {
                         nightArray.Insert(0, item.People);
                     }
                 }
                 if (item.IdDay == 7)
                 {
-                    if (item.NamePeriod == "Morning")
+                    if (item.Type == "Morning")
                     {
                         morningArray.Insert(1, item.People);
                     }
-                    if (item.NamePeriod == "Afternoon")
+                    if (item.Type == "Afternoon")
                     {
                         afternoonArray.Insert(1, item.People);
                     }
-                    if (item.NamePeriod == "Evening")
+                    if (item.Type == "Evening")
                     {
                         eveningArray.Insert(1, item.People);
                     }
-                    if (item.NamePeriod == "Night")
+                    if (item.Type == "Night")
                     {
                         nightArray.Insert(1, item.People);
                     }
@@ -551,249 +455,210 @@ namespace BBBWebApiCodeFirst.Converters
             obj.Add("legend", periodArray);
             obj.Add("yAxis", yAxisArray);
 
-            JObject finalObj = new JObject();
+            finalObj = new JObject();
             finalObj.Add("data", obj);
 
             return finalObj;
         }
 
 
-        public JObject ByDayByActivityJson(List<ByDayByActivityDTO> list)
+        public JObject ByDayByActivityJson(List<DayByTypeDTO> list)
         {
             var obj = new JObject();
-            JArray objArray = new JArray();
+            JArray objArray = new JArray();            
 
             foreach (var item in list)
             {
-                var individualObj = new JObject();
+                JObject jObject = new JObject();
 
-                if (item.IdDay == 1)
-                {
-                    individualObj.Add("id", item.IdDay);
-                    individualObj.Add("title", "Monday by Activities");
-                    individualObj.Add("xAxis", item.NameActivity);
-                    individualObj.Add("yAxis", item.People);
-                }
-                else if (item.IdDay == 2)
-                {
-                    individualObj.Add("id", item.IdDay);
-                    individualObj.Add("title", "Tuesday by Activities");
-                    individualObj.Add("xAxis", item.NameActivity);
-                    individualObj.Add("yAxis", item.People);
-                }
-                else if (item.IdDay == 3)
-                {
-                    individualObj.Add("id", item.IdDay);
-                    individualObj.Add("title", "Wednesday by Activities");
-                    individualObj.Add("xAxis", item.NameActivity);
-                    individualObj.Add("yAxis", item.People);
-                }
-                else if (item.IdDay == 4)
-                {
-                    individualObj.Add("id", item.IdDay);
-                    individualObj.Add("title", "Thursday by Activities");
-                    individualObj.Add("xAxis", item.NameActivity);
-                    individualObj.Add("yAxis", item.People);
-                }
-                else if (item.IdDay == 5)
-                {
-                    individualObj.Add("id", item.IdDay);
-                    individualObj.Add("title", "Friday by Activities");
-                    individualObj.Add("xAxis", item.NameActivity);
-                    individualObj.Add("yAxis", item.People);
-                }
-                else if (item.IdDay == 6)
-                {
-                    individualObj.Add("id", item.IdDay);
-                    individualObj.Add("title", "Saturday by Activities");
-                    individualObj.Add("xAxis", item.NameActivity);
-                    individualObj.Add("yAxis", item.People);
-                }
-                else if (item.IdDay == 7)
-                {
-                    individualObj.Add("id", item.IdDay);
-                    individualObj.Add("title", "Sunday by Activities");
-                    individualObj.Add("xAxis", item.NameActivity);
-                    individualObj.Add("yAxis", item.People);
-                }
+                jObject.Add("id", item.IdDay);
+                jObject.Add("title", item.Day + " by Activities");
+                jObject.Add("xAxis", item.Type);
+                jObject.Add("yAxis", item.People);
 
-
-                objArray.Add(individualObj);
+                objArray.Add(jObject);
             }
+
             obj.Add("data", objArray);
 
             return obj;
         }
 
-        public JObject FullDaysByActivityJson(List<FullDaysByActivityDTO> list)
+
+        public JObject FullDaysByActivityJson(List<DayByTypeDTO> list)
         {
             var obj = new JObject();
 
+            JArray liveArray = new JArray();
+            JArray workArray = new JArray();
+            JArray leisureArray = new JArray();
+            JArray commuteArray = new JArray();
+            JArray passerByArray = new JArray();
+            
             foreach (var item in list)
             {
 
                 if (item.IdDay == 1)
                 {
-                    if (item.NameActivity == "Live")
+                    if (item.Type == "Live")
                     {
                         liveArray.Insert(0, item.People);
                     }
-                    if (item.NameActivity == "Work")
+                    if (item.Type == "Work")
                     {
                         workArray.Insert(0, item.People);
                     }
-                    if (item.NameActivity == "Leisure")
+                    if (item.Type == "Leisure")
                     {
                         leisureArray.Insert(0, item.People);
                     }
-                    if (item.NameActivity == "Commute")
+                    if (item.Type == "Commute")
                     {
                         commuteArray.Insert(0, item.People);
                     }
-                    if (item.NameActivity == "Passer-by")
+                    if (item.Type == "Passer-by")
                     {
                         passerByArray.Insert(0, item.People);
                     }
                 }
                 if (item.IdDay == 2)
                 {
-                    if (item.NameActivity == "Live")
+                    if (item.Type == "Live")
                     {
                         liveArray.Insert(1, item.People);
                     }
-                    if (item.NameActivity == "Work")
+                    if (item.Type == "Work")
                     {
                         workArray.Insert(1, item.People);
                     }
-                    if (item.NameActivity == "Leisure")
+                    if (item.Type == "Leisure")
                     {
                         leisureArray.Insert(1, item.People);
                     }
-                    if (item.NameActivity == "Commute")
+                    if (item.Type == "Commute")
                     {
                         commuteArray.Insert(1, item.People);
                     }
-                    if (item.NameActivity == "Passer-by")
+                    if (item.Type == "Passer-by")
                     {
                         passerByArray.Insert(1, item.People);
                     }
                 }
                 if (item.IdDay == 3)
                 {
-                    if (item.NameActivity == "Live")
+                    if (item.Type == "Live")
                     {
                         liveArray.Insert(2, item.People);
                     }
-                    if (item.NameActivity == "Work")
+                    if (item.Type == "Work")
                     {
                         workArray.Insert(2, item.People);
                     }
-                    if (item.NameActivity == "Leisure")
+                    if (item.Type == "Leisure")
                     {
                         leisureArray.Insert(2, item.People);
                     }
-                    if (item.NameActivity == "Commute")
+                    if (item.Type == "Commute")
                     {
                         commuteArray.Insert(2, item.People);
                     }
-                    if (item.NameActivity == "Passer-by")
+                    if (item.Type == "Passer-by")
                     {
                         passerByArray.Insert(2, item.People);
                     }
                 }
                 if (item.IdDay == 4)
                 {
-                    if (item.NameActivity == "Live")
+                    if (item.Type == "Live")
                     {
                         liveArray.Insert(3, item.People);
                     }
-                    if (item.NameActivity == "Work")
+                    if (item.Type == "Work")
                     {
                         workArray.Insert(3, item.People);
                     }
-                    if (item.NameActivity == "Leisure")
+                    if (item.Type == "Leisure")
                     {
                         leisureArray.Insert(3, item.People);
                     }
-                    if (item.NameActivity == "Commute")
+                    if (item.Type == "Commute")
                     {
                         commuteArray.Insert(3, item.People);
                     }
-                    if (item.NameActivity == "Passer-by")
+                    if (item.Type == "Passer-by")
                     {
                         passerByArray.Insert(3, item.People);
                     }
                 }
                 if (item.IdDay == 5)
                 {
-                    if (item.NameActivity == "Live")
+                    if (item.Type == "Live")
                     {
                         liveArray.Insert(4, item.People);
                     }
-                    if (item.NameActivity == "Work")
+                    if (item.Type == "Work")
                     {
                         workArray.Insert(4, item.People);
                     }
-                    if (item.NameActivity == "Leisure")
+                    if (item.Type == "Leisure")
                     {
                         leisureArray.Insert(4, item.People);
                     }
-                    if (item.NameActivity == "Commute")
+                    if (item.Type == "Commute")
                     {
                         commuteArray.Insert(4, item.People);
                     }
-                    if (item.NameActivity == "Passer-by")
+                    if (item.Type == "Passer-by")
                     {
                         passerByArray.Insert(4, item.People);
                     }
                 }
                 if (item.IdDay == 6)
                 {
-                    if (item.NameActivity == "Live")
+                    if (item.Type == "Live")
                     {
                         liveArray.Insert(5, item.People);
                     }
-                    if (item.NameActivity == "Work")
+                    if (item.Type == "Work")
                     {
                         workArray.Insert(5, item.People);
                     }
-                    if (item.NameActivity == "Leisure")
+                    if (item.Type == "Leisure")
                     {
                         leisureArray.Insert(5, item.People);
                     }
-                    if (item.NameActivity == "Commute")
+                    if (item.Type == "Commute")
                     {
                         commuteArray.Insert(5, item.People);
                     }
-                    if (item.NameActivity == "Passer-by")
+                    if (item.Type == "Passer-by")
                     {
                         passerByArray.Insert(5, item.People);
                     }
                 }
                 if (item.IdDay == 7)
                 {
-                    if (item.NameActivity == "Live")
+                    if (item.Type == "Live")
                     {
                         liveArray.Insert(6, item.People);
                     }
-                    if (item.NameActivity == "Work")
+                    if (item.Type == "Work")
                     {
                         workArray.Insert(6, item.People);
                     }
-                    if (item.NameActivity == "Leisure")
+                    if (item.Type == "Leisure")
                     {
                         leisureArray.Insert(6, item.People);
                     }
-                    if (item.NameActivity == "Commute")
+                    if (item.Type == "Commute")
                     {
                         commuteArray.Insert(6, item.People);
                     }
-                    if (item.NameActivity == "Passer-by")
+                    if (item.Type == "Passer-by")
                     {
                         passerByArray.Insert(6, item.People);
                     }
                 }
-
             }
 
             yAxisArray.Insert(0, liveArray);
@@ -813,13 +678,18 @@ namespace BBBWebApiCodeFirst.Converters
             return finalObj;
         }
 
-        public JObject WeekDaysByActivityJson(List<WeekDaysByActivityDTO> list)
+        public JObject WeekDaysByActivityJson(List<DaysByActivityDTO> list)
         {
             var obj = new JObject();
 
+            JArray liveArray = new JArray();
+            JArray workArray = new JArray();
+            JArray leisureArray = new JArray();
+            JArray commuteArray = new JArray();
+            JArray passerByArray = new JArray();
+
             foreach (var item in list)
             {
-
                 if (item.IdDay == 1)
                 {
                     if (item.NameActivity == "Live")
@@ -955,13 +825,18 @@ namespace BBBWebApiCodeFirst.Converters
             return finalObj;
         }
 
-        public JObject WeekendByActivityJson(List<WeekendByActivityDTO> list)
+        public JObject WeekendByActivityJson(List<DaysByActivityDTO> list)
         {
             var obj = new JObject();
 
+            JArray liveArray = new JArray();
+            JArray workArray = new JArray();
+            JArray leisureArray = new JArray();
+            JArray commuteArray = new JArray();
+            JArray passerByArray = new JArray();
+
             foreach (var item in list)
             {
-
                 if (item.IdDay == 6)
                 {
                     if (item.NameActivity == "Live")
@@ -1033,11 +908,16 @@ namespace BBBWebApiCodeFirst.Converters
         public JObject ByDayByPeriodByActivityJson(List<ByDayByPeriodByActivityDTO> list, string day)
         {
             var obj = new JObject();
+
             ConverterHandler converterHandler = new ConverterHandler();
             string dayToConcat = converterHandler.getDayById(day);
-            string title = dayToConcat + " by Periods & by Activities";
-            JArray xAxisArray = new JArray();
-            xAxisArray.Add(dayToConcat);
+            string title = dayToConcat + " by Periods & by Activities"; 
+
+            int[] yAxisActivityByPeriodLiveArray = new int[4];
+            int[] yAxisActivityByPeriodWorkArray = new int[4];
+            int[] yAxisActivityByPeriodCommuteArray = new int[4];
+            int[] yAxisActivityByPeriodPasserbyArray = new int[4];
+            int[] yAxisActivityByPeriodLeisureArray = new int[4];
 
 
             foreach (var item in list)
@@ -1154,8 +1034,39 @@ namespace BBBWebApiCodeFirst.Converters
             return finalObj;
         }
 
-        public JObject ByWeekdaysByPeriodByActivityJson(List<ByWeekdaysByPeriodByActivityDTO> list)
+        public JObject ByWeekdaysByPeriodByActivityJson(List<ByDayByPeriodByActivityDTO> list)
         {
+
+            int[] yAxisPeriodArrayMorningLive = new int[5];
+            int[] yAxisPeriodArrayAfternoonLive = new int[5];
+            int[] yAxisPeriodArrayEveningLive = new int[5];
+            int[] yAxisPeriodArrayNightLive = new int[5];
+
+            int[] yAxisPeriodArrayMorningWork = new int[5];
+            int[] yAxisPeriodArrayAfternoonWork = new int[5];
+            int[] yAxisPeriodArrayEveningWork = new int[5];
+            int[] yAxisPeriodArrayNightWork = new int[5];
+
+            int[] yAxisPeriodArrayMorningCommute = new int[5];
+            int[] yAxisPeriodArrayAfternoonCommute = new int[5];
+            int[] yAxisPeriodArrayEveningCommute = new int[5];
+            int[] yAxisPeriodArrayNightCommute = new int[5];
+
+            int[] yAxisPeriodArrayMorningPasserBy = new int[5];
+            int[] yAxisPeriodArrayAfternoonPasserBy = new int[5];
+            int[] yAxisPeriodArrayEveningPasserBy = new int[5];
+            int[] yAxisPeriodArrayNightPasserBy = new int[5];
+
+            int[] yAxisPeriodArrayMorningLeisure = new int[5];
+            int[] yAxisPeriodArrayAfternoonLeisure = new int[5];
+            int[] yAxisPeriodArrayEveningLeisure = new int[5];
+            int[] yAxisPeriodArrayNightLeisure = new int[5];
+
+            int[][] jaggedArrayLive = new int[4][];
+            int[][] jaggedArrayWork = new int[4][];
+            int[][] jaggedArrayCommute = new int[4][];
+            int[][] jaggedArrayPasserBy = new int[4][];
+            int[][] jaggedArrayLeisure = new int[4][];
 
             foreach (var item in list)
             {
@@ -1684,7 +1595,7 @@ namespace BBBWebApiCodeFirst.Converters
             return jObject;
         }
 
-        public JObject WeekendByPeriodByActivityJson(List<WeekendByPeriodByActivityDTO> list)
+        public JObject WeekendByPeriodByActivityJson(List<ByDayByPeriodByActivityDTO> list)
         {
             int[] yAxisPeriodArrayMorningLiveWeekend = new int[2];
             int[] yAxisPeriodArrayAfternoonLiveWeekend = new int[2];
@@ -2002,10 +1913,9 @@ namespace BBBWebApiCodeFirst.Converters
             jObject.Add("data", jObjectData);
 
             return jObject;
-
         }
 
-        public JObject FullDaysByPeriodByActivityJson(List<FullDaysByPeriodByActivityDTO> list)
+        public JObject FullDaysByPeriodByActivityJson(List<ByDayByPeriodByActivityDTO> list)
         {
             int[] yAxisPeriodArrayMorningLiveFullDays = new int[7];
             int[] yAxisPeriodArrayAfternoonLiveFullDays = new int[7];
@@ -2727,7 +2637,7 @@ namespace BBBWebApiCodeFirst.Converters
 
 
 
-        public JObject AllWeekByHoursJson(List<AllWeekByHoursDTO> list)
+        public JObject AllWeekByHoursJson(List<BydayDTO> list)
         {
             var obj = new JObject();
             var individualObj = new JObject();

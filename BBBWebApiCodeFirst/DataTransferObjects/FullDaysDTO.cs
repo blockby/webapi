@@ -9,8 +9,7 @@ namespace BBBWebApiCodeFirst.DataTransferObjects
     {
         public double IdDay { get; set; }
 
-        public string Day { get; set; }       
-      
+        public string Day { get; set; }             
 
         public int People { get; set; }
     }

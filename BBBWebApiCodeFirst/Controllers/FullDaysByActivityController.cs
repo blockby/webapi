@@ -59,12 +59,12 @@ namespace BBBWebApiCodeFirst.Controllers
                 {
                     using (var reader = cmd.ExecuteReader())
                     {
-                        List<FullDaysByActivityDTO> FullDaysByActivityDTOList = new List<FullDaysByActivityDTO>();
+                        List<DayByTypeDTO> FullDaysByActivityDTOList = new List<DayByTypeDTO>();
 
                         while (reader.Read())
                         {
                             InterfaceDataReader dataReader = new DataReader();
-                            FullDaysByActivityDTO fullDaysByActivityDTO = dataReader.ReadFullDaysByActivityDTO(reader);
+                            DayByTypeDTO fullDaysByActivityDTO = dataReader.ReadDayByTypeDTO(reader);
                             FullDaysByActivityDTOList.Add(fullDaysByActivityDTO);
                         }
 
