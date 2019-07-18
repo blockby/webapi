@@ -816,7 +816,7 @@ namespace BBBWebApiCodeFirst.Converters
 
             obj.Add("title", "Weekdays by Activities");
             obj.Add("xAxis", weekdayArray);
-            obj.Add("legend", periodArray);
+            obj.Add("legend", activityArray);
             obj.Add("yAxis", yAxisArray);
 
             JObject finalObj = new JObject();
@@ -895,7 +895,7 @@ namespace BBBWebApiCodeFirst.Converters
 
             obj.Add("title", "Weekend by Activities");
             obj.Add("xAxis", weekendArray);
-            obj.Add("legend", periodArray);
+            obj.Add("legend", activityArray);
             obj.Add("yAxis", yAxisArray);
 
             JObject finalObj = new JObject();
