@@ -5,15 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Migrations\20190527124640_addingactivitytable.cs" />
-    <Compile Remove="Migrations\20190527124640_addingactivitytable.Designer.cs" />
-    <Compile Remove="Migrations\20190527132126_foreignkeymigration.cs" />
-    <Compile Remove="Migrations\20190527132126_foreignkeymigration.Designer.cs" />
-    <Compile Remove="Migrations\20190527134131_addforeignkey.cs" />
-    <Compile Remove="Migrations\20190527134131_addforeignkey.Designer.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="Models\Day.cs~RF1833f21.TMP" />
   </ItemGroup>
 

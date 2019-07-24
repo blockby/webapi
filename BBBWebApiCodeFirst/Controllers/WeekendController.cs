@@ -37,18 +37,22 @@ namespace BBBWebApiCodeFirst.Controllers
                 string result = await reader.ReadToEndAsync();
                 var locationObj = JObject.Parse(result)["id_location"];
                 var dayTypeObj = JObject.Parse(result)["id_day_type"];
+                var serviceObj = JObject.Parse(result)["id_service"];
+                var rCustomerObj = JObject.Parse(result)["returning_customer"];
 
                 string location = locationObj.ToObject<string>();
                 string day_type = dayTypeObj.ToObject<string>();
-
-                return ExecuteQuery(location, day_type);
+                string service = serviceObj.ToObject<string>();
+                string rCustomer= rCustomerObj.ToObject<string>();
+                
+                return ExecuteQuery(location, day_type, service, rCustomer);
             }
         }
 
 
-        private JObject ExecuteQuery(string location, string day_type)
+        private JObject ExecuteQuery(string location, string day_type, string service, string rCustomer)
         {
-            string _selectString = "SELECT a.id_day, b.name_day AS day, a.id_type_day, COUNT(DISTINCT a.src) AS people FROM collected_data a INNER JOIN days b ON a.id_day = b.id_day WHERE a.id_location = " + location+" AND b.id_day_type = "+day_type+" GROUP BY a.id_day, b.id_day, a.id_type_day ORDER BY a.id_day";
+            string _selectString = "SELECT a.id_day, b.name_day AS day COUNT(DISTINCT a.src) AS people FROM collected_data a INNER JOIN days b ON a.id_day = b.id_day WHERE a.id_location = " + location+" AND b.id_day_type = "+day_type+ " AND a.id_service = "+service+" AND a.returning_customer = " + rCustomer + "  GROUP BY a.id_day, b.id_day ORDER BY a.id_day";
 
             using (var conn = new NpgsqlConnection(connectionString))
             {

@@ -21,18 +21,6 @@ namespace BBBWebApiCodeFirst.Migrations
                 .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            modelBuilder.Entity("BBBWebApiCodeFirst.Models.Activity", b =>
-                {
-                    b.Property<int>("id_activity")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("name_activity");
-
-                    b.HasKey("id_activity");
-
-                    b.ToTable("activitys");
-                });
-
             modelBuilder.Entity("BBBWebApiCodeFirst.Models.Collected_data", b =>
                 {
                     b.Property<int>("id_coll_data")
@@ -44,19 +32,31 @@ namespace BBBWebApiCodeFirst.Migrations
 
                     b.Property<string>("dst");
 
-                    b.Property<int>("id_activity");
+                    b.Property<int>("hours");
 
                     b.Property<int>("id_day");
 
-                    b.Property<int>("id_day_period");
+                    b.Property<int>("id_day_type");
+
+                    b.Property<int>("id_in_activity");
+
+                    b.Property<int>("id_in_day_period");
 
                     b.Property<int>("id_location");
 
                     b.Property<string>("id_oui");
 
+                    b.Property<int>("id_out_activity");
+
+                    b.Property<int>("id_out_day_period");
+
+                    b.Property<int>("id_service");
+
+                    b.Property<int>("returning_customer");
+
                     b.Property<int>("sn");
 
-                    b.Property<string>("src");
+                    b.Property<int>("src");
 
                     b.Property<string>("src_resolved");
 
@@ -72,9 +72,17 @@ namespace BBBWebApiCodeFirst.Migrations
 
                     b.HasIndex("id_day");
 
-                    b.HasIndex("id_day_period");
+                    b.HasIndex("id_day_type");
+
+                    b.HasIndex("id_in_activity");
+
+                    b.HasIndex("id_in_day_period");
 
                     b.HasIndex("id_location");
+
+                    b.HasIndex("id_out_activity");
+
+                    b.HasIndex("id_out_day_period");
 
                     b.ToTable("collected_data");
                 });
@@ -84,39 +92,53 @@ namespace BBBWebApiCodeFirst.Migrations
                     b.Property<int>("id_day")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("id_day_type");
-
                     b.Property<string>("name_day");
 
                     b.HasKey("id_day");
 
-                    b.HasIndex("id_day_type");
-
                     b.ToTable("days");
-                });
-
-            modelBuilder.Entity("BBBWebApiCodeFirst.Models.Day_period", b =>
-                {
-                    b.Property<int>("id_day_period")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("name_period");
-
-                    b.HasKey("id_day_period");
-
-                    b.ToTable("day_periods");
                 });
 
             modelBuilder.Entity("BBBWebApiCodeFirst.Models.Day_type", b =>
                 {
-                    b.Property<int>("id_type_day")
+                    b.Property<int>("id_day_type")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("type_day");
+                    b.Property<string>("day_type");
 
-                    b.HasKey("id_type_day");
+                    b.Property<string>("description");
+
+                    b.HasKey("id_day_type");
 
                     b.ToTable("day_types");
+                });
+
+            modelBuilder.Entity("BBBWebApiCodeFirst.Models.In_activity", b =>
+                {
+                    b.Property<int>("id_in_activity")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("description");
+
+                    b.Property<string>("name_activity");
+
+                    b.HasKey("id_in_activity");
+
+                    b.ToTable("in_activitys");
+                });
+
+            modelBuilder.Entity("BBBWebApiCodeFirst.Models.In_day_period", b =>
+                {
+                    b.Property<int>("id_in_day_period")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("description");
+
+                    b.Property<string>("name_period");
+
+                    b.HasKey("id_in_day_period");
+
+                    b.ToTable("in_day_periods");
                 });
 
             modelBuilder.Entity("BBBWebApiCodeFirst.Models.Location", b =>
@@ -128,7 +150,11 @@ namespace BBBWebApiCodeFirst.Migrations
 
                     b.Property<Point>("coordinates");
 
+                    b.Property<string>("description");
+
                     b.Property<int>("id_prop_type");
+
+                    b.Property<int>("id_service");
 
                     b.Property<int>("id_user");
 
@@ -136,21 +162,67 @@ namespace BBBWebApiCodeFirst.Migrations
 
                     b.HasIndex("id_prop_type");
 
+                    b.HasIndex("id_service");
+
                     b.HasIndex("id_user");
 
                     b.ToTable("locations");
                 });
 
-            modelBuilder.Entity("BBBWebApiCodeFirst.Models.Property_type", b =>
+            modelBuilder.Entity("BBBWebApiCodeFirst.Models.Out_activity", b =>
                 {
-                    b.Property<int>("id_type_prop")
+                    b.Property<int>("id_out_activity")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("type_prop");
+                    b.Property<string>("description");
 
-                    b.HasKey("id_type_prop");
+                    b.Property<string>("name_activity");
+
+                    b.HasKey("id_out_activity");
+
+                    b.ToTable("out_activitys");
+                });
+
+            modelBuilder.Entity("BBBWebApiCodeFirst.Models.Out_day_period", b =>
+                {
+                    b.Property<int>("id_out_day_period")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("description");
+
+                    b.Property<string>("name_period");
+
+                    b.HasKey("id_out_day_period");
+
+                    b.ToTable("out_day_periods");
+                });
+
+            modelBuilder.Entity("BBBWebApiCodeFirst.Models.Property_type", b =>
+                {
+                    b.Property<int>("id_prop_type")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("description");
+
+                    b.Property<string>("prop_type");
+
+                    b.HasKey("id_prop_type");
 
                     b.ToTable("property_types");
+                });
+
+            modelBuilder.Entity("BBBWebApiCodeFirst.Models.Service", b =>
+                {
+                    b.Property<int>("id_service")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("description");
+
+                    b.Property<string>("name_service");
+
+                    b.HasKey("id_service");
+
+                    b.ToTable("services");
                 });
 
             modelBuilder.Entity("BBBWebApiCodeFirst.Models.Shared_location", b =>
@@ -176,7 +248,9 @@ namespace BBBWebApiCodeFirst.Migrations
                     b.Property<int>("id_user")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("depent");
+                    b.Property<int>("depend");
+
+                    b.Property<string>("description");
 
                     b.Property<int>("id_user_type");
 
@@ -191,12 +265,14 @@ namespace BBBWebApiCodeFirst.Migrations
 
             modelBuilder.Entity("BBBWebApiCodeFirst.Models.User_type", b =>
                 {
-                    b.Property<int>("id_type_user")
+                    b.Property<int>("id_user_type")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<string>("description");
 
                     b.Property<string>("type_user");
 
-                    b.HasKey("id_type_user");
+                    b.HasKey("id_user_type");
 
                     b.ToTable("user_types");
                 });
@@ -208,22 +284,34 @@ namespace BBBWebApiCodeFirst.Migrations
                         .HasForeignKey("id_day")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("BBBWebApiCodeFirst.Models.Day_period", "day_period")
+                    b.HasOne("BBBWebApiCodeFirst.Models.Day_type", "day_type")
                         .WithMany()
-                        .HasForeignKey("id_day_period")
+                        .HasForeignKey("id_day_type")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("BBBWebApiCodeFirst.Models.In_activity", "in_activity")
+                        .WithMany()
+                        .HasForeignKey("id_in_activity")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("BBBWebApiCodeFirst.Models.In_day_period", "in_day_period")
+                        .WithMany()
+                        .HasForeignKey("id_in_day_period")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("BBBWebApiCodeFirst.Models.Location", "location")
                         .WithMany()
                         .HasForeignKey("id_location")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
 
-            modelBuilder.Entity("BBBWebApiCodeFirst.Models.Day", b =>
-                {
-                    b.HasOne("BBBWebApiCodeFirst.Models.Day_type", "day_type")
+                    b.HasOne("BBBWebApiCodeFirst.Models.Out_activity", "out_activity")
                         .WithMany()
-                        .HasForeignKey("id_day_type")
+                        .HasForeignKey("id_out_activity")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("BBBWebApiCodeFirst.Models.Out_day_period", "out_day_period")
+                        .WithMany()
+                        .HasForeignKey("id_out_day_period")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -232,6 +320,11 @@ namespace BBBWebApiCodeFirst.Migrations
                     b.HasOne("BBBWebApiCodeFirst.Models.Property_type", "property_type")
                         .WithMany()
                         .HasForeignKey("id_prop_type")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("BBBWebApiCodeFirst.Models.Service", "service")
+                        .WithMany()
+                        .HasForeignKey("id_service")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("BBBWebApiCodeFirst.Models.User", "user")

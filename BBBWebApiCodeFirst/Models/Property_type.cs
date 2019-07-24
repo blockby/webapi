@@ -11,8 +11,11 @@ namespace BBBWebApiCodeFirst.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int id_type_prop { get; set; }
+        public int id_prop_type { get; set; }
 
-        public string type_prop { get; set; }
+        public string prop_type { get; set; }
+
+        public string description { get; set; }
+
     }
 }

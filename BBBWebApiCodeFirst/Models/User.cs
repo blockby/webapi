@@ -19,6 +19,8 @@ namespace BBBWebApiCodeFirst.Models
         [ForeignKey("id_user_type")]
         public User_type user_type { get; set; }
 
-        public int depent { get; set; }
+        public int depend { get; set; }
+
+        public string description { get; set; }
     }
 }

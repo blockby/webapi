@@ -2,7 +2,7 @@
 
 namespace BBBWebApiCodeFirst.Migrations
 {
-    public partial class autoincrementupdate : Migration
+    public partial class srcColumnFixing2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

@@ -7,12 +7,14 @@ using System.Threading.Tasks;
 
 namespace BBBWebApiCodeFirst.Models
 {
-    public class Day
+    public class Out_day_period
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int id_day { get; set; }
+        public int id_out_day_period { get; set; }
 
-        public string name_day { get; set; }
+        public string name_period { get; set; }
+
+        public string description { get; set; }
     }
 }

@@ -7,12 +7,14 @@ using System.Threading.Tasks;
 
 namespace BBBWebApiCodeFirst.Models
 {
-    public class Activity
+    public class Out_activity
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int id_activity { get; set; }
+        public int id_out_activity { get; set; }
 
         public string name_activity { get; set; }
+
+        public string description { get; set; }
     }
 }

@@ -36,17 +36,21 @@ namespace BBBWebApiCodeFirst.Controllers
             {
                 string result = await reader.ReadToEndAsync();
                 var locationObj = JObject.Parse(result)["id_location"];
+                var serviceObj = JObject.Parse(result)["id_service"];
+                var rCustomerObj = JObject.Parse(result)["returning_customer"];
+                
                 string location = locationObj.ToObject<string>();
-    
+                string service = serviceObj.ToObject<string>();
+                string rCustomer = rCustomerObj.ToObject<string>();
 
-                return ExecuteQuery(location);
+                return ExecuteQuery(location, service, rCustomer);
             }
         }
 
 
-        private JObject ExecuteQuery(string id_location)
+        private JObject ExecuteQuery(string id_location, string service, string rCustomer)
         {
-            string _selectString = "SELECT a.id_day, b.name_day AS day, COUNT(DISTINCT a.src) AS people FROM collected_data a INNER JOIN days b ON a.id_day = b.id_day WHERE a.id_location = " + id_location+" GROUP BY a.id_day,b.id_day ORDER BY a.id_day";
+            string _selectString = "SELECT a.id_day, b.name_day AS day, COUNT(DISTINCT a.src) AS people FROM collected_data a INNER JOIN days b ON a.id_day = b.id_day WHERE a.id_location = " + id_location+ " AND a.id_service = "+service+" AND a.returning_customer = " + rCustomer + " GROUP BY a.id_day, b.id_day ORDER BY a.id_day";
 
             using (var conn = new NpgsqlConnection(connectionString))
             {

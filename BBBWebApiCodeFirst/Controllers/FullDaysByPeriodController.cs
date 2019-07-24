@@ -37,19 +37,23 @@ namespace BBBWebApiCodeFirst.Controllers
                 string result = await reader.ReadToEndAsync();
 
                 var locationObj = JObject.Parse(result)["id_location"];
-                var idPeriodDayObj = JObject.Parse(result)["id_period_day"];
+                var idDayPeriodObj = JObject.Parse(result)["id_out_day_period"];
+                var serviceObj = JObject.Parse(result)["id_service"];
+                var rCustomerObj = JObject.Parse(result)["returning_customer"];
 
                 string location = locationObj.ToObject<string>();
-                string idPeriodDay = idPeriodDayObj.ToObject<string>();
+                string idPeriodDay = idDayPeriodObj.ToObject<string>();
+                string service = serviceObj.ToObject<string>();
+                string rCustomer = rCustomerObj.ToObject<string>();
 
-                return ExecuteQuery(location, idPeriodDay);
+                return ExecuteQuery(location, idPeriodDay, service, rCustomer);
             }
         }
 
 
-        private JObject ExecuteQuery(string id_location, string id_period_day)
+        private JObject ExecuteQuery(string id_location, string id_out_day_period, string id_service, string returning_customer)
         {
-            string _selectString = "SELECT a.id_day, b.name_day AS day, c.name_period, COUNT(DISTINCT a.src) AS people FROM collected_data a INNER JOIN days b ON a.id_day = b.id_day INNER JOIN day_periods c ON a.id_period_day = c.id_day_period WHERE a.id_location = " + id_location+" AND a.id_period_day IN ("+id_period_day+") GROUP BY a.id_day,b.id_day, c.name_period,a.id_period_day ORDER BY a.id_day,a.id_period_day";
+            string _selectString = "SELECT a.id_day, b.name_day AS day, c.name_period, COUNT(DISTINCT a.src) AS people FROM collected_data a INNER JOIN days b ON a.id_day = b.id_day INNER JOIN out_day_periods c ON a.id_out_day_period = c.id_out_day_period WHERE a.id_location = " + id_location+" AND a.id_out_day_period IN ("+ id_out_day_period + ") AND a.id_service = " + id_service + " AND a.returning_customer = "+ returning_customer +" GROUP BY a.id_day, b.id_day, c.name_period, a.id_out_day_period ORDER BY a.id_day,a.id_out_day_period";
 
             using (var conn = new NpgsqlConnection(connectionString))
             {

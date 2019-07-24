@@ -11,8 +11,10 @@ namespace BBBWebApiCodeFirst.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int id_type_user { get; set; }
+        public int id_user_type { get; set; }
 
         public string type_user { get; set; }
+
+        public string description { get; set; }
     }
 }

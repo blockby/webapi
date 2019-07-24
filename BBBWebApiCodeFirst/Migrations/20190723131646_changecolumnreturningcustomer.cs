@@ -2,22 +2,22 @@
 
 namespace BBBWebApiCodeFirst.Migrations
 {
-    public partial class changeidoui : Migration
+    public partial class changecolumnreturningcustomer : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.RenameColumn(
-                name: "oui",
-                table: "vendors",
-                newName: "id_oui");
+                name: "returning",
+                table: "collected_data",
+                newName: "returning_customer");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.RenameColumn(
-                name: "id_oui",
-                table: "vendors",
-                newName: "oui");
+                name: "returning_customer",
+                table: "collected_data",
+                newName: "returning");
         }
     }
 }

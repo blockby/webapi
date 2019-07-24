@@ -28,5 +28,12 @@ namespace BBBWebApiCodeFirst.Models
 
         [JsonConverter(typeof(NetTopologySuiteConverter))]
         public Point coordinates { get; set; }
+
+        public string description { get; set; }
+
+        public int id_service { get; set; }
+        [ForeignKey("id_service")]
+        public Service service { get; set; }
+
     }
 }

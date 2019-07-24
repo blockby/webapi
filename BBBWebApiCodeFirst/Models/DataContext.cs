@@ -36,24 +36,32 @@ namespace BBBWebApiCodeFirst.Models
             builder.HasPostgresExtension("postgis");
         }
 
-        public DbSet<Collected_data> collected_data { get; set; }       
+        public DbSet<User_type> user_types { get; set; }
 
-        public DbSet<Day_period> day_periods { get; set; }
+        public DbSet<User> users { get; set; }
+               
+        public DbSet<Location> locations { get; set; }
+
+        public DbSet<Shared_location> shared_locations { get; set; }
+
+        public DbSet<Collected_data> collected_data { get; set; }
+
+        public DbSet<Property_type> property_types { get; set; }
+
+        public DbSet<Service> services { get; set; }
 
         public DbSet<Day_type> day_types { get; set; }
 
         public DbSet<Day> days { get; set; }
 
-        public DbSet<Location> locations { get; set; }
+        public DbSet<In_activity> in_activitys { get; set; }
 
-        public DbSet<Property_type> property_types { get; set; }
+        public DbSet<Out_activity> out_activitys { get; set; }
 
-        public DbSet<Shared_location> shared_locations { get; set; }
+        public DbSet<In_day_period> in_day_periods { get; set; }
 
-        public DbSet<User> users { get; set; }
+        public DbSet<Out_day_period> out_day_periods { get; set; }
+       
 
-        public DbSet<User_type> user_types { get; set; }    
-        
-        public DbSet<Activity> activitys { get; set; }
     }
 }
