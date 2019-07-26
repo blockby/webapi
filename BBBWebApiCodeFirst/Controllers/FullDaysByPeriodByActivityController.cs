@@ -24,6 +24,8 @@ namespace BBBWebApiCodeFirst.Controllers
         private readonly DataContext _context;
         private readonly string connectionString = ConnectionStringBuilder.buildConnectionString();
 
+        private string _selectString;
+
         public FullDaysByPeriodByActivityController(DataContext context)
         {
             _context = context;
@@ -37,21 +39,33 @@ namespace BBBWebApiCodeFirst.Controllers
                 string result = await reader.ReadToEndAsync();
 
                 var locationObj = JObject.Parse(result)["id_location"];
-                var idPeriodDayObj = JObject.Parse(result)["id_period_day"];
-                var idActivityObj = JObject.Parse(result)["id_activity"];
+                var idPeriodDayObj = JObject.Parse(result)["id_out_day_period"];
+                var idActivityObj = JObject.Parse(result)["id_out_activity"];
+                var serviceObj = JObject.Parse(result)["id_service"];
+                var rCustomerObj = JObject.Parse(result)["returning_customer"];
 
                 string location = locationObj.ToObject<string>();
                 string idPeriodDay = idPeriodDayObj.ToObject<string>();
                 string idActivity = idActivityObj.ToObject<string>();
+                string service = serviceObj.ToObject<string>();
+                string rCustomer = rCustomerObj.ToObject<string>();
 
-                return ExecuteQuery(location, idPeriodDay, idActivity);
+                return ExecuteQuery(location, idPeriodDay, idActivity, service, rCustomer);
             }
         }
 
 
-        private JObject ExecuteQuery(string id_location, string id_period_day, string id_activity)
+        private JObject ExecuteQuery(string id_location, string id_period_day, string id_activity, string service, string returning_customer)
         {
-            string _selectString = "SELECT a.id_day AS id_day, b.name_day AS day, c.name_period, d.name_activity, COUNT(DISTINCT a.src) AS people FROM collected_data a INNER JOIN days b ON a.id_day = b.id_day INNER JOIN day_periods c ON a.id_period_day = c.id_day_period INNER JOIN activitys d ON a.id_activity = d.id_activity WHERE a.id_location = "+id_location+" AND a.id_period_day IN("+id_period_day+") AND a.id_activity IN("+id_activity+ ") GROUP BY a.id_day, b.id_day, c.id_day_period, a.id_period_day, d.id_activity, a.id_activity ORDER BY a.id_day,a.id_period_day";
+            
+            if (service == "1")
+            {
+                _selectString = "SELECT a.id_day AS id_day, b.name_day AS day, c.name_period, d.name_activity, COUNT(DISTINCT a.src) AS people FROM collected_data a INNER JOIN days b ON a.id_day = b.id_day INNER JOIN in_day_periods c ON a.id_in_day_period = c.id_in_day_period INNER JOIN in_activitys d ON a.id_in_activity = d.id_in_activity WHERE a.id_location = " + id_location + " AND a.id_period_day IN(" + id_period_day + ") AND a.id_activity IN(" + id_activity + ") AND a.id_service = " + service + " AND a.returning_customer = " + returning_customer + " GROUP BY a.id_day, b.name_day, c.name_period d.name_activity, a.id_in_day_period ORDER BY a.id_day, a.id_in_day_period";
+            }
+            else if (service == "2")
+            {
+                _selectString = "SELECT a.id_day AS id_day, b.name_day AS day, c.name_period, d.name_activity, COUNT(DISTINCT a.src) AS people FROM collected_data a INNER JOIN days b ON a.id_day = b.id_day INNER JOIN out_day_periods c ON a.id_out_day_period = c.id_out_day_period INNER JOIN out_activitys d ON a.id_out_activity = d.id_out_activity WHERE a.id_location = " + id_location + " AND a.id_period_day IN(" + id_period_day + ") AND a.id_activity IN(" + id_activity + ") AND a.id_service = " + service + " AND a.returning_customer = " + returning_customer + " GROUP BY a.id_day, b.name_day, c.name_period d.name_activity, a.id_out_day_period ORDER BY a.id_day,a.id_out_day_period";
+            }
 
             using (var conn = new NpgsqlConnection(connectionString))
             {

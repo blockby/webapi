@@ -106,291 +106,40 @@ namespace BBBWebApiCodeFirst.Converters
         }
 
 
-        public JObject FullDaysByPeriodJson(List<DayByTypeDTO> list)
+        public JObject FullDaysByPeriodJson(List<DayByTypeDTO> list, string serviceId)
         {
-            obj = new JObject();
-
-            JArray morningArray = new JArray();
-            JArray afternoonArray = new JArray();
-            JArray eveningArray = new JArray();
-            JArray nightArray = new JArray();
-
-            foreach (var item in list)
+            
+            ConverterHandler handler = new ConverterHandler();
+            
+            if (serviceId == "1")
             {
-                if (item.IdDay == 1)
-                {
-                    if (item.Type == "Morning")
-                    {
-                        morningArray.Insert(0, item.People);
-                    }
-                    if (item.Type == "Afternoon")
-                    {
-                        afternoonArray.Insert(0, item.People);
-                    }
-                    if (item.Type == "Evening")
-                    {
-                        eveningArray.Insert(0, item.People);
-                    }
-                    if (item.Type == "Night")
-                    {
-                        nightArray.Insert(0, item.People);
-                    }
-                }
-                if (item.IdDay == 2)
-                {
-                    if (item.Type == "Morning")
-                    {
-                        morningArray.Insert(1, item.People);
-                    }
-                    if (item.Type == "Afternoon")
-                    {
-                        afternoonArray.Insert(1, item.People);
-                    }
-                    if (item.Type == "Evening")
-                    {
-                        eveningArray.Insert(1, item.People);
-                    }
-                    if (item.Type == "Night")
-                    {
-                        nightArray.Insert(1, item.People);
-                    }
-                }
-                if (item.IdDay == 3)
-                {
-                    if (item.Type == "Morning")
-                    {
-                        morningArray.Insert(2, item.People);
-                    }
-                    if (item.Type == "Afternoon")
-                    {
-                        afternoonArray.Insert(2, item.People);
-                    }
-                    if (item.Type == "Evening")
-                    {
-                        eveningArray.Insert(2, item.People);
-                    }
-                    if (item.Type == "Night")
-                    {
-                        nightArray.Insert(2, item.People);
-                    }
-                }
-                if (item.IdDay == 4)
-                {
-                    if (item.Type == "Morning")
-                    {
-                        morningArray.Insert(3, item.People);
-                    }
-                    if (item.Type == "Afternoon")
-                    {
-                        afternoonArray.Insert(3, item.People);
-                    }
-                    if (item.Type == "Evening")
-                    {
-                        eveningArray.Insert(3, item.People);
-                    }
-                    if (item.Type == "Night")
-                    {
-                        nightArray.Insert(3, item.People);
-                    }
-                }
-                if (item.IdDay == 5)
-                {
-                    if (item.Type == "Morning")
-                    {
-                        morningArray.Insert(4, item.People);
-                    }
-                    if (item.Type == "Afternoon")
-                    {
-                        afternoonArray.Insert(4, item.People);
-                    }
-                    if (item.Type == "Evening")
-                    {
-                        eveningArray.Insert(4, item.People);
-                    }
-                    if (item.Type == "Night")
-                    {
-                        nightArray.Insert(4, item.People);
-                    }
-                }
-                if (item.IdDay == 6)
-                {
-                    if (item.Type == "Morning")
-                    {
-                        morningArray.Insert(5, item.People);
-                    }
-                    if (item.Type == "Afternoon")
-                    {
-                        afternoonArray.Insert(5, item.People);
-                    }
-                    if (item.Type == "Evening")
-                    {
-                        eveningArray.Insert(5, item.People);
-                    }
-                    if (item.Type == "Night")
-                    {
-                        nightArray.Insert(5, item.People);
-                    }
-                }
-                if (item.IdDay == 7)
-                {
-                    if (item.Type == "Morning")
-                    {
-                        morningArray.Insert(6, item.People);
-                    }
-                    if (item.Type == "Afternoon")
-                    {
-                        afternoonArray.Insert(6, item.People);
-                    }
-                    if (item.Type == "Evening")
-                    {
-                        eveningArray.Insert(6, item.People);
-                    }
-                    if (item.Type == "Night")
-                    {
-                        nightArray.Insert(6, item.People);
-                    }
-                }
-
+                finalObj = handler.getInsideFullDayByPeriodJson(list);
             }
-
-            yAxisArray.Insert(0, morningArray);
-            yAxisArray.Insert(1, afternoonArray);
-            yAxisArray.Insert(2, eveningArray);
-            yAxisArray.Insert(3, nightArray);
-
-            obj.Add("title", "All Week by Periods");
-            obj.Add("xAxis", daysArray);
-            obj.Add("legend", periodArray);
-            obj.Add("yAxis", yAxisArray);
-            finalObj = new JObject();
-            finalObj.Add("data", obj);
+            else if  (serviceId == "2")
+            {
+                finalObj = handler.getOutsideFullDayByPeriodJson(list);
+            }
 
             return finalObj;
         }
 
 
-        public JObject WeekDayByPeriodJson(List<DayByTypeDTO> list)
+        public JObject WeekDayByPeriodJson(List<DayByTypeDTO> list, string serviceId)
         {
-            obj = new JObject();
+            ConverterHandler handler = new ConverterHandler();
 
-            JArray morningArray = new JArray();
-            JArray afternoonArray = new JArray();
-            JArray eveningArray = new JArray();
-            JArray nightArray = new JArray();
-
-            foreach (var item in list)
+            if (serviceId == "1")
             {
-
-                if (item.IdDay == 1)
-                {
-                    if (item.Type == "Morning")
-                    {
-                        morningArray.Insert(0, item.People);
-                    }
-                    if (item.Type == "Afternoon")
-                    {
-                        afternoonArray.Insert(0, item.People);
-                    }
-                    if (item.Type == "Evening")
-                    {
-                        eveningArray.Insert(0, item.People);
-                    }
-                    if (item.Type == "Night")
-                    {
-                        nightArray.Insert(0, item.People);
-                    }
-                }
-                if (item.IdDay == 2)
-                {
-                    if (item.Type == "Morning")
-                    {
-                        morningArray.Insert(1, item.People);
-                    }
-                    if (item.Type == "Afternoon")
-                    {
-                        afternoonArray.Insert(1, item.People);
-                    }
-                    if (item.Type == "Evening")
-                    {
-                        eveningArray.Insert(1, item.People);
-                    }
-                    if (item.Type == "Night")
-                    {
-                        nightArray.Insert(1, item.People);
-                    }
-                }
-                if (item.IdDay == 3)
-                {
-                    if (item.Type == "Morning")
-                    {
-                        morningArray.Insert(2, item.People);
-                    }
-                    if (item.Type == "Afternoon")
-                    {
-                        afternoonArray.Insert(2, item.People);
-                    }
-                    if (item.Type == "Evening")
-                    {
-                        eveningArray.Insert(2, item.People);
-                    }
-                    if (item.Type == "Night")
-                    {
-                        nightArray.Insert(2, item.People);
-                    }
-                }
-                if (item.IdDay == 4)
-                {
-                    if (item.Type == "Morning")
-                    {
-                        morningArray.Insert(3, item.People);
-                    }
-                    if (item.Type == "Afternoon")
-                    {
-                        afternoonArray.Insert(3, item.People);
-                    }
-                    if (item.Type == "Evening")
-                    {
-                        eveningArray.Insert(3, item.People);
-                    }
-                    if (item.Type == "Night")
-                    {
-                        nightArray.Insert(3, item.People);
-                    }
-                }
-                if (item.IdDay == 5)
-                {
-                    if (item.Type == "Morning")
-                    {
-                        morningArray.Insert(4, item.People);
-                    }
-                    if (item.Type == "Afternoon")
-                    {
-                        afternoonArray.Insert(4, item.People);
-                    }
-                    if (item.Type == "Evening")
-                    {
-                        eveningArray.Insert(4, item.People);
-                    }
-                    if (item.Type == "Night")
-                    {
-                        nightArray.Insert(4, item.People);
-                    }
-                } 
+                finalObj = handler.getInsideWeekDayByPeriodJson(list);
+            }
+            else if (serviceId == "2")
+            {
+                finalObj = handler.getOutsideWeekDayByPeriodJson(list);
             }
 
-            yAxisArray.Insert(0, morningArray);
-            yAxisArray.Insert(1, afternoonArray);
-            yAxisArray.Insert(2, eveningArray);
-            yAxisArray.Insert(3, nightArray);
-
-            obj.Add("title", "Weekdays by Periods");
-            obj.Add("xAxis", weekdayArray);
-            obj.Add("legend", periodArray);
-            obj.Add("yAxis", yAxisArray);
-
-            finalObj = new JObject();
-            finalObj.Add("data", obj);
             return finalObj;
+
+            
         }
 
         public JObject WeekendByPeriodJson(List<DayByTypeDTO> list)

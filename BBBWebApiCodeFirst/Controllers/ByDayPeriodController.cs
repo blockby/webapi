@@ -24,6 +24,8 @@ namespace BBBWebApiCodeFirst.Controllers
         private readonly DataContext _context;
         private readonly string connectionString = ConnectionStringBuilder.buildConnectionString();
 
+        private string _selectString;
+
         public ByDayPeriodController(DataContext context)
         {
             _context = context;
@@ -53,8 +55,18 @@ namespace BBBWebApiCodeFirst.Controllers
 
 
         private JObject ExecuteQuery(string id_location, string id_day, string id_period_day, string service, string rCustomer)
-        {
-            string _selectString = "SELECT b.id_day, b.name_day AS day, c.name_period, COUNT(DISTINCT a.src) AS people FROM collected_data a INNER JOIN days b ON a.id_day = b.id_day INNER JOIN out_day_periods c ON a.id_out_day_period = c.id_day_period WHERE a.id_location = " + id_location + " AND a.id_day = " + id_day + " AND a.id_out_day_period IN(" + id_period_day + ") AND a.id_service = " + service + " AND a.returning_customer = "+rCustomer+" GROUP BY b.id_day, c.name_period, a.id_out_day_period ORDER BY a.id_out_day_period ASC";
+        {            
+
+            if (service == "2")
+            {
+                _selectString = "SELECT b.id_day, b.name_day AS day, c.name_period, COUNT(DISTINCT a.src) AS people FROM collected_data a INNER JOIN days b ON a.id_day = b.id_day INNER JOIN out_day_periods c ON a.id_out_day_period = c.id_out_day_period WHERE a.id_location = " + id_location + " AND a.id_day = " + id_day + " AND a.id_out_day_period IN(" + id_period_day + ") AND a.id_service = " + service + " AND a.returning_customer = " + rCustomer + " GROUP BY b.id_day, c.name_period, a.id_out_day_period ORDER BY a.id_out_day_period ASC";
+            }
+            else if (service == "1")
+            {
+                _selectString = "SELECT b.id_day, b.name_day AS day, c.name_period, COUNT(DISTINCT a.src) AS people FROM collected_data a INNER JOIN days b ON a.id_day = b.id_day INNER JOIN in_day_periods c ON a.id_in_day_period = c.id_in_day_period WHERE a.id_location = " + id_location + " AND a.id_day = " + id_day + " AND a.id_in_day_period IN(" + id_period_day + ") AND a.id_service = " + service + " AND a.returning_customer = " + rCustomer + " GROUP BY b.id_day, c.name_period, a.id_in_day_period ORDER BY a.id_in_day_period ASC";
+            }     
+
+            
 
             using (var conn = new NpgsqlConnection(connectionString))
             {

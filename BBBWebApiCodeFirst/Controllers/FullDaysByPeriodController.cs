@@ -24,6 +24,10 @@ namespace BBBWebApiCodeFirst.Controllers
         private readonly DataContext _context;
         private readonly string connectionString = ConnectionStringBuilder.buildConnectionString();
 
+        private string _selectString;
+        private string serviceId;
+
+
         public FullDaysByPeriodController(DataContext context)
         {
             _context = context;
@@ -51,9 +55,19 @@ namespace BBBWebApiCodeFirst.Controllers
         }
 
 
-        private JObject ExecuteQuery(string id_location, string id_out_day_period, string id_service, string returning_customer)
+        private JObject ExecuteQuery(string id_location, string id_day_period, string service, string returning_customer)
         {
-            string _selectString = "SELECT a.id_day, b.name_day AS day, c.name_period, COUNT(DISTINCT a.src) AS people FROM collected_data a INNER JOIN days b ON a.id_day = b.id_day INNER JOIN out_day_periods c ON a.id_out_day_period = c.id_out_day_period WHERE a.id_location = " + id_location+" AND a.id_out_day_period IN ("+ id_out_day_period + ") AND a.id_service = " + id_service + " AND a.returning_customer = "+ returning_customer +" GROUP BY a.id_day, b.id_day, c.name_period, a.id_out_day_period ORDER BY a.id_day,a.id_out_day_period";
+
+            if (service == "2")
+            {
+                _selectString = "SELECT a.id_day, b.name_day AS day, c.name_period, COUNT(DISTINCT a.src) AS people FROM collected_data a INNER JOIN days b ON a.id_day = b.id_day INNER JOIN out_day_periods c ON a.id_out_day_period = c.id_out_day_period WHERE a.id_location = " + id_location + " AND a.id_out_day_period IN (" + id_day_period + ") AND a.id_service = " + service + " AND a.returning_customer = " + returning_customer + " GROUP BY a.id_day, b.id_day, c.name_period, a.id_out_day_period ORDER BY a.id_day,a.id_out_day_period";
+                serviceId = "2";
+            }
+            else if (service == "1")
+            {
+                _selectString = "SELECT a.id_day, b.name_day AS day, c.name_period, COUNT(DISTINCT a.src) AS people FROM collected_data a INNER JOIN days b ON a.id_day = b.id_day INNER JOIN in_day_periods c ON a.id_in_day_period = c.id_in_day_period WHERE a.id_location = " + id_location + " AND a.id_in_day_period IN (" + id_day_period + ") AND a.id_service = " + service + " AND a.returning_customer = " + returning_customer + " GROUP BY a.id_day, b.id_day, c.name_period, a.id_in_day_period ORDER BY a.id_day,a.id_in_day_period";
+                serviceId = "1";
+            }
 
             using (var conn = new NpgsqlConnection(connectionString))
             {
@@ -73,7 +87,7 @@ namespace BBBWebApiCodeFirst.Controllers
                         }
 
                         IObjectConverter objConverted = new ObjectConverter();
-                        var obj = objConverted.FullDaysByPeriodJson(FullDaysByPeriodDTOList);
+                        var obj = objConverted.FullDaysByPeriodJson(FullDaysByPeriodDTOList, serviceId);
 
                         return obj;
                     }

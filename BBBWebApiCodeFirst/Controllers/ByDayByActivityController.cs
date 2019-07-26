@@ -24,6 +24,8 @@ namespace BBBWebApiCodeFirst.Controllers
         private readonly DataContext _context;
         private readonly string connectionString = ConnectionStringBuilder.buildConnectionString();
 
+        private string _selectString;
+
         public ByDayByActivityController(DataContext context)
         {
             _context = context;
@@ -53,9 +55,17 @@ namespace BBBWebApiCodeFirst.Controllers
         }
 
 
-        private JObject ExecuteQuery(string id_location, string id_day, string id_activity, string id_service, string returning_customer)
+        private JObject ExecuteQuery(string id_location, string id_day, string id_activity, string service, string returning_customer)
         {
-            string _selectString = "SELECT b.id_day, b.name_day AS day, c.name_activity, COUNT(DISTINCT a.src) AS people FROM collected_data a INNER JOIN days b ON a.id_day = b.id_day INNER JOIN out_activitys c ON a.id_out_activity = c.id_out_activity WHERE a.id_location = " + id_location + " AND a.id_day = " + id_day + " AND a.id_out_activity IN(" + id_activity + ") AND a.id_service = "+ id_service + " AND a.returning_customer = "+ returning_customer +" GROUP BY b.id_day, c.id_out_activity ORDER BY a.id_activity ASC";
+            
+            if (service == "1")
+            {
+                string _selectString = "SELECT b.id_day, b.name_day AS day, c.name_activity, COUNT(DISTINCT a.src) AS people FROM collected_data a INNER JOIN days b ON a.id_day = b.id_day INNER JOIN in_activitys c ON a.id_in_activity = c.id_in_activity WHERE a.id_location = " + id_location + " AND a.id_day = " + id_day + " AND a.id_in_activity IN(" + id_activity + ") AND a.id_service = " + service + " AND a.returning_customer = " + returning_customer + " GROUP BY b.id_day, c.id_in_activity ORDER BY a.id_in_activity ASC";
+            }
+            else if (service == "2")
+            {
+                string _selectString = "SELECT b.id_day, b.name_day AS day, c.name_activity, COUNT(DISTINCT a.src) AS people FROM collected_data a INNER JOIN days b ON a.id_day = b.id_day INNER JOIN out_activitys c ON a.id_out_activity = c.id_out_activity WHERE a.id_location = " + id_location + " AND a.id_day = " + id_day + " AND a.id_out_activity IN(" + id_activity + ") AND a.id_service = " + service + " AND a.returning_customer = " + returning_customer + " GROUP BY b.id_day, c.id_out_activity ORDER BY a.id_out_activity ASC";
+            }
 
             using (var conn = new NpgsqlConnection(connectionString))
             {

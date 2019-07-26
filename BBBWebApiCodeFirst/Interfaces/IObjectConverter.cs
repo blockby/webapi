@@ -20,11 +20,11 @@ namespace BBBWebApiCodeFirst.Interfaces
 
         JObject ByDayPeriodJson(List<DayByTypeDTO> list);
 
-        JObject WeekDayByPeriodJson(List<DayByTypeDTO> list);
+        JObject WeekDayByPeriodJson(List<DayByTypeDTO> list, string serviceId);
 
         JObject WeekendByPeriodJson(List<DayByTypeDTO> list);
 
-        JObject FullDaysByPeriodJson(List<DayByTypeDTO> list);
+        JObject FullDaysByPeriodJson(List<DayByTypeDTO> list, string serviceId);
 
         
 
