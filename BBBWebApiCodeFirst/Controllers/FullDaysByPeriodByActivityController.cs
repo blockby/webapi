@@ -25,6 +25,8 @@ namespace BBBWebApiCodeFirst.Controllers
         private readonly string connectionString = ConnectionStringBuilder.buildConnectionString();
 
         private string _selectString;
+        private string _preSelectString;
+        private string filterSpecification;
 
         public FullDaysByPeriodByActivityController(DataContext context)
         {
@@ -38,17 +40,11 @@ namespace BBBWebApiCodeFirst.Controllers
             {
                 string result = await reader.ReadToEndAsync();
 
-                var locationObj = JObject.Parse(result)["id_location"];
-                var idPeriodDayObj = JObject.Parse(result)["id_out_day_period"];
-                var idActivityObj = JObject.Parse(result)["id_out_activity"];
-                var serviceObj = JObject.Parse(result)["id_service"];
-                var rCustomerObj = JObject.Parse(result)["returning_customer"];
-
-                string location = locationObj.ToObject<string>();
-                string idPeriodDay = idPeriodDayObj.ToObject<string>();
-                string idActivity = idActivityObj.ToObject<string>();
-                string service = serviceObj.ToObject<string>();
-                string rCustomer = rCustomerObj.ToObject<string>();
+                string location = JObject.Parse(result)["id_location"].ToObject<string>();
+                string idPeriodDay = JObject.Parse(result)["id_day_period"].ToObject<string>();
+                string idActivity = JObject.Parse(result)["id_activity"].ToObject<string>();
+                string service = JObject.Parse(result)["id_service"].ToObject<string>();
+                string rCustomer = JObject.Parse(result)["returning_customer"].ToObject<string>();
 
                 return ExecuteQuery(location, idPeriodDay, idActivity, service, rCustomer);
             }
@@ -57,16 +53,8 @@ namespace BBBWebApiCodeFirst.Controllers
 
         private JObject ExecuteQuery(string id_location, string id_period_day, string id_activity, string service, string returning_customer)
         {
+            AssignQueryValue(id_location, id_period_day, id_activity,service, returning_customer);
             
-            if (service == "1")
-            {
-                _selectString = "SELECT a.id_day AS id_day, b.name_day AS day, c.name_period, d.name_activity, COUNT(DISTINCT a.src) AS people FROM collected_data a INNER JOIN days b ON a.id_day = b.id_day INNER JOIN in_day_periods c ON a.id_in_day_period = c.id_in_day_period INNER JOIN in_activitys d ON a.id_in_activity = d.id_in_activity WHERE a.id_location = " + id_location + " AND a.id_period_day IN(" + id_period_day + ") AND a.id_activity IN(" + id_activity + ") AND a.id_service = " + service + " AND a.returning_customer = " + returning_customer + " GROUP BY a.id_day, b.name_day, c.name_period d.name_activity, a.id_in_day_period ORDER BY a.id_day, a.id_in_day_period";
-            }
-            else if (service == "2")
-            {
-                _selectString = "SELECT a.id_day AS id_day, b.name_day AS day, c.name_period, d.name_activity, COUNT(DISTINCT a.src) AS people FROM collected_data a INNER JOIN days b ON a.id_day = b.id_day INNER JOIN out_day_periods c ON a.id_out_day_period = c.id_out_day_period INNER JOIN out_activitys d ON a.id_out_activity = d.id_out_activity WHERE a.id_location = " + id_location + " AND a.id_period_day IN(" + id_period_day + ") AND a.id_activity IN(" + id_activity + ") AND a.id_service = " + service + " AND a.returning_customer = " + returning_customer + " GROUP BY a.id_day, b.name_day, c.name_period d.name_activity, a.id_out_day_period ORDER BY a.id_day,a.id_out_day_period";
-            }
-
             using (var conn = new NpgsqlConnection(connectionString))
             {
                 conn.Open();
@@ -75,22 +63,51 @@ namespace BBBWebApiCodeFirst.Controllers
                 {
                     using (var reader = cmd.ExecuteReader())
                     {
-                        List<ByDayByPeriodByActivityDTO> FullDaysByPeriodByActivityDTOList = new List<ByDayByPeriodByActivityDTO>();
 
-                        while (reader.Read())
-                        {
-                            InterfaceDataReader dataReader = new DataReader();
-                            ByDayByPeriodByActivityDTO fullDaysByPeriodByActivityDTO = dataReader.ReadByDayByPeriodByActivityDTO(reader);
-                            FullDaysByPeriodByActivityDTOList.Add(fullDaysByPeriodByActivityDTO);
-                        }
+                        InterfaceDataReader dataReader = new DataReader();
+                        List<ByDayByPeriodByActivityDTO> DTOList = new List<ByDayByPeriodByActivityDTO>();
+                        DTOList = dataReader.ReadByDayByPeriodByActivityDTO(reader);
 
                         IObjectConverter objConverted = new ObjectConverter();
-                        var obj = objConverted.FullDaysByPeriodByActivityJson(FullDaysByPeriodByActivityDTOList);
+                        var obj = objConverted.FullDaysByPeriodByActivityJson(DTOList, service, filterSpecification);
 
                         return obj;
                     }
                 }
             }
+        }
+
+        private void AssignQueryValue(string id_location, string id_period_day, string id_activity, string service, string returning_customer)
+        {
+            if (service == "1")
+            {
+                if (id_activity == "1")
+                {
+                    _selectString = buildInsideCustomerString(id_location, id_period_day, "3,4", "8", service, returning_customer);
+                }
+                else if (id_activity == "1,2" || id_activity == "2,1")
+                {
+                    _selectString = buildInsideCustomerString(id_location, id_period_day, "3,4", "2", service, returning_customer);
+                }
+                else if (id_activity == "2")
+                {
+                    _selectString = buildInsideCustomerString(id_location, id_period_day, "2", "8", service, returning_customer);
+                }
+                else if (id_activity == "3" || id_activity == "4" || id_activity == "3,4" || id_activity == "4,3")
+                {
+                    _selectString = "SELECT a.id_day AS id_day, b.name_day AS day, c.name_period, d.name_activity, COUNT(DISTINCT a.src) AS people FROM collected_data a INNER JOIN days b ON a.id_day = b.id_day INNER JOIN in_day_periods c ON a.id_in_day_period = c.id_in_day_period INNER JOIN in_activitys d ON a.id_in_activity = d.id_in_activity WHERE a.id_location = " + id_location + " AND a.id_in_day_period IN(" + id_period_day + ") AND a.id_in_activity IN(" + id_activity + ") AND a.id_service = " + service + " AND a.returning_customer IN(" + returning_customer + ") GROUP BY a.id_day, b.name_day, c.name_period, d.name_activity, a.id_in_day_period ORDER BY a.id_day, a.id_in_day_period";
+                }
+            }
+            else if (service == "2")
+            {
+                _selectString = "SELECT a.id_day AS id_day, b.name_day AS day, c.name_period, d.name_activity, COUNT(DISTINCT a.src) AS people FROM collected_data a INNER JOIN days b ON a.id_day = b.id_day INNER JOIN out_day_periods c ON a.id_out_day_period = c.id_out_day_period INNER JOIN out_activitys d ON a.id_out_activity = d.id_out_activity WHERE a.id_location = " + id_location + " AND a.id_out_day_period IN(" + id_period_day + ") AND a.id_out_activity IN(" + id_activity + ") AND a.id_service = " + service + " AND a.returning_customer IN(" + returning_customer + ") GROUP BY a.id_day, b.name_day, c.name_period, d.name_activity, a.id_out_day_period ORDER BY a.id_day,a.id_out_day_period";
+            }
+        }
+
+        private string buildInsideCustomerString(string id_location, string id_period_day, string id_activity1, string id_activity2, string service, string returning_customer)
+        {
+            _preSelectString = "SELECT id_day, day, name_period, name_activity, SUM(people) AS people FROM ((SELECT a.id_day AS id_day, b.name_day AS day, c.id_in_day_period, c.name_period, 'Take_away Customers' AS name_activity, COUNT(DISTINCT a.src) AS people FROM collected_data a INNER JOIN days b ON a.id_day = b.id_day INNER JOIN in_day_periods c ON a.id_in_day_period = c.id_in_day_period INNER JOIN in_activitys d ON a.id_in_activity = d.id_in_activity WHERE a.id_location = " + id_location + " AND a.id_in_day_period IN(" + id_period_day + ") AND a.id_in_activity IN(" + id_activity1 + ") AND a.id_service = " + service + " AND a.returning_customer IN(" + returning_customer + ") GROUP BY a.id_day, b.name_day, c.name_period, c.id_in_day_period, d.id_in_activity ORDER BY a.id_day,c.id_in_day_period) UNION(SELECT a.id_day AS id_day, b.name_day AS day, c.id_in_day_period, c.name_period, d.name_activity, COUNT(DISTINCT a.src) AS people FROM collected_data a INNER JOIN days b ON a.id_day = b.id_day INNER JOIN in_day_periods c ON a.id_in_day_period = c.id_in_day_period INNER JOIN in_activitys d ON a.id_in_activity = d.id_in_activity WHERE a.id_location = " + id_location + " AND a.id_in_day_period IN(" + id_period_day + ") AND a.id_in_activity IN(" + id_activity2 + ") AND a.id_service = " + service + " AND a.returning_customer IN(" + returning_customer + ") GROUP BY a.id_day, b.name_day, c.name_period, d.name_activity, c.id_in_day_period ORDER BY a.id_day, c.id_in_day_period) ) AS tb1 GROUP BY id_day,day, id_in_day_period, name_period, name_activity ORDER BY id_day, id_in_day_period ASC";
+            return _preSelectString;
         }
     }
 }

@@ -35,22 +35,18 @@ namespace BBBWebApiCodeFirst.Controllers
             using (StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8))
             {
                 string result = await reader.ReadToEndAsync();
-                var locationObj = JObject.Parse(result)["id_location"];
-                var serviceObj = JObject.Parse(result)["id_service"];
-                var rCustomerObj = JObject.Parse(result)["returning_customer"];
-                
-                string location = locationObj.ToObject<string>();
-                string service = serviceObj.ToObject<string>();
-                string rCustomer = rCustomerObj.ToObject<string>();
+                                
+                string location = JObject.Parse(result)["id_location"].ToObject<string>();
+                string service = JObject.Parse(result)["id_service"].ToObject<string>();
+                string rCustomer = JObject.Parse(result)["returning_customer"].ToObject<string>();
 
                 return ExecuteQuery(location, service, rCustomer);
             }
         }
 
-
         private JObject ExecuteQuery(string id_location, string service, string rCustomer)
         {
-            string _selectString = "SELECT a.id_day, b.name_day AS day, COUNT(DISTINCT a.src) AS people FROM collected_data a INNER JOIN days b ON a.id_day = b.id_day WHERE a.id_location = " + id_location+ " AND a.id_service = "+service+" AND a.returning_customer = " + rCustomer + " GROUP BY a.id_day, b.id_day ORDER BY a.id_day";
+            string _selectString = "SELECT a.id_day, b.name_day AS day, COUNT(DISTINCT a.src) AS people FROM collected_data a INNER JOIN days b ON a.id_day = b.id_day WHERE a.id_location = " + id_location+ " AND a.id_service = "+service+" AND a.returning_customer IN(" + rCustomer + ") GROUP BY a.id_day, b.id_day ORDER BY a.id_day";
 
             using (var conn = new NpgsqlConnection(connectionString))
             {
@@ -60,14 +56,9 @@ namespace BBBWebApiCodeFirst.Controllers
                 {
                     using (var reader = cmd.ExecuteReader())
                     {
-                        List<FullDaysDTO> FulldaysDTOList = new List<FullDaysDTO>();
-
-                        while (reader.Read())
-                        {
-                            InterfaceDataReader dataReader = new DataReader();
-                            FullDaysDTO fulldaysDTO = dataReader.ReadFulldaysDTO(reader);
-                            FulldaysDTOList.Add(fulldaysDTO);
-                        }
+                        InterfaceDataReader dataReader = new DataReader();
+                        List<MainDTO> FulldaysDTOList = new List<MainDTO>();
+                        FulldaysDTOList = dataReader.ReadMainDTO(reader);             
 
                         IObjectConverter objConverted = new ObjectConverter();
                         var obj = objConverted.FulldaysJson(FulldaysDTOList);

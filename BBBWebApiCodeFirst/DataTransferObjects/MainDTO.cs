@@ -5,24 +5,21 @@ using System.Threading.Tasks;
 
 namespace BBBWebApiCodeFirst.DataTransferObjects
 {
-    public class BydayDTO
+    public class MainDTO
     {
+        private int _idDay;
         private string _day;
-        private int _hour;
-        private int _people;
+        public int _people;
 
+
+        public int IdDay { get { return _idDay; } set { _idDay = value; } }
         public string Day { get { return _day; } set { _day = value; } }
-        public int Hour { get { return _hour; } set { _hour = value; } }
         public int People { get { return _people; } set { _people = value; } }
 
-        public BydayDTO() {
-
-        }
-
-        public BydayDTO(string day, int hour, int people)
+        public MainDTO(int idDay, string day, int people)
         {
+            _idDay = idDay;
             _day = day;
-            _hour = hour;
             _people = people;
         }
     }

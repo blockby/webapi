@@ -6,54 +6,44 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+
 namespace BBBWebApiCodeFirst.Interfaces
 {
     interface IObjectConverter
     {
 
-        JObject BydayJson(List<BydayDTO> list);
+        JObject AllWeekByHoursJson(List<BydayDTO> list, string serviceId);
 
-        JObject TypeDayJson(List<TypeDayDTO> list, string typeday);
+        JObject sharedLocationJson(List<SharedLocationDTO> list);
 
-        JObject FulldaysJson(List<FullDaysDTO> list);
 
+        JObject BydayJson(List<BydayDTO> obj);
+
+        JObject TypeDayJson(List<MainDTO> list);
+
+        JObject FulldaysJson(List<MainDTO> list);
+        
 
         JObject ByDayPeriodJson(List<DayByTypeDTO> list);
 
-        JObject WeekDayByPeriodJson(List<DayByTypeDTO> list, string serviceId);
-
-        JObject WeekendByPeriodJson(List<DayByTypeDTO> list);
+        JObject TypeDayByPeriodJson(List<DayByTypeDTO> list, string serviceId, string dayType);
 
         JObject FullDaysByPeriodJson(List<DayByTypeDTO> list, string serviceId);
+                
+
+        JObject ByDayByActivityJson(List<DayByTypeDTO> list, string serviceId);
+
+        JObject TypeDaysByActivityJson(List<DaysByActivityDTO> list, string serviceId, string spec, string dayType);
+
+        JObject FullDaysByActivityJson(List<DayByTypeDTO> list, string serviceId, string spec);
 
         
 
-        JObject ByDayByActivityJson(List<DayByTypeDTO> list);
+        JObject ByDayByPeriodByActivityJson(List<ByDayByPeriodByActivityDTO> list, string day, string serviceId, string spec);
 
-        JObject WeekDaysByActivityJson(List<DaysByActivityDTO> list);
+        JObject TypeDaysByPeriodByActivityJson(List<ByDayByPeriodByActivityDTO> list, string serviceId, string spec, string dayType);
 
-        JObject WeekendByActivityJson(List<DaysByActivityDTO> list);
-
-        JObject FullDaysByActivityJson(List<DayByTypeDTO> list);
-
+        JObject FullDaysByPeriodByActivityJson(List<ByDayByPeriodByActivityDTO> list, string serviceId, string spec);
         
-
-        JObject ByDayByPeriodByActivityJson(List<ByDayByPeriodByActivityDTO> list, string day);
-
-        JObject ByWeekdaysByPeriodByActivityJson(List<ByDayByPeriodByActivityDTO> list);
-
-        JObject WeekendByPeriodByActivityJson(List<ByDayByPeriodByActivityDTO> list);
-
-        JObject FullDaysByPeriodByActivityJson(List<ByDayByPeriodByActivityDTO> list);
-
-
-        JObject AllWeekByHoursJson(List<BydayDTO> list);
-
-        JObject sharedLocationJson(List<SharedLocationDTO>list);
-
-        
-
-
-
     }
 }

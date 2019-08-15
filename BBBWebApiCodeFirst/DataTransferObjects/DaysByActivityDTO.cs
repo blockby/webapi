@@ -5,16 +5,18 @@ using System.Threading.Tasks;
 
 namespace BBBWebApiCodeFirst.DataTransferObjects
 {
-    public class DaysByActivityDTO
+    public class DaysByActivityDTO: MainDTO
     {
-        public double IdDay { get; set; }
+        private int _typeDay;
+        private string _nameActivity;
 
-        public string Day { get; set; }
+        public int TypeDay { get{return _typeDay;} set{_typeDay = value;}}
+        public string NameActivity { get { return _nameActivity; } set { _nameActivity = value; }}
 
-        public string TypeDay { get; set; }
-
-        public string NameActivity { get; set;}
-
-        public int People { get; set; }
+        public DaysByActivityDTO (int idDay, string day , int people, int typeDay, string nameActivity): base (idDay, day, people)
+        {
+            _typeDay = typeDay;
+            _nameActivity = nameActivity;
+        }
     }
 }

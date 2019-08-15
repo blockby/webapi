@@ -25,6 +25,7 @@ namespace BBBWebApiCodeFirst.Controllers
         private readonly string connectionString = ConnectionStringBuilder.buildConnectionString();
 
         private string _selectString;
+        private string _preSelectString;
 
         public ByDayByActivityController(DataContext context)
         {
@@ -37,35 +38,21 @@ namespace BBBWebApiCodeFirst.Controllers
             using (StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8))
             {
                 string result = await reader.ReadToEndAsync();
+                
+                string location = JObject.Parse(result)["id_location"].ToObject<string>();
+                string day = JObject.Parse(result)["id_day"].ToObject<string>();
+                string idActivity = JObject.Parse(result)["id_activity"].ToObject<string>();
+                string service = JObject.Parse(result)["id_service"].ToObject<string>();
+                string rCustomer = JObject.Parse(result)["returning_customer"].ToObject<string>();
 
-                var locationObj = JObject.Parse(result)["id_location"];
-                var dayObj = JObject.Parse(result)["id_day"];
-                var idActivityObj = JObject.Parse(result)["id_out_activity"];
-                var serviceObj = JObject.Parse(result)["id_service"];
-                var rCustomerObj = JObject.Parse(result)["returning_customer"];
-
-                string location = locationObj.ToObject<string>();
-                string day = dayObj.ToObject<string>();
-                string idActivity = idActivityObj.ToObject<string>();
-                string service = dayObj.ToObject<string>();
-                string rCustomer = idActivityObj.ToObject<string>();
-
-                return ExecuteQuery(location, day, idActivity, service, rCustomer);
+                return Execute(location, day, idActivity, service, rCustomer);
             }
         }
+        
 
-
-        private JObject ExecuteQuery(string id_location, string id_day, string id_activity, string service, string returning_customer)
+        private JObject Execute(string id_location, string id_day, string id_activity, string service, string returning_customer)
         {
-            
-            if (service == "1")
-            {
-                string _selectString = "SELECT b.id_day, b.name_day AS day, c.name_activity, COUNT(DISTINCT a.src) AS people FROM collected_data a INNER JOIN days b ON a.id_day = b.id_day INNER JOIN in_activitys c ON a.id_in_activity = c.id_in_activity WHERE a.id_location = " + id_location + " AND a.id_day = " + id_day + " AND a.id_in_activity IN(" + id_activity + ") AND a.id_service = " + service + " AND a.returning_customer = " + returning_customer + " GROUP BY b.id_day, c.id_in_activity ORDER BY a.id_in_activity ASC";
-            }
-            else if (service == "2")
-            {
-                string _selectString = "SELECT b.id_day, b.name_day AS day, c.name_activity, COUNT(DISTINCT a.src) AS people FROM collected_data a INNER JOIN days b ON a.id_day = b.id_day INNER JOIN out_activitys c ON a.id_out_activity = c.id_out_activity WHERE a.id_location = " + id_location + " AND a.id_day = " + id_day + " AND a.id_out_activity IN(" + id_activity + ") AND a.id_service = " + service + " AND a.returning_customer = " + returning_customer + " GROUP BY b.id_day, c.id_out_activity ORDER BY a.id_out_activity ASC";
-            }
+            AssignQueryValue(id_location, id_day, id_activity, service, returning_customer);
 
             using (var conn = new NpgsqlConnection(connectionString))
             {
@@ -75,22 +62,50 @@ namespace BBBWebApiCodeFirst.Controllers
                 {
                     using (var reader = cmd.ExecuteReader())
                     {
-                        List<DayByTypeDTO> ByDayByActivityDTOList = new List<DayByTypeDTO>();
-
-                        while (reader.Read())
-                        {
-                            InterfaceDataReader dataReader = new DataReader();
-                            DayByTypeDTO byDayByActivityDTO = dataReader.ReadDayByTypeDTO(reader);
-                            ByDayByActivityDTOList.Add(byDayByActivityDTO);
-                        }
+                        InterfaceDataReader dataReader = new DataReader();
+                        List<DayByTypeDTO> DTOList = new List<DayByTypeDTO>();
+                        DTOList = dataReader.ReadDayByTypeDTO(reader);
 
                         IObjectConverter objConverted = new ObjectConverter();
-                        var obj = objConverted.ByDayByActivityJson(ByDayByActivityDTOList);
+                        var obj = objConverted.ByDayByActivityJson(DTOList, service);
 
                         return obj;
                     }
                 }
             }
+        }
+
+        private void AssignQueryValue(string id_location, string id_day, string id_activity, string service, string returning_customer)
+        {
+            if (service == "1")
+            {
+                if (id_activity == "1")
+                {
+                    _selectString = buildInsideCustomerString(id_location, id_day, "3,4", "8", service, returning_customer);
+                }
+                else if (id_activity == "1,2" || id_activity == "2,1")
+                {
+                    _selectString = buildInsideCustomerString(id_location, id_day, "3,4", "2", service, returning_customer);
+                }
+                else if (id_activity == "2")
+                {
+                    _selectString = buildInsideCustomerString(id_location, id_day, "2", "8", service, returning_customer);
+                }
+                else if (id_activity == "3" || id_activity == "4" || id_activity == "3,4" || id_activity == "4,3")
+                {
+                    _selectString = "SELECT b.id_day, b.name_day AS day, c.name_activity, COUNT(DISTINCT a.src) AS people FROM collected_data a INNER JOIN days b ON a.id_day = b.id_day INNER JOIN in_activitys c ON a.id_in_activity = c.id_in_activity WHERE a.id_location = " + id_location + " AND a.id_day = " + id_day + " AND a.id_in_activity IN(" + id_activity + ") AND a.id_service = " + service + " AND a.returning_customer IN(" + returning_customer + ") GROUP BY b.id_day, c.id_in_activity ORDER BY c.id_in_activity ASC";
+                }
+            }
+            else if (service == "2")
+            {
+                _selectString = "SELECT b.id_day, b.name_day AS day, c.name_activity, COUNT(DISTINCT a.src) AS people FROM collected_data a INNER JOIN days b ON a.id_day = b.id_day INNER JOIN out_activitys c ON a.id_out_activity = c.id_out_activity WHERE a.id_location = " + id_location + " AND a.id_day = " + id_day + " AND a.id_out_activity IN(" + id_activity + ") AND a.id_service = " + service + " AND a.returning_customer IN (" + returning_customer + ") GROUP BY b.id_day, c.id_out_activity ORDER BY c.id_out_activity ASC";
+            }            
+        }
+
+        private string buildInsideCustomerString(string id_location, string id_day, string id_activity1, string id_activity2, string service, string returning_customer)
+        {
+            _preSelectString = "SELECT id_day, day, name_activity, people FROM ((SELECT b.id_day, b.name_day AS day, 'Take_away Customers' AS name_activity, COUNT(DISTINCT a.src) AS people FROM collected_data a INNER JOIN days b ON a.id_day = b.id_day WHERE a.id_location = " + id_location + " AND a.id_day = " + id_day + " AND a.id_in_activity IN(" + id_activity1 + ") AND a.id_service = " + service + " AND a.returning_customer IN(" + returning_customer + ") GROUP BY b.id_day) UNION (SELECT b.id_day, b.name_day AS day, c.name_activity, COUNT(DISTINCT a.src) AS people FROM collected_data a INNER JOIN days b ON a.id_day = b.id_day INNER JOIN in_activitys c ON a.id_in_activity = c.id_in_activity WHERE a.id_location = " + id_location + " AND a.id_day = " + id_day + " AND a.id_in_activity IN(" + id_activity2 + ") AND a.id_service = " + service + " AND a.returning_customer IN(" + returning_customer + ") GROUP BY b.id_day, c.id_in_activity)) AS tb1 GROUP BY id_day,day, name_activity, people";
+            return _preSelectString;
         }
     }
 }

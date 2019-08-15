@@ -36,15 +36,10 @@ namespace BBBWebApiCodeFirst.Controllers
             {
                 string result = await reader.ReadToEndAsync();
 
-                var locationObj = JObject.Parse(result)["id_location"];
-                var serviceObj = JObject.Parse(result)["id_service"];
-                var rCustomerObj = JObject.Parse(result)["returning_customer"];
-
-                string location = locationObj.ToObject<string>();
-                string service = serviceObj.ToObject<string>();
-                string rCustomer = rCustomerObj.ToObject<string>();
-
-
+                string location = JObject.Parse(result)["id_location"].ToObject<string>();
+                string service = JObject.Parse(result)["id_service"].ToObject<string>();
+                string rCustomer = JObject.Parse(result)["returning_customer"].ToObject<string>();
+                
                 return ExecuteQuery(location, service, rCustomer);
             }
         }
@@ -52,8 +47,8 @@ namespace BBBWebApiCodeFirst.Controllers
 
         private JObject ExecuteQuery(string id_location, string service, string returning_customer)
         {
-            string _selectString = "SELECT b.name_day AS day, a.hours as hour, COUNT(DISTINCT(a.src)) AS people FROM collected_data a INNER JOIN days b ON a.id_day = b.id_day WHERE a.id_location = "+id_location+ " AND a.id_service = " + service + " AND a.returning_customer = " + returning_customer + " GROUP BY a.id_day, b.name_day, hour ORDER BY a.id_day, hour ASC";
-
+            string _selectString = "SELECT b.name_day AS day, a.hours as hour, COUNT(DISTINCT(a.src)) AS people FROM collected_data a INNER JOIN days b ON a.id_day = b.id_day WHERE a.id_location = "+id_location+ " AND a.id_service = " + service + " AND a.returning_customer IN(" + returning_customer + ") GROUP BY a.id_day, b.name_day, hour ORDER BY a.id_day, hour ASC";
+            
             using (var conn = new NpgsqlConnection(connectionString))
             {
                 conn.Open();
@@ -62,17 +57,12 @@ namespace BBBWebApiCodeFirst.Controllers
                 {
                     using (var reader = cmd.ExecuteReader())
                     {
-                        List<BydayDTO> allWeekByHoursDTOList = new List<BydayDTO>();
-
-                        while (reader.Read())
-                        {
-                            InterfaceDataReader dataReader = new DataReader();
-                            BydayDTO allWeekByHoursDTO = dataReader.ReadBydayDTO(reader);
-                            allWeekByHoursDTOList.Add(allWeekByHoursDTO);
-                        }
+                        InterfaceDataReader dataReader = new DataReader();
+                        List<BydayDTO> DTOList = new List<BydayDTO>();
+                        DTOList = dataReader.ReadBydayDTO(reader);
 
                         IObjectConverter objConverted = new ObjectConverter();
-                        var obj = objConverted.AllWeekByHoursJson(allWeekByHoursDTOList);
+                        var obj = objConverted.AllWeekByHoursJson(DTOList, service);
 
                         return obj;
                     }

@@ -18,138 +18,90 @@ namespace BBBWebApiCodeFirst.DataReaders
         public DataReader()
         {
 
+        }        
+
+        public List<BydayDTO> ReadBydayDTO(NpgsqlDataReader reader)
+        {
+            List<BydayDTO> dTOList = new List<BydayDTO>();
+
+
+            while (reader.Read())
+            {
+                BydayDTO dTO = new BydayDTO();
+                dTO = new BydayDTO(reader.GetString(0), reader.GetInt32(1), reader.GetInt32(2));
+                dTOList.Add(dTO);
+            }
+            return dTOList;
         }
 
-        public BydayDTO ReadBydayDTO (NpgsqlDataReader reader)
+        public List<MainDTO> ReadMainDTO (NpgsqlDataReader reader)
         {
-            var obj = new JObject();
+            List<MainDTO> mainDTOList = new List<MainDTO>();
 
-            string day = reader.GetString(0);
-            double hour = reader.GetDouble(1);
-            int people = reader.GetInt32(2);
-
-            BydayDTO bydayDTO = new BydayDTO()
+            while (reader.Read())
             {
-                Day = day,
-                Hour = hour,
-                People = people
-            };
-
-            return bydayDTO;
+                MainDTO mainDTO = new MainDTO(reader.GetInt32(0), reader.GetString(1), reader.GetInt32(2)) { };
+                mainDTOList.Add(mainDTO);
+            }
+            return mainDTOList;
         }
 
-        
-
-        public TypeDayDTO ReadTypeDayDTO(NpgsqlDataReader reader)
+        public List<DayByTypeDTO> ReadDayByTypeDTO(NpgsqlDataReader reader)
         {
-            var obj = new JObject();
+            List<DayByTypeDTO> dtoList = new List<DayByTypeDTO>();
 
-            double id_day = reader.GetDouble(0);
-            string day = reader.GetString(1);
-            int type_day = reader.GetInt32(2);
-            int people = reader.GetInt32(3);
-
-            TypeDayDTO typeDayDTO = new TypeDayDTO()
+            while (reader.Read())
             {
-                IdDay = id_day,
-                Day = day,
-                TypeDay = type_day,
-                People = people
-            };
+                int id_day = reader.GetInt32(0);
+                string day = reader.GetString(1);
+                string type = reader.GetString(2);
+                int people = reader.GetInt32(3);
 
-            return typeDayDTO;
+                DayByTypeDTO dTO = new DayByTypeDTO(id_day, day, people, type) { };
+                dtoList.Add(dTO);
+            }
+            return dtoList;
         }
 
-        public FullDaysDTO ReadFulldaysDTO (NpgsqlDataReader reader)
+        public List<DaysByActivityDTO> ReadDaysByActivityDTO(NpgsqlDataReader reader)
         {
-            double id_day = reader.GetDouble(0);
-            string day = reader.GetString(1);
-            int people = reader.GetInt32(2);
+            List<DaysByActivityDTO> dtoList = new List<DaysByActivityDTO>();
 
-            FullDaysDTO fulldaysDTO = new FullDaysDTO()
+            while (reader.Read())
             {
-                IdDay = id_day,
-                Day = day,
-                People = people
-            };
+                int id_day = reader.GetInt32(0);
+                string day = reader.GetString(1);
+                int type_day = reader.GetInt32(2);
+                string name_activity = reader.GetString(3);
+                int people = reader.GetInt32(4);
 
-            return fulldaysDTO;
+                DaysByActivityDTO dTO = new DaysByActivityDTO(id_day, day, people, type_day, name_activity) { };
+                dtoList.Add(dTO);
+            }
+            return dtoList;           
         }
 
-
-        public DayByTypeDTO ReadDayByTypeDTO(NpgsqlDataReader reader)
+        public List<ByDayByPeriodByActivityDTO> ReadByDayByPeriodByActivityDTO(NpgsqlDataReader reader)
         {
-            double id_day = reader.GetDouble(0);
-            string day = reader.GetString(1);
-            string type = reader.GetString(2);
-            int people = reader.GetInt32(3);
+            List<ByDayByPeriodByActivityDTO> dtoList = new List<ByDayByPeriodByActivityDTO>();
 
-            DayByTypeDTO weekDayByPeriodDTO = new DayByTypeDTO()
+            while (reader.Read())
             {
-                IdDay = id_day,
-                Day = day,
-                Type = type,
-                People = people
-            };
-            return weekDayByPeriodDTO;
+                int id_day = reader.GetInt32(0);
+                string day = reader.GetString(1);
+                string name_period = reader.GetString(2);
+                string name_activity = reader.GetString(3);
+                int people = reader.GetInt32(4);
+
+                ByDayByPeriodByActivityDTO dTO = new ByDayByPeriodByActivityDTO(id_day, day, people, name_activity, name_period) { };
+
+                dtoList.Add(dTO);
+            }
+            return dtoList;
         }
-
-
-
-
-
-        public DaysByActivityDTO ReadDaysByActivityDTO(NpgsqlDataReader reader)
-        {
-            double id_day = reader.GetDouble(0);
-            string day = reader.GetString(1);
-            string type_day = reader.GetString(2);
-            string name_activity = reader.GetString(3);
-            int people = reader.GetInt32(4);
-
-            DaysByActivityDTO weekDaysByActivityDTO = new DaysByActivityDTO()
-            {
-                IdDay = id_day,
-                Day = day,
-                TypeDay = type_day,
-                NameActivity = name_activity,
-                People = people
-            };
-
-            return weekDaysByActivityDTO;
-        }
-
-
-
-
-
-        public ByDayByPeriodByActivityDTO ReadByDayByPeriodByActivityDTO(NpgsqlDataReader reader)
-        {
-            double id_day = reader.GetDouble(0);
-            string day = reader.GetString(1);
-            string name_period = reader.GetString(2);
-            string name_activity = reader.GetString(3);
-            int people = reader.GetInt32(4);
-
-            ByDayByPeriodByActivityDTO byDayByPeriodByActivityDTO = new ByDayByPeriodByActivityDTO()
-            {
-                IdDay = id_day,
-                Day = day,
-                NamePeriod = name_period,
-                NameActivity = name_activity,
-                People = people
-            };
-
-            return byDayByPeriodByActivityDTO;
-        }    
-
-        
-
-
 
         public SharedLocationDTO ReadSharedLocationDTO(NpgsqlDataReader reader)
         {
-            var obj = new JObject();
-
             int id_location = reader.GetInt32(0);
             int id_user = reader.GetInt32(1);
             string owner = reader.GetString(2);
@@ -158,7 +110,8 @@ namespace BBBWebApiCodeFirst.DataReaders
             double longitude = reader.GetDouble(5);
             double latitude = reader.GetDouble(6);
             bool state = reader.GetBoolean(7);
-            
+            int service = reader.GetInt32(8);
+                        
             SharedLocationDTO sharedLocationDTO = new SharedLocationDTO()
             {
                 IdLocation = id_location,
@@ -168,7 +121,8 @@ namespace BBBWebApiCodeFirst.DataReaders
                 TypeProp = type_prop,
                 Longitude = longitude,
                 Latitude = latitude,
-                State = state
+                State = state,
+                Service = service
             };
 
             return sharedLocationDTO;

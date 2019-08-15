@@ -23,5 +23,6 @@ namespace BBBWebApiCodeFirst.DataTransferObjects
 
         public bool State { get; set; }
 
+        public int Service { get; set; }
     }
 }

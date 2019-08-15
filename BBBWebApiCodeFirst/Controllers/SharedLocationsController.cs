@@ -35,18 +35,15 @@ namespace BBBWebApiCodeFirst.Controllers
             using (StreamReader reader = new StreamReader(Request.Body, Encoding.UTF8))
             {
                 string result = await reader.ReadToEndAsync();
-
-                var idUserObj = JObject.Parse(result)["id_user"];                
-                string idUser = idUserObj.ToObject<string>();
-                
-                return ExecuteQuery(idUser);
+                string idUser = JObject.Parse(result)["id_user"].ToObject<string>();
+                string state = JObject.Parse(result)["state"].ToObject<string>();                
+                return ExecuteQuery(idUser, state);
             }
-        }
+        }        
 
-
-        private JObject ExecuteQuery(string idUser)
+        private JObject ExecuteQuery(string idUser, string state)
         {
-            string _selectString = "SELECT a.id_location, d.id_user, d.name AS owner,a.address, c.type_prop, ST_X(a.coordinates) AS longitude, ST_Y(a.coordinates) AS latitude, b.state FROM locations a INNER JOIN shared_locations b ON a.id_location = b.id_location INNER JOIN property_types c ON a.id_prop_type = c.id_type_prop INNER JOIN users d ON b.id_user = d.id_user WHERE b.id_user = "+idUser+" AND b.state = True";
+            string _selectString = "SELECT a.id_location, d.id_user, d.name AS owner, a.address, c.prop_type, ST_X(a.coordinates) AS longitude, ST_Y(a.coordinates) AS latitude, b.state, a.id_service FROM locations a INNER JOIN shared_locations b ON a.id_location = b.id_location INNER JOIN property_types c ON a.id_prop_type = c.id_prop_type INNER JOIN users d ON b.id_user = d.id_user WHERE b.id_user = "+idUser+" AND b.state = "+state+"";
 
             using (var conn = new NpgsqlConnection(connectionString))
             {
