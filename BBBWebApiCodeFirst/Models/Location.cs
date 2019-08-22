@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 using BBBWebApiCodeFirst.Converters;
+using Microsoft.AspNetCore.Identity;
 using NetTopologySuite.Geometries;
 using Newtonsoft.Json;
 
@@ -18,7 +19,7 @@ namespace BBBWebApiCodeFirst.Models
 
         public int id_user { get; set; }
         [ForeignKey("id_user")]
-        public User user { get; set; }
+        public User User { get; set; }
 
         public int id_prop_type { get; set; }
         [ForeignKey("id_prop_type")]

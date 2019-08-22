@@ -14,9 +14,11 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using Npgsql;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BBBWebApiCodeFirst.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class SharedLocationsController : ControllerBase
@@ -43,7 +45,7 @@ namespace BBBWebApiCodeFirst.Controllers
 
         private JObject ExecuteQuery(string idUser, string state)
         {
-            string _selectString = "SELECT a.id_location, d.id_user, d.name AS owner, a.address, c.prop_type, ST_X(a.coordinates) AS longitude, ST_Y(a.coordinates) AS latitude, b.state, a.id_service FROM locations a INNER JOIN shared_locations b ON a.id_location = b.id_location INNER JOIN property_types c ON a.id_prop_type = c.id_prop_type INNER JOIN users d ON b.id_user = d.id_user WHERE b.id_user = "+idUser+" AND b.state = "+state+"";
+            string _selectString = "SELECT a.id_location, d.\"Id\", d.\"UserName\" AS owner, a.address, c.prop_type, ST_X(a.coordinates) AS longitude, ST_Y(a.coordinates) AS latitude, b.state, a.id_service FROM locations a INNER JOIN shared_locations b ON a.id_location = b.id_location INNER JOIN property_types c ON a.id_prop_type = c.id_prop_type INNER JOIN \"AspNetUsers\" d ON b.id_user = d.\"Id\" WHERE b.id_user = "+idUser+" AND b.state = "+state+"";
 
             using (var conn = new NpgsqlConnection(connectionString))
             {
@@ -53,17 +55,15 @@ namespace BBBWebApiCodeFirst.Controllers
                 {
                     using (var reader = cmd.ExecuteReader())
                     {
-                        List<SharedLocationDTO> sharedLocationDTOList = new List<SharedLocationDTO>();
+                        SharedLocationDTO sharedLocationDTO = new SharedLocationDTO();
 
                         while (reader.Read())
                         {
-                            InterfaceDataReader dataReader = new DataReader();
-                            SharedLocationDTO sharedLocationDTO = dataReader.ReadSharedLocationDTO(reader);
-                            sharedLocationDTOList.Add(sharedLocationDTO);
+                            InterfaceDataReader dataReader = new DataReader();                            
+                            sharedLocationDTO = dataReader.ReadSharedLocationDTO(reader);                            
                         }
-
                         IObjectConverter objConverted = new ObjectConverter();
-                        var obj = objConverted.sharedLocationJson(sharedLocationDTOList);
+                        var obj = objConverted.sharedLocationJson(sharedLocationDTO);
 
                         return obj;
 

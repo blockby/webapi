@@ -14,7 +14,7 @@ namespace BBBWebApiCodeFirst.Interfaces
 
         JObject AllWeekByHoursJson(List<BydayDTO> list, string serviceId);
 
-        JObject sharedLocationJson(List<SharedLocationDTO> list);
+        JObject sharedLocationJson(SharedLocationDTO dto);
 
 
         JObject BydayJson(List<BydayDTO> obj);

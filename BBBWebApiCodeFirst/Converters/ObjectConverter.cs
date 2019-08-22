@@ -23,7 +23,7 @@ namespace BBBWebApiCodeFirst.Converters
         private JArray insideCustomerActivityArray = JArray.Parse(@"['Take-away Customers', 'Sit-down Customers']");
         private JArray insideTransactionActivityArray = JArray.Parse(@"['Transaction Time 1-5 minutes', 'Transaction Time over 5-10 minutes']");
 
-        private JObject obj;
+        private JObject obj = new JObject();
         private string title;
 
         JArray yAxisArray = new JArray();
@@ -430,30 +430,24 @@ namespace BBBWebApiCodeFirst.Converters
             return obj;            
         }
 
-        public JObject sharedLocationJson(List<SharedLocationDTO> list)
-        {
-            List<JObject> dataList = new List<JObject>();
+        public JObject sharedLocationJson(SharedLocationDTO item)
+        {         
 
-            foreach (var item in list) {
+            JObject locationJObject = new JObject();
 
-                JObject locationJObject = new JObject();
+            locationJObject.Add("id_location", item.IdLocation);
+            locationJObject.Add("id_user", item.IdUser);
+            locationJObject.Add("owner", item.Owner);
+            locationJObject.Add("address", item.Address);
+            locationJObject.Add("typeProperty", item.TypeProp);
+            JObject coordinatesJObject = new JObject();
+            coordinatesJObject.Add("longitude", item.Longitude);
+            coordinatesJObject.Add("latitude", item.Latitude);
+            locationJObject.Add("coordinates", coordinatesJObject);
+            locationJObject.Add("state", item.State);
+            locationJObject.Add("id_service", item.Service);        
 
-                locationJObject.Add("id_location", item.IdLocation);
-                locationJObject.Add("id_user", item.IdUser);
-                locationJObject.Add("owner", item.Owner);
-                locationJObject.Add("address", item.Address);
-                locationJObject.Add("typeProperty", item.TypeProp);
-                JObject coordinatesJObject = new JObject();
-                coordinatesJObject.Add("longitude", item.Longitude);
-                coordinatesJObject.Add("latitude", item.Latitude);
-                locationJObject.Add("coordinates", coordinatesJObject);
-                locationJObject.Add("state", item.State);
-                locationJObject.Add("id_service", item.Service);
-
-                dataList.Add(locationJObject);
-            }
-
-            obj.Add("data", JArray.FromObject(dataList));
+            obj.Add("data", locationJObject);
             return obj;
         }
 

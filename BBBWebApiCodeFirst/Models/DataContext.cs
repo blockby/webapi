@@ -1,4 +1,6 @@
 ﻿using BBBWebApiCodeFirst.Common;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -9,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace BBBWebApiCodeFirst.Models
 {
-    public class DataContext : DbContext
+    public class DataContext : IdentityDbContext<User, User_type, int>
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
@@ -33,7 +35,19 @@ namespace BBBWebApiCodeFirst.Models
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            base.OnModelCreating(builder);
             builder.HasPostgresExtension("postgis");
+
+            #region "Seed Data"
+
+            builder.Entity<User_type>().HasData(
+                new { Id = 1, Name = "Admin", NormalizedName = "ADMIN"},
+                new { Id = 2, Name = "Broker", NormalizedName = "BROKER"},
+                new { Id = 3, Name = "ShopOwner", NormalizedName = "SHOPOWNER"}
+                );
+
+            #endregion
+
         }
 
         public DbSet<User_type> user_types { get; set; }
