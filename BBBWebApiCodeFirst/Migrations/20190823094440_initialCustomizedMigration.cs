@@ -5,7 +5,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace BBBWebApiCodeFirst.Migrations
 {
-    public partial class initialIntegration : Migration
+    public partial class initialCustomizedMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -55,7 +55,9 @@ namespace BBBWebApiCodeFirst.Migrations
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
                 });
-                        
+            
+
+
             migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
@@ -162,7 +164,6 @@ namespace BBBWebApiCodeFirst.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName", "description" },
@@ -213,9 +214,9 @@ namespace BBBWebApiCodeFirst.Migrations
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
-                unique: true);           
-        }
+                unique: true);
 
+        }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {

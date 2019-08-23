@@ -41,19 +41,14 @@ namespace BBBWebApiCodeFirst.Models
             #region "Seed Data"
 
             builder.Entity<User_type>().HasData(
-                new { Id = 1, Name = "Admin", NormalizedName = "ADMIN"},
-                new { Id = 2, Name = "Broker", NormalizedName = "BROKER"},
-                new { Id = 3, Name = "ShopOwner", NormalizedName = "SHOPOWNER"}
-                );
+                new { Id = 1, Name = "Admin", NormalizedName = "ADMIN" },
+                new { Id = 2, Name = "Broker", NormalizedName = "BROKER" },
+                new { Id = 3, Name = "ShopOwner", NormalizedName = "SHOPOWNER" }
+            );
 
             #endregion
+            }
 
-        }
-
-        public DbSet<User_type> user_types { get; set; }
-
-        public DbSet<User> users { get; set; }
-               
         public DbSet<Location> locations { get; set; }
 
         public DbSet<Shared_location> shared_locations { get; set; }
