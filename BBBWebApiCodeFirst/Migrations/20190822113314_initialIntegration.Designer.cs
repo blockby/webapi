@@ -11,8 +11,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace BBBWebApiCodeFirst.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20190820112400_initialMigration")]
-    partial class initialMigration
+    [Migration("20190822113314_initialIntegration")]
+    partial class initialIntegration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
