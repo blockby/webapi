@@ -459,7 +459,6 @@ namespace BBBWebApiCodeFirst.Converters
             return finalObj;
         }
 
-
         public JArray getXArray()
         {
             for (int i = 0; i < 24; i++)
