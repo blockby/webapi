@@ -44,7 +44,6 @@ namespace BBBWebApiCodeFirst.Controllers
             }
         }
 
-
         private JObject ExecuteQuery(string id_location, string service, string returning_customer)
         {
             string _selectString = "SELECT b.name_day AS day, a.hours as hour, COUNT(DISTINCT(a.src)) AS people FROM collected_data a INNER JOIN days b ON a.id_day = b.id_day WHERE a.id_location = "+id_location+ " AND a.id_service = " + service + " AND a.returning_customer IN(" + returning_customer + ") GROUP BY a.id_day, b.name_day, hour ORDER BY a.id_day, hour ASC";

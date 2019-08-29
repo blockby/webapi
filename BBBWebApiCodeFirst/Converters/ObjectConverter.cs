@@ -23,7 +23,7 @@ namespace BBBWebApiCodeFirst.Converters
         private JArray insideCustomerActivityArray = JArray.Parse(@"['Take-away Customers', 'Sit-down Customers']");
         private JArray insideTransactionActivityArray = JArray.Parse(@"['Transaction Time 1-5 minutes', 'Transaction Time over 5-10 minutes']");
 
-        private JObject obj;
+        private JObject obj = new JObject();
         private string title;
 
         JArray yAxisArray = new JArray();
@@ -158,8 +158,7 @@ namespace BBBWebApiCodeFirst.Converters
             obj.Add("yAxis", jArray);
 
             return CreateFinalObject(obj);
-        }        
-
+        }
 
         public JObject ByDayByActivityJson(List<DayByTypeDTO> list, string serviceId)
         {
@@ -263,8 +262,7 @@ namespace BBBWebApiCodeFirst.Converters
             obj.Add("yAxis", jArray);
 
             return CreateFinalObject(obj);
-        }
-        
+        }        
 
         public JObject ByDayByPeriodByActivityJson(List<ByDayByPeriodByActivityDTO> list, string day, string serviceId, string spec)
         {
@@ -457,14 +455,12 @@ namespace BBBWebApiCodeFirst.Converters
             return obj;
         }
 
-
         private JObject CreateFinalObject(JObject obj)
         {
             JObject finalObj = new JObject();
             finalObj.Add("data", obj);
             return finalObj;
         }
-
 
         public JArray getXArray()
         {

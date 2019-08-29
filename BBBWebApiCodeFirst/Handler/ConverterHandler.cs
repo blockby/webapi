@@ -8,17 +8,7 @@ using System.Threading.Tasks;
 namespace BBBWebApiCodeFirst.Handler
 {
     public class ConverterHandler
-    {
-
-        private JArray daysArray = JArray.Parse(@"['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday' ]");
-        private JArray weekendArray = JArray.Parse(@"['Saturday', 'Sunday' ]");
-        private JArray weekdayArray = JArray.Parse(@"['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']");
-        private JArray outsidePeriodArray = JArray.Parse(@"['Morning', 'Afternoon', 'Evening', 'Night']");
-        private JArray insidePeriodArray = JArray.Parse(@"['Morning', 'Midday', 'Afternoon']");
-        private JArray outsideActivityArray = JArray.Parse(@"['Living', 'Working', 'Commuters', 'Passer-by', 'Leisure']");
-        private JArray insideCustomerActivityArray = JArray.Parse(@"['Take-away Customers', 'Sit-down Customers']");
-        private JArray insideTransactionActivityArray = JArray.Parse(@"['Transaction Time 1-5 minutes', 'Transaction Time over 5-10 minutes']");
-        
+    {        
         private JObject obj;
         private JObject finalObj;
 
@@ -1389,7 +1379,6 @@ namespace BBBWebApiCodeFirst.Handler
             return yAxisArray;           
         }
 
-
         public JArray GetOutsideWeekendByActivityJArray(List<DaysByActivityDTO> list)
         {
             JArray liveArray = new JArray();
@@ -1877,8 +1866,7 @@ namespace BBBWebApiCodeFirst.Handler
             }
 
             int[][] jaggedArrayLive = new int[3][];
-            int[][] jaggedArrayWork = new int[3][];
-         
+            int[][] jaggedArrayWork = new int[3][];         
 
             jaggedArrayLive[0] = yAxisPeriodArrayMorningLiveFullDays;         
             jaggedArrayLive[1] = yAxisPeriodArrayMiddayLiveFullDays;
@@ -1886,9 +1874,7 @@ namespace BBBWebApiCodeFirst.Handler
 
             jaggedArrayWork[0] = yAxisPeriodArrayMorningWorkFullDays;
             jaggedArrayWork[2] = yAxisPeriodArrayAfternoonWorkFullDays;
-            jaggedArrayWork[1] = yAxisPeriodArrayMiddayWorkFullDays;
-            
-            
+            jaggedArrayWork[1] = yAxisPeriodArrayMiddayWorkFullDays;            
             
             List<int[][]> listData = new List<int[][]>(5);
 
@@ -3027,8 +3013,7 @@ namespace BBBWebApiCodeFirst.Handler
             int[] yAxisPeriodArrayAfternoonWork = new int[5];            
 
             int[][] jaggedArrayLive = new int[3][];
-            int[][] jaggedArrayWork = new int[3][];
-            
+            int[][] jaggedArrayWork = new int[3][];            
 
             foreach (var item in list)
             {
@@ -3194,7 +3179,6 @@ namespace BBBWebApiCodeFirst.Handler
 
             return listData;
         }
-
 
         public List<int[][]> GetOutsideWeekDaysByPeriodByActivityJArray(List<ByDayByPeriodByActivityDTO> list)
         {
@@ -3708,7 +3692,6 @@ namespace BBBWebApiCodeFirst.Handler
                 }
             }
 
-
             jaggedArrayLive[0] = yAxisPeriodArrayMorningLive;
             jaggedArrayLive[1] = yAxisPeriodArrayAfternoonLive;
             jaggedArrayLive[2] = yAxisPeriodArrayEveningLive;
@@ -3734,7 +3717,6 @@ namespace BBBWebApiCodeFirst.Handler
             jaggedArrayLeisure[2] = yAxisPeriodArrayEveningLeisure;
             jaggedArrayLeisure[3] = yAxisPeriodArrayNightLeisure;
             
-
             List<int[][]> listData = new List<int[][]>(5);
 
             listData.Add(jaggedArrayLive);
@@ -3852,7 +3834,6 @@ namespace BBBWebApiCodeFirst.Handler
             return listData;                        
         }
 
-
         public List<int[][]> GetInsideTransactionWeekendByPeriodByActivityJArray(List<ByDayByPeriodByActivityDTO> list)
         {
             int[] yAxisPeriodArrayMorningLiveWeekend = new int[2];
@@ -3861,8 +3842,7 @@ namespace BBBWebApiCodeFirst.Handler
             
             int[] yAxisPeriodArrayMorningWorkWeekend = new int[2];
             int[] yAxisPeriodArrayMiddayWorkWeekend = new int[2];
-            int[] yAxisPeriodArrayAfternoonWorkWeekend = new int[2];
-             
+            int[] yAxisPeriodArrayAfternoonWorkWeekend = new int[2];            
 
             foreach (var item in list)
             {
@@ -3986,7 +3966,6 @@ namespace BBBWebApiCodeFirst.Handler
             int[] yAxisPeriodArrayAfternoonLeisureWeekend = new int[2];
             int[] yAxisPeriodArrayEveningLeisureWeekend = new int[2];
             int[] yAxisPeriodArrayNightLeisureWeekend = new int[2];
-
 
             foreach (var item in list)
             {
@@ -4258,8 +4237,6 @@ namespace BBBWebApiCodeFirst.Handler
             jaggedArrayLeisureWeekend[2] = yAxisPeriodArrayEveningLeisureWeekend;
             jaggedArrayLeisureWeekend[3] = yAxisPeriodArrayNightLeisureWeekend;
 
-
-
             List<int[][]> listData = new List<int[][]>(5);
 
             listData.Add(jaggedArrayLiveWeekend);
@@ -4268,11 +4245,8 @@ namespace BBBWebApiCodeFirst.Handler
             listData.Add(jaggedArrayPasserByWeekend);
             listData.Add(jaggedArrayLeisureWeekend);
 
-            return listData;
-
-            
+            return listData;            
         }
-
 
         public JObject GetAllWeekByHoursJson(List<BydayDTO> list, string spec)
         {
@@ -4307,7 +4281,6 @@ namespace BBBWebApiCodeFirst.Handler
             obj.Add("data", individualObj);
             return obj;
         }
-
 
         public JArray getOutsideXArray()
         {
@@ -4392,7 +4365,6 @@ namespace BBBWebApiCodeFirst.Handler
             }
             return xArray;
         }
-
 
         public JArray getInsideZArray()
         {
